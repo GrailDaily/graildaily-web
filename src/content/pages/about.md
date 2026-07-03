@@ -1,37 +1,31 @@
 ---
-title: "About"
-description: "A bit about me and this blog."
+title: About
+description: Learn more about GrailDaily and our mission.
 ---
 
-AstroPaper is a minimal, accessible and SEO-friendly blog theme built with [Astro](https://astro.build/) and [Tailwind CSS](https://tailwindcss.com/).
+# About GrailDaily
 
-![Astro Paper](@/assets/images/astropaper-og.jpg)
+GrailDaily is an independent publication dedicated to exploring history, archaeology, ancient civilizations, science, and the world's greatest mysteries.
 
-AstroPaper provides a solid foundation for blogs, or even portfolios\_ with full markdown support, built-in dark mode, and a clean layout that works out-of-the-box.
+Our mission is to make complex historical discoveries and scientific research accessible through engaging, well-researched articles that inspire curiosity.
 
-The blog posts in this theme also serve as guides, docs or example articles\_ making AstroPaper a flexible starting point for your next content-driven site.
+Rather than promoting sensational claims, we aim to examine extraordinary topics through historical evidence, archaeological findings, scientific studies, and credible sources whenever possible.
 
-## Features
+## What We Cover
 
-AstroPaper comes with a set of useful features that make content publishing easy and effective:
+- Ancient Civilizations
+- Lost Cities
+- Archaeology
+- Historical Mysteries
+- Mythology
+- Science
+- Space
+- Unexplained Phenomena
 
-- SEO-friendly
-- Fast performance
-- Light & dark mode
-- Highly customizable
-- Organizable blog posts
-- Responsive & accessible
-- Static search with [PageFind](https://pagefind.app/)
-- Automatic social image generation
+## Our Mission
 
-and so much more.
+We believe curiosity drives discovery.
 
-## Show your support
+Every article published on GrailDaily is created to encourage readers to ask questions, explore evidence, and appreciate the fascinating stories hidden throughout history.
 
-If you like [AstroPaper](https://github.com/satnaing/astro-paper), consider giving it a star ⭐️.
-
-Found a bug 🐛 or have an improvement ✨ in mind? Feel free to open an [issue](https://github.com/satnaing/astro-paper/issues), submit a [pull request](https://github.com/satnaing/astro-paper/pulls) or start a [discussion](https://github.com/satnaing/astro-paper/discussions).
-
-If you find this theme helpful, you can also [sponsor me on GitHub](https://github.com/sponsors/satnaing) or [buy me a coffee](https://buymeacoffee.com/satnaing) to show your support — every penny counts.
-
-Kyay zuu! 🙏🏼
+Thank you for visiting GrailDaily.
