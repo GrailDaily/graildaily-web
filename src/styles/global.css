@@ -22,11 +22,11 @@
 }
 
 @utility max-w-app {
-  @apply max-w-3xl;
+  @apply max-w-[1280px];
 }
 
 @utility app-layout {
-  @apply max-w-app mx-auto w-full px-4;
+  @apply mx-auto w-full max-w-app px-6 lg:px-8;
 }
 
 @utility active-nav {
