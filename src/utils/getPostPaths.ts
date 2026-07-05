@@ -1,7 +1,7 @@
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { BLOG_PATH } from "@/content.config";
 import { slugifyStr } from "./slugify";
-import config from "@/config";
+
 
 function getPostPathSegments(filePath: string | undefined): string[] {
   return (
@@ -16,8 +16,7 @@ function getPostPathSegments(filePath: string | undefined): string[] {
 }
 
 function getIdSlug(id: string): string {
-  const postId = id.split("/");
-  return postId.length > 0 ? String(postId[postId.length - 1]) : id;
+  return id.split("/").pop()?.replace(/\.(md|mdx)$/, "") ?? id;
 }
 
 function getPostSlugPath(id: string, filePath: string | undefined): string {

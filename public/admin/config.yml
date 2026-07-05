@@ -1,0 +1,25 @@
+backend:
+  name: github
+  repo: GrailDaily/graildaily-web
+  branch: main
+
+auth_endpoint: https://github.com/login/oauth/authorize
+site_domain: https://graildaily-website.pages.dev
+
+media_folder: "src/assets/images"
+public_folder: "/src/assets/images"
+
+collections:
+  - name: "posts"
+    label: "Posts"
+    folder: "src/content/posts/_releases"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Publish Date", name: "pubDatetime", widget: "datetime" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Tags", name: "tags", widget: "list" }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown" }
