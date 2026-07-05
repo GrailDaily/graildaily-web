@@ -11,8 +11,10 @@ import LinkButton from "./LinkButton.astro";
 import { stripBase, stripLocale } from "@/utils/withBase";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
+import logoLight from "@/assets/images/logo/logo-light.png";
+import logoDark from "@/assets/images/logo/logo-dark.png";
 
-const { site, features } = config;
+const { features } = config;
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
@@ -52,11 +54,19 @@ const isActive = (path: string) => {
   href={getRelativeLocaleUrl(locale, "")}
   class="absolute sm:static flex items-center"
 >
+  <>
   <img
-  src="/images/graildaily-logo.png"
-  alt="GrailDaily"
-  class="h-10 w-auto sm:h-12"
-/>
+    src={logoLight.src}
+    alt="GrailDaily"
+    class="h-10 w-auto sm:h-12 dark:hidden"
+  />
+
+  <img
+    src={logoDark.src}
+    alt="GrailDaily"
+    class="hidden h-10 w-auto dark:block sm:h-12"
+  />
+</>
 </a>
     <nav
       id="nav-menu"
