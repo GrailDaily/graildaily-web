@@ -1,9 +1,10 @@
 ---
 
-import ThemeToggle from "./ThemeToggle.astro";
+
 import SearchModal from "./SearchModal.astro";
 import DesktopNav from "./DesktopNav.astro";
 import Logo from "./Logo.astro";
+import HeaderActions from "./HeaderActions.astro";
 ---
 
 
@@ -18,18 +19,7 @@ import Logo from "./Logo.astro";
     <DesktopNav />
 
     <!-- Actions -->
-    <div class="actions">
-  <button
-  class="search-btn"
-  type="button"
-  aria-label="Search"
-  onclick="document.dispatchEvent(new Event('open-search'))"
->
-  🔍
-</button>
-
-  <ThemeToggle />
-</div>
+    <HeaderActions />
 
   </div>
 </header>
@@ -84,24 +74,6 @@ html.dark .site-header {
     color: white;
   }
 
-  .actions {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .search-btn {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.15);
-    color: white;
-    padding: 6px 10px;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-
-  .search-btn:hover {
-    background: rgba(255,255,255,0.08);
-  }
 
   @media (max-width: 768px) {
     .nav {
