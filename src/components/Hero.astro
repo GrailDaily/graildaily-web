@@ -1,140 +1,275 @@
+
 ---
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("posts");
+
+const featured = posts
+  .sort(
+    (a, b) =>
+      new Date(b.data.pubDatetime).getTime() -
+      new Date(a.data.pubDatetime).getTime()
+  )[0];
 ---
 
 <section class="hero">
-  <div class="container">
+  <div class="hero-container">
 
-    <!-- LEFT: Main Text -->
-    <div class="hero-text">
-      <p class="kicker">Exploring History, Science & Mysteries</p>
+    <div class="hero-content">
+
+      <span class="hero-badge">
+        Exploring History, Science & Mysteries
+      </span>
 
       <h1>
-        Discover the World’s Greatest Mysteries & Hidden Knowledge
+        Discover the World's Greatest Mysteries &
+        Hidden Knowledge
       </h1>
 
-      <p class="subtext">
-        Deep-dive articles about ancient civilizations, unexplained phenomena,
-        archaeology, science discoveries, and forgotten history.
+      <p>
+        Deep-dive articles about ancient civilizations,
+        unexplained phenomena, archaeology,
+        forgotten history, and scientific discoveries.
       </p>
 
-      <div class="hero-actions">
-        <a class="primary" href="/posts">Read Articles</a>
-        <a class="secondary" href="/about">About Project</a>
+      <div class="hero-buttons">
+        <a href="/posts" class="primary">
+          Read Articles
+        </a>
+
+        <a href="/about" class="secondary">
+          About Project
+        </a>
       </div>
+
     </div>
 
-    <!-- RIGHT: Featured Card -->
-    <div class="featured">
-      <div class="card">
-        <p class="label">Featured Article</p>
+    <div class="hero-featured">
 
-        <h3>
-          The Lost Civilization Beneath the Sands of the Sahara
-        </h3>
+      <a class="featured-card" href={`/posts/${featured.id}/`}>
 
-        <p class="meta">
-          Ancient discovery • 8 min read
+        <div class="featured-image">
+  {
+    featured.data.ogImage && (
+      <img
+  src={
+    typeof featured.data.ogImage === "string"
+      ? featured.data.ogImage
+      : featured.data.ogImage?.src
+  }
+  alt={featured.data.title}
+  class="featured-cover"
+  loading="lazy"
+/>
+    )
+  }
+</div>
+
+        <div class="featured-content">
+
+          <span class="featured-tag">
+            Featured Article
+          </span>
+
+          <h3>{featured.data.title}</h3>
+
+          <p>
+            {featured.data.author}
         </p>
-      </div>
+
+        </div>
+
+      </a>
+
     </div>
 
   </div>
 </section>
 
 <style>
-  .hero {
-    padding: 70px 20px;
+    .hero {
+  padding: 72px 20px;
+}
+
+.hero-container {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.hero-content {
+  max-width: 760px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 6px 14px;
+
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+
+  color: rgba(255,255,255,.75);
+
+  background: rgba(255,255,255,.04);
+}
+
+.hero-content h1 {
+  margin-top: 22px;
+  margin-bottom: 20px;
+
+  font-size: clamp(2.8rem, 6vw, 4.8rem);
+  line-height: 1.05;
+  font-weight: 800;
+
+  color: #fff;
+
+  max-width: 900px;
+}
+
+.hero-content p {
+  max-width: 640px;
+
+  font-size: 18px;
+  line-height: 1.8;
+
+  color: rgba(255,255,255,.70);
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  margin-top: 36px;
+}
+
+.primary,
+.secondary {
+  padding: 14px 22px;
+
+  border-radius: 12px;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  transition: .25s;
+}
+
+.primary {
+  background: #ffffff;
+  color: #000000;
+}
+
+.primary:hover {
+  transform: translateY(-2px);
+}
+
+.secondary {
+  border: 1px solid rgba(255,255,255,.15);
+
+  color: white;
+
+  background: rgba(255,255,255,.04);
+}
+
+.secondary:hover {
+  background: rgba(255,255,255,.08);
+}
+
+.featured-card {
+  overflow: hidden;
+
+  border-radius: 22px;
+
+  border: 1px solid rgba(255,255,255,.08);
+
+  background: rgba(255,255,255,.03);
+
+  backdrop-filter: blur(14px);
+}
+
+.featured-image {
+  aspect-ratio: 16 / 9;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.10),
+      rgba(255,255,255,.02)
+    );
+}
+
+.featured-content {
+  padding: 28px;
+}
+
+.featured-tag {
+  font-size: 12px;
+
+  text-transform: uppercase;
+
+  letter-spacing: .08em;
+
+  color: rgba(255,255,255,.55);
+}
+
+.featured-content h3 {
+  margin-top: 12px;
+  margin-bottom: 14px;
+
+  font-size: 30px;
+  line-height: 1.3;
+
+  color: white;
+}
+
+.featured-content p {
+  color: rgba(255,255,255,.60);
+}
+
+@media (max-width:768px){
+
+  .hero{
+      padding:56px 20px;
   }
 
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 40px;
-    align-items: center;
+  .hero-content h1{
+      font-size:42px;
   }
 
-  .kicker {
-    color: #aaa;
-    font-size: 13px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 10px;
+  .hero-content p{
+      font-size:16px;
   }
 
-  h1 {
-    font-size: 42px;
-    line-height: 1.2;
-    margin: 0 0 15px;
-    color: white;
-  }
+}
+.featured-image {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
 
-  .subtext {
-    color: rgba(255,255,255,0.7);
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 25px;
-    max-width: 500px;
-  }
+.featured-cover {
+  width: 100%;
+  height: 100%;
 
-  .hero-actions {
-    display: flex;
-    gap: 12px;
-  }
+  object-fit: cover;
 
-  .primary {
-    background: white;
-    color: black;
-    padding: 10px 16px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-  }
+  display: block;
 
-  .secondary {
-    border: 1px solid rgba(255,255,255,0.2);
-    color: white;
-    padding: 10px 16px;
-    border-radius: 8px;
-    text-decoration: none;
-  }
+  transition: transform .4s ease;
+}
 
-  .featured .card {
-    border: 1px solid rgba(255,255,255,0.1);
-    padding: 20px;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.03);
-    backdrop-filter: blur(10px);
-  }
-
-  .label {
-    font-size: 12px;
-    color: #aaa;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-
-  .featured h3 {
-    font-size: 18px;
-    color: white;
-    margin: 0 0 10px;
-    line-height: 1.4;
-  }
-
-  .meta {
-    font-size: 13px;
-    color: rgba(255,255,255,0.6);
-  }
-
-  @media (max-width: 768px) {
-    .container {
-      grid-template-columns: 1fr;
-      text-align: left;
-    }
-
-    h1 {
-      font-size: 32px;
-    }
-  }
+.featured-card:hover .featured-cover {
+  transform: scale(1.05);
+}
 </style>
