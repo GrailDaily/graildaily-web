@@ -26,7 +26,8 @@ const {
     : Astro.url.href,
 } = Astro.props;
 
-const socialImageURL = new URL(ogImage, Astro.site ?? Astro.url);
+const baseURL = Astro.site ?? Astro.url;
+const socialImageURL = new URL(ogImage, baseURL);
 const rssHref = getRelativeLocaleUrl(
   Astro.currentLocale ?? config.site.lang,
   "rss.xml"
@@ -57,7 +58,10 @@ const rssHref = getRelativeLocaleUrl(
     <meta name="title" content={title} />
     <meta name="description" content={description} />
     <meta name="author" content={site.author} />
-    <link rel="sitemap" href={new URL("sitemap-index.xml", Astro.site)} />
+    <link
+  rel="sitemap"
+  href={Astro.site ? new URL("sitemap-index.xml", Astro.site).href : "/sitemap-index.xml"}
+/>
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -68,7 +72,7 @@ const rssHref = getRelativeLocaleUrl(
     <meta property="og:image" content={socialImageURL} />
 
     <!-- Twitter / X -->
-    <meta property="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
@@ -115,6 +119,20 @@ const rssHref = getRelativeLocaleUrl(
         window.__theme = { value: theme };
       })();
     </script>
+
+    <script is:inline type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "GrailDaily",
+  "url": "https://your-domain.com",
+  "description": "Exploring history, science, mysteries, and ancient civilizations.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "GrailDaily"
+  }
+}
+</script>
 
     <ClientRouter />
   </head>

@@ -1,0 +1,36 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/header/Header.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import Main from "@/components/Main.astro";
+import Footer from "@/components/Footer.astro";
+import Tag from "@/components/Tag.astro";
+import { getUniqueTags } from "@/utils/getUniqueTags";
+import config from "@/config";
+
+const posts = await getCollection("posts", ({ data }) => !data.draft);
+const tags = getUniqueTags(posts);
+---
+
+<Layout
+  title={`Categories | ${config.site.title}`}
+  description="Browse all article categories on GrailDaily."
+>
+  <Header />
+
+  <Breadcrumb />
+
+  <Main
+    pageTitle="Categories"
+    pageDesc="Browse articles by category."
+  >
+    <ul class="flex flex-wrap gap-6">
+      {tags.map(({ tag, tagName }) => (
+        <Tag {tag} {tagName} />
+      ))}
+    </ul>
+  </Main>
+
+  <Footer />
+</Layout>

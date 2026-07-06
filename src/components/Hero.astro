@@ -1,0 +1,140 @@
+---
+---
+
+<section class="hero">
+  <div class="container">
+
+    <!-- LEFT: Main Text -->
+    <div class="hero-text">
+      <p class="kicker">Exploring History, Science & Mysteries</p>
+
+      <h1>
+        Discover the World’s Greatest Mysteries & Hidden Knowledge
+      </h1>
+
+      <p class="subtext">
+        Deep-dive articles about ancient civilizations, unexplained phenomena,
+        archaeology, science discoveries, and forgotten history.
+      </p>
+
+      <div class="hero-actions">
+        <a class="primary" href="/posts">Read Articles</a>
+        <a class="secondary" href="/about">About Project</a>
+      </div>
+    </div>
+
+    <!-- RIGHT: Featured Card -->
+    <div class="featured">
+      <div class="card">
+        <p class="label">Featured Article</p>
+
+        <h3>
+          The Lost Civilization Beneath the Sands of the Sahara
+        </h3>
+
+        <p class="meta">
+          Ancient discovery • 8 min read
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: 70px 20px;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .kicker {
+    color: #aaa;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-size: 42px;
+    line-height: 1.2;
+    margin: 0 0 15px;
+    color: white;
+  }
+
+  .subtext {
+    color: rgba(255,255,255,0.7);
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    max-width: 500px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+  }
+
+  .primary {
+    background: white;
+    color: black;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .secondary {
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+  }
+
+  .featured .card {
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(10px);
+  }
+
+  .label {
+    font-size: 12px;
+    color: #aaa;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .featured h3 {
+    font-size: 18px;
+    color: white;
+    margin: 0 0 10px;
+    line-height: 1.4;
+  }
+
+  .meta {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      grid-template-columns: 1fr;
+      text-align: left;
+    }
+
+    h1 {
+      font-size: 32px;
+    }
+  }
+</style>

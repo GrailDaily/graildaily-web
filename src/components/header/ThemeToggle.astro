@@ -1,0 +1,118 @@
+<button
+  id="theme-btn"
+  type="button"
+  aria-label="Toggle theme"
+  class="theme-toggle"
+>
+  <!-- Sun -->
+  <svg
+    class="icon sun"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2" />
+    <path d="M12 20v2" />
+    <path d="M4.93 4.93l1.41 1.41" />
+    <path d="M17.66 17.66l1.41 1.41" />
+    <path d="M2 12h2" />
+    <path d="M20 12h2" />
+    <path d="M4.93 19.07l1.41-1.41" />
+    <path d="M17.66 6.34l1.41-1.41" />
+  </svg>
+
+  <!-- Moon -->
+  <svg
+    class="icon moon"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+  >
+    <path
+      d="M21 12.8A9 9 0 1111.2 3
+         7 7 0 0021 12.8z"
+    />
+  </svg>
+</button>
+
+<style>
+.theme-toggle {
+  all: unset;
+
+  box-sizing: border-box;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+
+  position: relative;
+
+  border-radius: 9999px;
+  cursor: pointer;
+
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.05);
+  backdrop-filter: blur(14px);
+
+  transition:
+    transform .2s ease,
+    background .25s ease,
+    border-color .25s ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px);
+}
+
+.theme-toggle:active {
+  transform: scale(.95);
+}
+
+.theme-toggle * {
+  box-sizing: border-box;
+}
+
+.icon {
+  position: absolute;
+
+  width: 18px;
+  height: 18px;
+
+  transition:
+    opacity .28s ease,
+    transform .35s ease;
+}
+
+/* Default = Light Mode */
+
+.sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.moon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(.6);
+}
+
+/* Dark Mode */
+
+html.dark .sun {
+  opacity: 0;
+  transform: rotate(90deg) scale(.6);
+}
+
+html.dark .moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+</style>

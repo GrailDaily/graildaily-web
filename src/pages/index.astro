@@ -1,19 +1,20 @@
 ---
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import IconRss from "@/assets/icons/IconRss.svg";
+
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/header/Header.astro";
 import Footer from "@/components/Footer.astro";
-import Socials from "@/components/Socials.astro";
-import Card from "@/components/Card.astro";
+
 import LinkButton from "@/components/LinkButton.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
+import Hero from "@/components/Hero.astro";
 
-const { socials, posts: postsConfig } = config;
+
+const { posts: postsConfig } = config;
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
@@ -27,71 +28,127 @@ const homePath = getRelativeLocaleUrl(locale, "");
 
 <Layout>
   <Header />
+  <Hero />
+  <section class="hero fade-in"></section>
+
+  <section id="trending" class="trending fade-in">
+
+  </section>
+  <section id="trending" class="trending">
+  <h2 class="title">Trending Now</h2>
+
+  <div class="scroll">
+    {recentPosts.slice(0, 5).map(post => (
+      <article class="trend-card">
+        <div class="badge">🔥 HOT</div>
+
+        <h3>{post.data.title}</h3>
+
+        <p>
+          {post.data.description}
+        </p>
+
+        <div class="meta">
+          <span>Trending</span>
+          <span>•</span>
+          <span>5 min read</span>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<section id="categories" class="categories fade-in">
+
+</section>
+<section id="categories" class="categories">
+  <h2 class="title">Explore Categories</h2>
+
+  <div class="cat-grid">
+    <a class="cat-card" href="/tags/history">
+      <h3>History</h3>
+      <p>Ancient civilizations, lost empires, historical events</p>
+    </a>
+
+    <a class="cat-card" href="/tags/science">
+      <h3>Science</h3>
+      <p>Discoveries, theories, space, and modern research</p>
+    </a>
+
+    <a class="cat-card" href="/tags/mystery">
+      <h3>Mystery</h3>
+      <p>Unexplained phenomena and unsolved cases</p>
+    </a>
+
+    <a class="cat-card" href="/tags/civilization">
+      <h3>Civilization</h3>
+      <p>Lost cultures, archaeology, ancient knowledge</p>
+    </a>
+  </div>
+</section>
+
+<section id="newsletter" class="newsletter fade-in">
+  
+</section>
+<section id="newsletter" class="newsletter">
+  <div class="nl-box">
+
+    <div class="nl-text">
+      <h2>Join Curious Minds</h2>
+      <p>
+        Get weekly deep-dive articles about history, science,
+        mysteries, and forgotten knowledge directly in your inbox.
+      </p>
+    </div>
+
+    <form class="nl-form">
+      <input
+        type="email"
+        placeholder="Enter your email"
+        required
+      />
+
+      <button type="submit">
+        Subscribe
+      </button>
+    </form>
+
+  </div>
+</section>
+
   <main
     id="main-content"
     data-layout="index"
     data-home-path={homePath}
     class="app-layout"
   >
-    <section id="hero" class="border-border border-b pt-8 pb-6">
-      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        GrailDaily
-      </h1>
-      <p class="text-xl font-semibold mt-2">
-  Discover the Extraordinary
-</p>
-<p class="mt-4">
-  GrailDaily explores history, ancient civilizations, science, mysteries,
-  and unexplained phenomena through carefully researched articles designed
-  for curious minds around the world.
-</p>
-      <a
-        target="_blank"
-        href={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}rss.xml`}
-        class="inline-block"
-        aria-label="RSS Feed"
-        title="RSS Feed"
-      >
-        <IconRss
-          width={20}
-          height={20}
-          class="stroke-accent scale-125 stroke-3 rtl:-rotate-90"
-        />
-        <span class="sr-only">RSS Feed</span>
-      </a>
 
-      
-      
-      {
-        socials.length > 0 && (
-          <div class="mt-4 flex max-sm:flex-col sm:items-center">
-            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">
-              {t.home.socialLinks}:
-            </div>
-            <Socials />
-          </div>
-        )
-      }
-    </section>
 
     {
       featuredPosts.length > 0 && (
-        <section
-          id="featured"
-          class:list={[
-            "pt-12 pb-6",
-            { "border-border border-b": recentPosts.length > 0 },
-          ]}
-        >
-          <h2 class="text-2xl font-semibold tracking-wide">
-            {t.home.featured}
-          </h2>
-          <ul>
-            {featuredPosts.map(data => (
-              <Card variant="h3" {...data} />
-            ))}
-          </ul>
-        </section>
+        <section id="featured" class="pt-12 pb-6">
+  <h2 class="text-2xl font-semibold tracking-wide">
+    Editor Picks
+  </h2>
+
+  <div class="grid">
+    {featuredPosts.map(post => (
+      <article class="card">
+        <h3>{post.data.title}</h3>
+
+        <p class="excerpt">
+          {post.data.description}
+        </p>
+
+        <div class="meta">
+          <span>General</span>
+          <span>•</span>
+          <span>5 min read</span>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
       )
     }
 
@@ -101,11 +158,23 @@ const homePath = getRelativeLocaleUrl(locale, "");
           <h2 class="text-2xl font-semibold tracking-wide">
             {t.home.recentPosts}
           </h2>
-          <ul>
-            {recentPosts.slice(0, postsConfig.perIndex).map(data => (
-              <Card variant="h3" {...data} />
-            ))}
-          </ul>
+          <div class="grid">
+  {recentPosts.slice(0, postsConfig.perIndex).map(post => (
+    <article class="card">
+      <h3>{post.data.title}</h3>
+
+      <p class="excerpt">
+        {post.data.description}
+      </p>
+
+      <div class="meta">
+        <span>General</span>
+<span>•</span>
+<span>5 min read</span>
+      </div>
+    </article>
+  ))}
+</div>
         </section>
       )
     }
@@ -130,3 +199,353 @@ const homePath = getRelativeLocaleUrl(locale, "");
     }
   });
 </script>
+
+<style>
+
+  * {
+  transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.card {
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  transition: 0.2s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  background: rgba(255,255,255,0.06);
+}
+
+.card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.excerpt {
+  font-size: 14px;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.meta {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  display: flex;
+  gap: 6px;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+.trending {
+  padding: 40px 0;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: white;
+}
+
+.scroll {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scroll-snap-type: x mandatory;
+}
+
+.scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+}
+
+.trend-card {
+  min-width: 260px;
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  transition: 0.2s ease;
+}
+
+.trend-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255,255,255,0.06);
+}
+
+.trend-card h3 {
+  font-size: 16px;
+  margin: 10px 0;
+  color: white;
+}
+
+.trend-card p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.4;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255, 69, 0, 0.15);
+  color: orange;
+}
+
+.meta {
+  margin-top: 10px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  display: flex;
+  gap: 6px;
+}
+.categories {
+  padding: 50px 0;
+}
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.cat-card {
+  display: block;
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.cat-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255,255,255,0.06);
+}
+
+.cat-card h3 {
+  font-size: 16px;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.cat-card p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .cat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .cat-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.newsletter {
+  padding: 60px 0;
+}
+
+.nl-box {
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.nl-text h2 {
+  font-size: 22px;
+  color: white;
+  margin-bottom: 6px;
+}
+
+.nl-text p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.65);
+  max-width: 420px;
+  line-height: 1.5;
+}
+
+.nl-form {
+  display: flex;
+  gap: 10px;
+}
+
+.nl-form input {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.2);
+  color: white;
+  outline: none;
+  min-width: 220px;
+}
+
+.nl-form button {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  background: white;
+  color: black;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.nl-form button:hover {
+  opacity: 0.85;
+}
+
+@media (max-width: 768px) {
+  .nl-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nl-form {
+    width: 100%;
+  }
+
+  .nl-form input {
+    flex: 1;
+    width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  main {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  section {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+}
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 28px;
+    line-height: 1.3;
+  }
+
+  .hero-text {
+    text-align: left;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-actions a {
+    width: 100%;
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  .scroll {
+    gap: 10px;
+    padding-bottom: 6px;
+  }
+
+  .trend-card {
+    min-width: 220px;
+  }
+}
+@media (max-width: 768px) {
+  .cat-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+@media (max-width: 768px) {
+  .nl-form {
+    flex-direction: column;
+  }
+
+  .nl-form input {
+    width: 100%;
+  }
+
+  .nl-form button {
+    width: 100%;
+  }
+}
+.card:hover,
+.trend-card:hover,
+.cat-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.15);
+}
+button,
+a.primary,
+a.secondary {
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+button:hover,
+a.primary:hover,
+a.secondary:hover {
+  transform: translateY(-2px);
+}
+
+button:active,
+a.primary:active,
+a.secondary:active {
+  transform: translateY(0px) scale(0.98);
+}
+.fade-in {
+  animation: fadeInUp 0.6s ease both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+</style>

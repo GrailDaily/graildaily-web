@@ -1,0 +1,26 @@
+---
+import "@pagefind/default-ui/css/ui.css";
+import { getAssetPath } from "@/utils/withBase";
+
+const pagefindBundlePath = getAssetPath("pagefind/");
+---
+
+<div id="search-modal" class="search-modal hidden">
+  <div class="search-backdrop"></div>
+
+  <div class="search-panel">
+    <button
+      id="search-close"
+      type="button"
+      aria-label="Close search"
+      class="search-close"
+    >
+      ✕
+    </button>
+
+    <div
+      id="pagefind-search"
+      data-bundle-path={pagefindBundlePath}
+    ></div>
+  </div>
+</div>
