@@ -1,9 +1,9 @@
 ---
-import logoDark from "@/assets/images/logo/logo-dark.png";
-import logoLight from "@/assets/images/logo/logo-light.png";
+
 import ThemeToggle from "./ThemeToggle.astro";
 import SearchModal from "./SearchModal.astro";
 import DesktopNav from "./DesktopNav.astro";
+import Logo from "./Logo.astro";
 ---
 
 
@@ -12,19 +12,7 @@ import DesktopNav from "./DesktopNav.astro";
   <div class="container">
     
     <!-- Logo -->
-    <a href="/" class="flex items-center">
-  <img
-    src={logoLight.src}
-    alt="GrailDaily"
-    class="h-8 w-auto block dark:hidden"
-  />
-
-  <img
-    src={logoDark.src}
-    alt="GrailDaily"
-    class="h-8 w-auto hidden dark:block"
-  />
-</a>
+    <Logo />
 
     <!-- Navigation -->
     <DesktopNav />
