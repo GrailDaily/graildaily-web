@@ -1,0 +1,112 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  category: string;
+  image?: string;
+  href: string;
+}
+
+const {
+  title,
+  description,
+  category,
+  image,
+  href,
+} = Astro.props;
+---
+
+<article class="hero-slide">
+
+  <div class="hero-left">
+
+    <span class="hero-category">
+      {category}
+    </span>
+
+    <h1>{title}</h1>
+
+    <p>{description}</p>
+
+    <a href={href} class="hero-button">
+      Read Article →
+    </a>
+
+  </div>
+
+  <div class="hero-right">
+
+    {
+      image ? (
+        <img
+          src={image}
+          alt={title}
+          class="hero-image"
+        />
+      ) : (
+        <div class="hero-image placeholder"></div>
+      )
+    }
+
+  </div>
+
+</article>
+
+<style>
+.hero-slide{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:center;
+  min-height:520px;
+}
+
+.hero-category{
+  display:inline-block;
+  padding:8px 16px;
+  border-radius:999px;
+  background:#D6B06622;
+  color:#D6B066;
+  font-size:.8rem;
+  font-weight:700;
+  text-transform:uppercase;
+}
+
+.hero-left h1{
+  margin:22px 0;
+  font-size:clamp(2.8rem,5vw,4.5rem);
+  line-height:1.1;
+}
+
+.hero-left p{
+  line-height:1.8;
+  color:#94A3B8;
+}
+
+.hero-button{
+  display:inline-block;
+  margin-top:28px;
+  padding:14px 24px;
+  border-radius:12px;
+  background:#D6B066;
+  color:#142A4A;
+  text-decoration:none;
+  font-weight:700;
+}
+
+.hero-image{
+  width:100%;
+  aspect-ratio:16/10;
+  object-fit:cover;
+  border-radius:24px;
+  background:#1E293B;
+}
+
+@media (max-width:960px){
+
+.hero-slide{
+  grid-template-columns:1fr;
+}
+
+}
+</style>
