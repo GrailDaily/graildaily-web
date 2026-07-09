@@ -61,10 +61,19 @@ export default defineConfig({
   fonts: [
   {
     name: "Inter",
-    cssVariable: "--font-google-sans-code",
+    cssVariable: "--font-inter",
     provider: fontProviders.google(),
     fallbacks: ["sans-serif"],
     weights: [300, 400, 500, 600, 700],
+    styles: ["normal", "italic"],
+    formats: ["woff", "ttf"],
+  },
+  {
+    name: "Playfair Display",
+    cssVariable: "--font-playfair",
+    provider: fontProviders.google(),
+    fallbacks: ["serif"],
+    weights: [400, 500, 600, 700, 800],
     styles: ["normal", "italic"],
     formats: ["woff", "ttf"],
   },

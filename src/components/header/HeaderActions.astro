@@ -1,18 +1,23 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
+import SearchIcon from "../icons/SearchIcon.astro";
+import LoginButton from "./LoginButton.astro";
+import SubscribeButton from "./SubscribeButton.astro";
 ---
 
 <div class="actions">
   <button
-    id="search-button"
-    class="search-btn"
-    type="button"
-    aria-label="Search"
-  >
-    🔍
-  </button>
+  id="search-button"
+  class="search-btn"
+  type="button"
+  aria-label="Search"
+>
+  <SearchIcon />
+</button>
 
   <ThemeToggle />
+  <LoginButton />
+  <SubscribeButton />
 </div>
 
 <script>
@@ -39,16 +44,55 @@ import ThemeToggle from "./ThemeToggle.astro";
 }
 
 .search-btn {
+  width: 44px;
+  height: 44px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  color: var(--foreground);
+
   background: transparent;
-  border: 1px solid rgba(255,255,255,.15);
-  color: white;
-  padding: 6px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: .2s;
+
+  border: 1px solid var(--border);
+
+  border-radius: 10px;
+
+  transition:
+    color .2s ease,
+    border-color .2s ease,
+    background-color .2s ease,
+    transform .15s ease;
 }
 
 .search-btn:hover {
-  background: rgba(255,255,255,.08);
+  color: var(--accent);
+  border-color: var(--accent);
+
+  background: color-mix(
+    in srgb,
+    var(--accent) 10%,
+    transparent
+  );
+}
+
+.search-btn:active {
+  transform: scale(.96);
+}
+
+.search-btn svg {
+  width: 20px;
+  height: 20px;
+
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .actions {
+    display: none;
+  }
 }
 </style>

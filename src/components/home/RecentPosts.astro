@@ -1,0 +1,57 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ArticleCard from "@/components/cards/ArticleCard.astro";
+
+interface Props {
+  posts: CollectionEntry<"posts">[];
+  title: string;
+  limit: number;
+}
+
+const { posts, title, limit } = Astro.props;
+---
+
+<section id="recent-posts" class="recent-posts">
+  <div class="app-layout">
+
+    <h2 class="title">
+      {title}
+    </h2>
+
+    <div class="grid">
+        {posts.slice(0, limit).map((post) => (
+            <ArticleCard
+            post={post}
+            variant="default"
+        />
+        ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+.recent-posts {
+  padding: 48px 0;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 16px;
+}
+
+@media (max-width:768px) {
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+</style>

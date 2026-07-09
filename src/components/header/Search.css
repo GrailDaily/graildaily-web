@@ -1,0 +1,164 @@
+.search-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding-top: 90px;
+}
+
+.search-modal.hidden {
+  display: none;
+}
+
+.search-backdrop {
+  position: absolute;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+}
+
+.search-panel {
+  position: relative;
+  z-index: 1;
+
+  width: min(720px, calc(100vw - 32px));
+
+  background: var(--background);
+
+  border: 1px solid var(--border);
+
+  border-radius: 18px;
+
+  padding: 24px;
+
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+}
+
+.search-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+
+  width: 36px;
+  height: 36px;
+
+  border: none;
+  border-radius: 999px;
+
+  background: transparent;
+  color: var(--foreground);
+}
+
+/* ===========================================================
+   PAGEFIND RESULT
+=========================================================== */
+
+.search-panel .pagefind-ui__result-excerpt,
+.search-panel .pagefind-ui__result-tags,
+.search-panel .pagefind-ui__result-image,
+.search-panel .pagefind-ui__result-thumb,
+.search-panel .pagefind-ui__result-meta,
+.search-panel .pagefind-ui__message {
+  display: none;
+}
+
+.search-panel .pagefind-ui__results {
+  margin-top: 14px;
+}
+
+.search-panel .pagefind-ui__result {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.search-panel .pagefind-ui__result:last-child {
+  border-bottom: none;
+}
+
+.search-panel .pagefind-ui__result-title {
+  margin: 0;
+}
+
+.search-panel .pagefind-ui__result-title a {
+  display: block;
+
+  color: var(--foreground);
+
+  text-decoration: none;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  transition: color .2s ease;
+}
+
+.search-panel .pagefind-ui__result-title a:hover {
+  color: var(--accent);
+}
+
+/* ==========================================================
+   GrailDaily Pagefind Theme
+========================================================== */
+
+.search-panel .pagefind-ui {
+  --pagefind-ui-primary: var(--accent);
+  --pagefind-ui-text: var(--foreground);
+  --pagefind-ui-background: transparent;
+  --pagefind-ui-border: transparent;
+}
+
+.search-panel .pagefind-ui__search-input {
+  height: 52px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  font-size: 16px;
+}
+
+.search-panel .pagefind-ui__search-input:focus {
+  border-color: var(--accent);
+}
+
+.search-panel .pagefind-ui__results {
+  margin-top: 18px;
+}
+
+.search-panel .pagefind-ui__result {
+  padding: 14px 16px;
+  border: 0;
+  border-radius: 12px;
+  transition: background .2s ease;
+}
+
+.search-panel .pagefind-ui__result:hover {
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+.search-panel .pagefind-ui__result-title {
+  margin: 0;
+}
+
+.search-panel .pagefind-ui__result-title a {
+  color: var(--foreground);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.search-panel .pagefind-ui__result-title a:hover {
+  color: var(--accent);
+}
+
+/* Sembunyikan informasi yang tidak kita perlukan */
+
+.search-panel .pagefind-ui__result-excerpt,
+.search-panel .pagefind-ui__result-image,
+.search-panel .pagefind-ui__result-thumb,
+.search-panel .pagefind-ui__result-tags,
+.search-panel .pagefind-ui__result-meta {
+  display: none;
+}

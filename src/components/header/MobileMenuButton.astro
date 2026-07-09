@@ -1,0 +1,53 @@
+<button
+  id="mobile-menu-button"
+  type="button"
+  aria-label="Open navigation menu"
+  class="mobile-menu-button"
+>
+  ☰
+</button>
+
+<style>
+.mobile-menu-button {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 44px;
+    height: 44px;
+
+    padding: 0;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    background: transparent;
+    color: var(--foreground);
+
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+
+    transition:
+      color .2s ease,
+      border-color .2s ease,
+      background-color .2s ease;
+  }
+
+  .mobile-menu-button:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+
+    background: color-mix(
+      in srgb,
+      var(--accent) 10%,
+      transparent
+    );
+  }
+}
+</style>

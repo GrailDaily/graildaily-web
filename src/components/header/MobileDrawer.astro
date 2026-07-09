@@ -1,0 +1,201 @@
+---
+import { navigation } from "./navigation";
+const currentPath = Astro.url.pathname;
+---
+
+<div id="mobile-drawer" class="mobile-drawer hidden">
+  <div id="mobile-backdrop" class="mobile-backdrop"></div>
+
+  <aside class="mobile-panel">
+    <button
+      id="mobile-close"
+      class="mobile-close"
+      aria-label="Close menu"
+      type="button"
+    >
+      ✕
+    </button>
+
+    <nav class="mobile-nav">
+      {
+  navigation.map((item) => {
+    const active =
+      item.href === "/"
+        ? currentPath === "/"
+        : currentPath.startsWith(item.href);
+
+    return (
+      <a
+        href={item.href}
+        class:list={{
+          active,
+        }}
+      >
+        {item.label}
+      </a>
+    );
+  })
+}
+
+      <hr />
+
+      <a href="/login">Login</a>
+      <a href="#">Subscribe</a>
+    </nav>
+  </aside>
+</div>
+
+<style>
+
+.mobile-drawer {
+  position: fixed;
+  inset: 0;
+
+  z-index: 100;
+
+  visibility: hidden;
+  opacity: 0;
+
+  transition:
+    opacity .25s ease,
+    visibility .25s ease;
+}
+
+.mobile-drawer.open {
+  visibility: visible;
+  opacity: 1;
+}
+
+.mobile-backdrop {
+  position: absolute;
+  inset: 0;
+
+  background: rgba(0,0,0,.45);
+
+  backdrop-filter: blur(4px);
+
+  opacity: 0;
+
+  transition: opacity .25s ease;
+}
+
+.mobile-drawer.open .mobile-backdrop {
+  opacity: 1;
+}
+
+.mobile-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  width: min(320px,85vw);
+  height: 100%;
+
+  background: var(--background);
+
+  border-left: 1px solid var(--border);
+
+  padding: 24px;
+
+  transform: translateX(100%);
+
+  transition: transform .3s ease;
+
+  will-change: transform;
+}
+
+.mobile-drawer.open .mobile-panel {
+  transform: translateX(0);
+}
+
+.mobile-close {
+  align-self: flex-end;
+
+  width: 40px;
+  height: 40px;
+
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  background: transparent;
+}
+
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  margin-top: 32px;
+}
+
+.mobile-nav a {
+  text-decoration: none;
+  color: var(--foreground);
+
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.mobile-nav a:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.mobile-nav a.active {
+  color: var(--accent);
+
+  font-weight: 600;
+
+  background: color-mix(
+    in srgb,
+    var(--accent) 12%,
+    transparent
+  );
+}
+</style>
+
+<script>
+function initMobileDrawer() {
+  const drawer = document.getElementById("mobile-drawer");
+  const open = document.getElementById("mobile-menu-button");
+  const close = document.getElementById("mobile-close");
+  const backdrop = document.getElementById("mobile-backdrop");
+
+  if (!drawer || !open) return;
+
+  function show() {
+  if (!drawer) return;
+
+  drawer.classList.remove("hidden");
+  drawer.classList.add("open");
+
+  document.body.style.overflow = "hidden";
+  document.documentElement.style.overflow = "hidden";
+}
+
+function hide() {
+  if (!drawer) return;
+
+  drawer.classList.remove("open");
+
+  setTimeout(() => {
+    drawer.classList.add("hidden");
+  }, 250);
+
+  document.body.style.overflow = "";
+  document.documentElement.style.overflow = "";
+}
+
+  open.onclick = show;
+  close?.addEventListener("click", hide);
+  backdrop?.addEventListener("click", hide);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") hide();
+  });
+}
+
+initMobileDrawer();
+
+document.addEventListener("astro:after-swap", initMobileDrawer);
+</script>
+

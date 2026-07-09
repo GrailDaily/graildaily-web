@@ -18,7 +18,8 @@
   --color-secondary: var(--secondary);
 
   /* Font (sementara tetap seperti sekarang) */
-  --font-app: var(--font-google-sans-code);
+  --font-app: var(--font-inter);
+--font-heading: var(--font-playfair);
 }
 
 /* ===========================================================

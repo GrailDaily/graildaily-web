@@ -1,0 +1,160 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"posts">;
+  variant?: "default" | "compact";
+}
+
+const {
+  post,
+  variant = "default",
+} = Astro.props;
+---
+
+<article
+  class:list={{
+    "article-card": true,
+    compact: variant === "compact",
+  }}
+>
+  <h3>
+    <a href={`/posts/${post.id}/`}>
+      {post.data.title}
+    </a>
+  </h3>
+
+  <p class="excerpt">
+    {post.data.description}
+  </p>
+
+  <div class="meta">
+
+  <span class="tag">
+    {post.data.tags?.[0] ?? "General"}
+  </span>
+
+  <span>•</span>
+
+  <time datetime={post.data.pubDatetime.toISOString()}>
+    {post.data.pubDatetime.toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    })}
+  </time>
+
+  <span>•</span>
+
+  <span>5 min read</span>
+
+</div>
+</article>
+
+<style>
+.article-card {
+  padding: 18px;
+  border-radius: 14px;
+
+  border: 1px solid var(--border);
+
+  background: color-mix(
+    in srgb,
+    var(--background) 96%,
+    white 4%
+  );
+
+  transition:
+    transform .2s ease,
+    border-color .2s ease,
+    background .2s ease;
+}
+
+.article-card:hover {
+  transform: translateY(-4px);
+
+  border-color: var(--accent);
+
+  background: color-mix(
+    in srgb,
+    var(--background) 92%,
+    white 8%
+  );
+}
+
+.article-card h3 {
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+
+.article-card h3 a {
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+.article-card h3 a:hover {
+  color: var(--accent);
+}
+
+.excerpt {
+  margin-top: .75rem;
+
+  color: var(--muted-foreground);
+
+  line-height: 1.7;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .5rem;
+
+  margin-top: 1rem;
+
+  font-size: .875rem;
+
+  color: var(--muted-foreground);
+}
+
+.tag {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+time {
+  white-space: nowrap;
+}
+
+.article-card.compact {
+  padding: 14px;
+}
+
+.article-card.compact h3 {
+  font-size: .95rem;
+}
+
+.article-card.compact .excerpt {
+  font-size: .85rem;
+}
+
+.thumbnail {
+  display: block;
+  margin-bottom: 14px;
+}
+
+.thumbnail img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+
+  object-fit: cover;
+
+  border-radius: 10px;
+
+  transition: transform .25s ease;
+}
+
+.article-card:hover .thumbnail img {
+  transform: scale(1.03);
+}
+</style>
