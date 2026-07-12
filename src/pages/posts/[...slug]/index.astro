@@ -75,10 +75,8 @@ const { Content } = await render(post);
 
 let ogImageUrl: string | undefined;
 
-if (typeof initOgImage === "string") {
+if (initOgImage) {
   ogImageUrl = initOgImage;
-} else if (initOgImage?.src) {
-  ogImageUrl = initOgImage.src;
 }
 
 if (!ogImageUrl && config.features.dynamicOgImage) {
@@ -131,6 +129,18 @@ const ogImage = ogImageUrl
       </span>
       <EditPost {hideEditPost} {post} class="max-sm:hidden" />
     </div>
+
+    {
+      post.data.ogImage && (
+        <div class="post-hero">
+          <img
+            src={post.data.ogImage}
+            alt={post.data.title}
+            class="post-hero-image"
+          />
+        </div>
+      )
+    }
 
     <article
       id="article"
@@ -530,3 +540,20 @@ const ogImage = ogImageUrl
     window.scrollTo({ left: 0, top: 0, behavior: "instant" })
   );
 </script>
+
+<style>
+  .post-hero {
+    margin: 2rem 0 2.5rem;
+  }
+
+  .post-hero-image {
+    width: 100%;
+    display: block;
+
+    border-radius: 20px;
+
+    object-fit: cover;
+
+    max-height: 520px;
+  }
+</style>

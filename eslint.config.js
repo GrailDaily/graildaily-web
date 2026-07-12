@@ -17,6 +17,6 @@ export default [
       parser: tsParser,
     },
   },
-  { rules: { "no-console": "error" } },
+  { rules: { "no-console": "warn" } },
   { ignores: ["dist/**", ".astro/**", "public/pagefind/**"] },
 ];

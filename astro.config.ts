@@ -59,25 +59,25 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   fonts: [
-  {
-    name: "Inter",
-    cssVariable: "--font-inter",
-    provider: fontProviders.google(),
-    fallbacks: ["sans-serif"],
-    weights: [300, 400, 500, 600, 700],
-    styles: ["normal", "italic"],
-    formats: ["woff", "ttf"],
-  },
-  {
-    name: "Playfair Display",
-    cssVariable: "--font-playfair",
-    provider: fontProviders.google(),
-    fallbacks: ["serif"],
-    weights: [400, 500, 600, 700, 800],
-    styles: ["normal", "italic"],
-    formats: ["woff", "ttf"],
-  },
-],
+    {
+      name: "Inter",
+      cssVariable: "--font-inter",
+      provider: fontProviders.google(),
+      fallbacks: ["sans-serif"],
+      weights: [300, 400, 500, 600, 700],
+      styles: ["normal", "italic"],
+      formats: ["woff", "ttf"],
+    },
+    {
+      name: "Playfair Display",
+      cssVariable: "--font-playfair",
+      provider: fontProviders.google(),
+      fallbacks: ["serif"],
+      weights: [400, 500, 600, 700, 800],
+      styles: ["normal", "italic"],
+      formats: ["woff", "ttf"],
+    },
+  ],
   env: {
     schema: {
       PUBLIC_GOOGLE_SITE_VERIFICATION: envField.string({

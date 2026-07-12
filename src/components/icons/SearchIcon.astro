@@ -4,10 +4,7 @@ interface Props {
   strokeWidth?: number;
 }
 
-const {
-  size = 20,
-  strokeWidth = 2,
-} = Astro.props;
+const { size = 20, strokeWidth = 2 } = Astro.props;
 ---
 
 <svg
@@ -22,6 +19,6 @@ const {
   stroke-linejoin="round"
   aria-hidden="true"
 >
-  <circle cx="11" cy="11" r="7" />
-  <path d="M20 20l-3.5-3.5" />
+  <circle cx="11" cy="11" r="7"></circle>
+  <path d="M20 20l-3.5-3.5"></path>
 </svg>

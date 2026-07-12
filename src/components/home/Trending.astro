@@ -10,65 +10,121 @@ const { posts } = Astro.props;
 ---
 
 <section id="trending" class="trending">
-  <h2 class="title">Trending Now</h2>
+  <div class="app-layout">
+    <h2 class="title">Trending Now</h2>
 
-  <div class="scroll">
-    {posts.slice(0, 5).map((post) => (
-  <ArticleCard
-    post={post}
-    variant="compact"
-  />
-))}
+    <div class="trending-wrapper">
+      <div class="trending-viewport">
+        <div class="trending-track">
+          {
+            posts
+              .slice(0, 10)
+              .map(post => <ArticleCard post={post} variant="compact" />)
+          }
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
+<script>
+  const track = document.querySelector(".trending-track") as HTMLElement | null;
+
+  if (track) {
+    let startX = 0;
+    let scrollLeft = 0;
+    let isDragging = false;
+
+    // Mouse
+    track.addEventListener("mousedown", e => {
+      isDragging = true;
+      startX = e.clientX;
+      scrollLeft = track.scrollLeft;
+    });
+
+    window.addEventListener("mouseup", () => {
+      isDragging = false;
+    });
+
+    window.addEventListener("mousemove", e => {
+      if (!isDragging) return;
+
+      e.preventDefault();
+
+      const distance = e.clientX - startX;
+
+      track.scrollLeft = scrollLeft - distance;
+    });
+
+    // Touch
+    track.addEventListener("touchstart", e => {
+      startX = e.touches[0].clientX;
+      scrollLeft = track.scrollLeft;
+    });
+
+    track.addEventListener("touchmove", e => {
+      const distance = e.touches[0].clientX - startX;
+
+      track.scrollLeft = scrollLeft - distance;
+    });
+  }
+</script>
+
 <style>
-.trending {
-  padding: 40px 0;
-}
-
-.title {
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 16px;
-  color: white;
-}
-
-.scroll {
-  display: flex;
-  gap: 14px;
-  overflow-x: auto;
-  padding-bottom: 10px;
-  scroll-snap-type: x mandatory;
-}
-
-.scroll {
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
-}
-
-.scroll::-webkit-scrollbar {
-  height: 6px;
-}
-
-.scroll::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,.2);
-  border-radius: 10px;
-}
-
-.scroll > * {
-  flex: 0 0 280px;
-  scroll-snap-align: start;
-}
-
-@media (max-width: 768px) {
-  .scroll {
-    gap: 10px;
-    padding-bottom: 6px;
+  .trending {
+    padding: 20px 0;
   }
 
-  .scroll > * {
-    flex-basis: 220px;
+  .title {
+    font-size: 1.9rem;
+    font-weight: 700;
+    line-height: 1.2;
+
+    color: var(--foreground);
+
+    margin-bottom: 0px;
   }
-}
+
+  .trending-track {
+    display: flex;
+    gap: 14px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    cursor: grab;
+    user-select: none;
+
+    scrollbar-width: none;
+    padding-top: 8px;
+    padding-bottom: 8px;
+
+    cursor: grab;
+    user-select: none;
+    touch-action: pan-y;
+  }
+
+  .trending-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .trending-track:active {
+    cursor: grabbing;
+  }
+
+  .trending-wrapper {
+    overflow: hidden;
+    position: relative;
+    padding-top: 8px;
+  }
+
+  .trending-viewport {
+    overflow: hidden;
+  }
+
+  @media (max-width: 768px) {
+    .trending-track {
+      gap: 10px;
+    }
+  }
 </style>

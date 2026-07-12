@@ -3,158 +3,330 @@ import type { CollectionEntry } from "astro:content";
 
 interface Props {
   post: CollectionEntry<"posts">;
-  variant?: "default" | "compact";
+  variant?: "featured" | "horizontal" | "horizontal-small" | "compact";
 }
 
-const {
-  post,
-  variant = "default",
-} = Astro.props;
+const { post, variant = "compact" } = Astro.props;
 ---
 
-<article
-  class:list={{
-    "article-card": true,
-    compact: variant === "compact",
-  }}
->
-  <h3>
-    <a href={`/posts/${post.id}/`}>
-      {post.data.title}
-    </a>
-  </h3>
+<a href={`/posts/${post.id}/`} class="article-link">
+  <article
+    class:list={{
+      "article-card": true,
+      compact: variant === "compact",
+      featured: variant === "featured",
+      horizontal: variant === "horizontal",
+      "horizontal-small": variant === "horizontal-small",
+    }}
+  >
+    {
+      post.data.ogImage && (
+        <div class="thumbnail">
+          <img src={post.data.ogImage} alt={post.data.title} loading="lazy" />
+        </div>
+      )
+    }
+    <div class="content">
+      <h3>{post.data.title}</h3>
 
-  <p class="excerpt">
-    {post.data.description}
-  </p>
+      <p class="excerpt">
+        {post.data.description}
+      </p>
 
-  <div class="meta">
+      <div class="meta">
+        <span class="tag">
+          {post.data.tags?.[0] ?? "General"}
+        </span>
 
-  <span class="tag">
-    {post.data.tags?.[0] ?? "General"}
-  </span>
+        <span>•</span>
 
-  <span>•</span>
+        <time datetime={post.data.pubDatetime.toISOString()}>
+          {
+            post.data.pubDatetime.toLocaleDateString("en-US", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            })
+          }
+        </time>
 
-  <time datetime={post.data.pubDatetime.toISOString()}>
-    {post.data.pubDatetime.toLocaleDateString("en-US", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    })}
-  </time>
+        <span>•</span>
 
-  <span>•</span>
-
-  <span>5 min read</span>
-
-</div>
-</article>
+        <span>5 min read</span>
+      </div>
+    </div>
+  </article>
+</a>
 
 <style>
-.article-card {
-  padding: 18px;
-  border-radius: 14px;
+  .article-card {
+    display: flex;
+    flex-direction: column;
 
-  border: 1px solid var(--border);
+    height: 100%;
 
-  background: color-mix(
-    in srgb,
-    var(--background) 96%,
-    white 4%
-  );
+    box-sizing: border-box;
 
-  transition:
-    transform .2s ease,
-    border-color .2s ease,
-    background .2s ease;
-}
+    padding: 18px;
 
-.article-card:hover {
-  transform: translateY(-4px);
+    border-radius: 14px;
 
-  border-color: var(--accent);
+    border: 1px solid var(--border);
 
-  background: color-mix(
-    in srgb,
-    var(--background) 92%,
-    white 8%
-  );
-}
+    background: color-mix(in srgb, var(--background) 96%, white 4%);
 
-.article-card h3 {
-  font-size: 1.05rem;
-  line-height: 1.4;
-}
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      background 0.2s ease;
+  }
 
-.article-card h3 a {
-  color: var(--foreground);
-  text-decoration: none;
-}
+  .article-card:hover {
+    transform: translateY(-4px);
 
-.article-card h3 a:hover {
-  color: var(--accent);
-}
+    border-color: var(--accent);
 
-.excerpt {
-  margin-top: .75rem;
+    background: color-mix(in srgb, var(--background) 92%, white 8%);
+  }
 
-  color: var(--muted-foreground);
+  .article-card h3 {
+    font-size: 1.05rem;
+    line-height: 1.4;
 
-  line-height: 1.7;
-}
+    min-height: 3em;
 
-.meta {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: .5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 
-  margin-top: 1rem;
+  .excerpt {
+    margin-top: 0.75rem;
 
-  font-size: .875rem;
+    color: var(--muted-foreground);
 
-  color: var(--muted-foreground);
-}
+    line-height: 1.7;
 
-.tag {
-  color: var(--accent);
-  font-weight: 600;
-}
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 
-time {
-  white-space: nowrap;
-}
+    overflow: hidden;
 
-.article-card.compact {
-  padding: 14px;
-}
+    min-height: 5.2em;
+  }
 
-.article-card.compact h3 {
-  font-size: .95rem;
-}
+  .meta {
+    margin-top: auto;
 
-.article-card.compact .excerpt {
-  font-size: .85rem;
-}
+    display: flex;
 
-.thumbnail {
-  display: block;
-  margin-bottom: 14px;
-}
+    align-items: center;
 
-.thumbnail img {
-  width: 100%;
-  aspect-ratio: 16 / 9;
+    flex-wrap: wrap;
 
-  object-fit: cover;
+    gap: 0.5rem;
 
-  border-radius: 10px;
+    padding-top: 18px;
 
-  transition: transform .25s ease;
-}
+    font-size: 0.875rem;
 
-.article-card:hover .thumbnail img {
-  transform: scale(1.03);
-}
+    color: var(--muted-foreground);
+  }
+
+  .tag {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  time {
+    white-space: nowrap;
+  }
+
+  .article-card.compact {
+    padding: 14px;
+  }
+
+  .article-card.compact h3 {
+    font-size: 0.95rem;
+  }
+
+  .article-card.compact .excerpt {
+    font-size: 0.85rem;
+  }
+
+  .thumbnail {
+    display: block;
+
+    width: 100%;
+
+    aspect-ratio: 16/9;
+
+    overflow: hidden;
+
+    border-radius: 10px;
+
+    margin-bottom: 14px;
+  }
+
+  .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.25s ease;
+  }
+
+  .article-card:hover .thumbnail img {
+    transform: scale(1.03);
+  }
+
+  .article-link {
+    display: block;
+
+    flex: 0 0 calc((100% - 56px) / 5);
+
+    min-width: calc((100% - 56px) / 5);
+
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .article-link:hover {
+    text-decoration: none;
+  }
+
+  .article-card.horizontal {
+    display: grid;
+
+    grid-template-columns: 260px 1fr;
+
+    gap: 22px;
+
+    align-items: stretch;
+
+    padding: 16px;
+  }
+
+  .article-card.horizontal-small {
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    gap: 14px;
+    align-items: center;
+    padding: 12px;
+  }
+
+  .article-card.horizontal-small .thumbnail {
+    margin: 0;
+    width: 100%;
+    height: 110px;
+    aspect-ratio: auto;
+    border-radius: 10px;
+  }
+
+  .article-card.horizontal-small .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .article-card.horizontal-small .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .article-card.horizontal-small h3 {
+    margin: 0;
+    min-height: auto;
+    font-size: 1rem;
+    line-height: 1.35;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .article-card.horizontal-small .excerpt {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .article-card.horizontal-small .meta {
+    margin-top: 10px;
+    padding-top: 0;
+    font-size: 0.8rem;
+  }
+
+  .article-card.horizontal .thumbnail {
+    margin: 0;
+
+    width: 100%;
+
+    height: 180px;
+
+    aspect-ratio: auto;
+
+    overflow: hidden;
+
+    border-radius: 12px;
+  }
+
+  .article-card.horizontal .thumbnail img {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+  }
+
+  .article-card.horizontal .content {
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+  }
+
+  .article-card.horizontal h3 {
+    min-height: auto;
+
+    margin: 0;
+
+    font-size: 1.35rem;
+
+    -webkit-line-clamp: 2;
+  }
+
+  .article-card.horizontal .excerpt {
+    margin-top: 12px;
+
+    min-height: auto;
+
+    -webkit-line-clamp: 3;
+  }
+
+  .article-card.horizontal .meta {
+    margin-top: 18px;
+
+    padding-top: 0;
+  }
+
+  @media (max-width: 768px) {
+    .article-card.horizontal {
+      grid-template-columns: 1fr;
+    }
+
+    .article-card.horizontal .thumbnail {
+      height: 220px;
+    }
+  }
 </style>

@@ -26,7 +26,7 @@
 }
 
 @utility app-layout {
-  @apply mx-auto w-full max-w-app px-6 lg:px-8;
+  @apply max-w-app mx-auto w-full px-6 lg:px-8;
 }
 
 @utility active-nav {

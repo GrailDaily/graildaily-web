@@ -1,151 +1,233 @@
 ---
+import type { CollectionEntry } from "astro:content";
+
 interface Category {
   name: string;
   description: string;
   href: string;
+  image: string;
 }
 
 interface Props {
   categories: Category[];
+  posts: CollectionEntry<"posts">[];
 }
 
-const { categories } = Astro.props;
+const { categories, posts } = Astro.props;
 ---
 
 <section id="categories" class="categories">
+  <div class="app-layout">
+    <h2 class="title">Explore Categories</h2>
 
-  <h2 class="title">
-    Explore Categories
-  </h2>
+    <div class="cat-grid">
+      {
+        categories.map(category => {
+          const articleCount = posts.filter(post =>
+            post.data.tags?.some(
+              tag => tag.toLowerCase() === category.name.toLowerCase()
+            )
+          ).length;
 
-  <div class="cat-grid">
+          return (
+            <a href={category.href} class="cat-card">
+              <div class="cat-image">
+                <img src={category.image} alt={category.name} loading="lazy" />
 
-    {categories.map((category) => (
+                <div class="cat-overlay">
+                  <h3>{category.name}</h3>
+                </div>
+              </div>
 
-      <a
-        class="cat-card"
-        href={category.href}
-      >
+              <div class="cat-content">
+                <p>{category.description}</p>
 
-        <h3>{category.name}</h3>
-
-        <p>{category.description}</p>
-
-      </a>
-
-    ))}
-
+                <span class="count">{articleCount} Articles</span>
+              </div>
+            </a>
+          );
+        })
+      }
+    </div>
   </div>
-
 </section>
 
 <style>
-.categories {
-  padding: 50px 0;
-}
-
-.title {
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 18px;
-  color: #142A4A;
-}
-
-.cat-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-}
-
-.cat-card {
-  display: block;
-  padding: 18px;
-
-  border-radius: 14px;
-
-  border: 1px solid #E6E9EE;
-
-  background: #FFFFFF;
-
-  text-decoration: none;
-
-  transition:
-    transform .2s ease,
-    border-color .2s ease,
-    box-shadow .2s ease;
-}
-
-.cat-card:hover {
-  transform: translateY(-4px);
-
-  border-color: #D6B066;
-
-  box-shadow: 0 10px 25px rgba(20, 42, 74, 0.08);
-}
-
-.cat-card h3 {
-  margin-bottom: .5rem;
-
-  color: #142A4A;
-
-  font-size: 1rem;
-}
-
-.cat-card p {
-  color: #64748B;
-
-  line-height: 1.6;
-
-  font-size: .9rem;
-}
-
-
-/* Dark Mode */
-
-:global(html.dark) .title {
-  color: #FFFFFF;
-}
-
-:global(html.dark) .cat-card {
-
-  background: #1E293B;
-
-  border-color: #334155;
-}
-
-:global(html.dark) .cat-card:hover {
-
-  border-color: #D6B066;
-
-}
-
-:global(html.dark) .cat-card h3 {
-
-  color: #FFFFFF;
-
-}
-
-:global(html.dark) .cat-card p {
-
-  color: #CBD5E1;
-
-}
-
-
-@media (max-width:900px) {
-
-  .cat-grid {
-    grid-template-columns: repeat(2,1fr);
+  .categories {
+    padding: 20px 0;
   }
 
-}
+  .title {
+    font-size: 1.9rem;
+    font-weight: 700;
+    line-height: 1.2;
 
+    color: var(--foreground);
 
-@media (max-width:768px) {
-
-  .cat-grid {
-    grid-template-columns: 1fr;
+    margin-bottom: 24px;
   }
 
-}
+  .cat-grid {
+    display: grid;
+
+    grid-template-columns: repeat(7, 1fr);
+
+    gap: 18px;
+  }
+
+  .cat-card {
+    display: flex;
+
+    flex-direction: column;
+
+    aspect-ratio: 1/1;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    border: 1px solid var(--border);
+
+    background: color-mix(in srgb, var(--background) 96%, white 4%);
+
+    text-decoration: none;
+
+    color: inherit;
+
+    transition:
+      transform 0.25s ease,
+      border-color 0.25s ease,
+      background 0.25s ease;
+  }
+
+  .cat-card:hover {
+    transform: translateY(-6px);
+
+    border-color: var(--accent);
+  }
+
+  .cat-image {
+    position: relative;
+
+    height: 72%;
+
+    overflow: hidden;
+
+    flex-shrink: 0;
+  }
+
+  .cat-image img {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: transform 0.35s ease;
+  }
+
+  .cat-card:hover .cat-image img {
+    transform: scale(1.03);
+  }
+
+  .cat-image::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 34%;
+
+    pointer-events: none;
+
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      color-mix(in srgb, var(--background) 96%, white 4%) 100%
+    );
+  }
+
+  .cat-overlay {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    padding: 12px 14px;
+
+    background: none;
+  }
+
+  .cat-overlay h3 {
+    margin: 0;
+
+    width: 100%;
+
+    text-align: center;
+
+    font-size: 1.02rem;
+
+    font-weight: 700;
+
+    color: #fff;
+  }
+
+  .cat-content {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: flex-start;
+
+    align-items: center;
+
+    text-align: center;
+
+    padding: 4px 14px 12px;
+
+    margin-top: -6px;
+  }
+
+  .cat-content h3 {
+    margin: 0;
+    padding: 0;
+    line-height: 1.15;
+  }
+
+  .cat-content p {
+    margin-top: 2px;
+
+    font-size: 0.72rem;
+
+    line-height: 1.2;
+
+    color: var(--muted-foreground);
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .count {
+    margin-top: 3px;
+
+    font-size: 0.78rem;
+  }
+
+  @media (max-width: 1200px) {
+    .cat-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .cat-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
 </style>

@@ -18,8 +18,6 @@ if (config.features.search !== "pagefind" && notFoundUrl) {
   return Astro.rewrite(notFoundUrl);
 }
 
-
-
 const pagefindBundlePath = getAssetPath("pagefind/");
 
 const t = useTranslations(locale);
@@ -31,10 +29,7 @@ const t = useTranslations(locale);
   <Breadcrumb />
 
   <Main pageTitle={t.pages.searchTitle} pageDesc={t.pages.searchDesc}>
-    <div
-  id="pagefind-search"
-  data-bundle-path={pagefindBundlePath}
-></div>
+    <div id="pagefind-search" data-bundle-path={pagefindBundlePath}></div>
   </Main>
 
   <Footer />

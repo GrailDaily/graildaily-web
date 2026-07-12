@@ -19,13 +19,7 @@ const pagefindBundlePath = getAssetPath("pagefind/");
       ✕
     </button>
 
-    <div
- id="pagefind-modal-search"
- data-bundle-path={pagefindBundlePath}
->
-</div>
-
-
+    <div id="pagefind-modal-search" data-bundle-path={pagefindBundlePath}></div>
   </div>
 </div>
 
@@ -49,16 +43,16 @@ const pagefindBundlePath = getAssetPath("pagefind/");
 
     await initSearch("#pagefind-modal-search");
 
-requestAnimationFrame(() => {
-  const input = document.querySelector<HTMLInputElement>(
-  ".pagefind-ui__search-input"
-);
+    requestAnimationFrame(() => {
+      const input = document.querySelector<HTMLInputElement>(
+        ".pagefind-ui__search-input"
+      );
 
-if (input) {
-  input.placeholder = "Search articles, topics, or keywords...";
-  input.focus();
-}
-});
+      if (input) {
+        input.placeholder = "Search articles, topics, or keywords...";
+        input.focus();
+      }
+    });
   }
 
   function closeSearch() {
@@ -88,26 +82,26 @@ if (input) {
     initSearchModal();
   });
 
-  document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    closeSearch();
-    return;
-  }
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") {
+      closeSearch();
+      return;
+    }
 
-  if (e.key !== "/") return;
+    if (e.key !== "/") return;
 
-  const target = e.target as HTMLElement | null;
+    const target = e.target as HTMLElement | null;
 
-  if (
-    target instanceof HTMLInputElement ||
-    target instanceof HTMLTextAreaElement ||
-    target?.isContentEditable
-  ) {
-    return;
-  }
+    if (
+      target instanceof HTMLInputElement ||
+      target instanceof HTMLTextAreaElement ||
+      target?.isContentEditable
+    ) {
+      return;
+    }
 
-  e.preventDefault();
+    e.preventDefault();
 
-  openSearch();
-});
+    openSearch();
+  });
 </script>

@@ -36,7 +36,7 @@
 
   padding: 24px;
 
-  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
 }
 
 .search-close {
@@ -94,7 +94,7 @@
   font-size: 16px;
   font-weight: 600;
 
-  transition: color .2s ease;
+  transition: color 0.2s ease;
 }
 
 .search-panel .pagefind-ui__result-title a:hover {
@@ -132,7 +132,7 @@
   padding: 14px 16px;
   border: 0;
   border-radius: 12px;
-  transition: background .2s ease;
+  transition: background 0.2s ease;
 }
 
 .search-panel .pagefind-ui__result:hover {

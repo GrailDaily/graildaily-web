@@ -4,13 +4,12 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 
 <footer class="footer">
   <div class="container">
-
     <!-- Brand -->
     <div class="brand">
       <h3>GrailDaily</h3>
       <p>
-        Exploring history, science, mysteries, and forgotten knowledge
-        for curious minds around the world.
+        Exploring history, science, mysteries, and forgotten knowledge for
+        curious minds around the world.
       </p>
     </div>
 
@@ -31,7 +30,6 @@ import { getRelativeLocaleUrl } from "astro:i18n";
       <a href="/rss.xml">RSS Feed</a>
       <a href="#">Contact</a>
     </div>
-
   </div>
 
   <div class="bottom">
@@ -39,67 +37,66 @@ import { getRelativeLocaleUrl } from "astro:i18n";
   </div>
 </footer>
 
-
 <style>
   .footer {
-  margin-top: 80px;
-  padding: 50px 0 20px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  background: rgba(0,0,0,0.2);
-}
-
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 30px;
-  padding: 0 20px;
-}
-
-.brand h3 {
-  color: white;
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-
-.brand p {
-  color: rgba(255,255,255,0.6);
-  font-size: 14px;
-  line-height: 1.6;
-  max-width: 320px;
-}
-
-.links h4 {
-  color: white;
-  font-size: 14px;
-  margin-bottom: 10px;
-}
-
-.links a {
-  display: block;
-  color: rgba(255,255,255,0.6);
-  text-decoration: none;
-  font-size: 13px;
-  margin-bottom: 6px;
-  transition: 0.2s;
-}
-
-.links a:hover {
-  color: white;
-}
-
-.bottom {
-  margin-top: 30px;
-  text-align: center;
-  font-size: 12px;
-  color: rgba(255,255,255,0.4);
-}
-
-@media (max-width: 768px) {
-  .container {
-    grid-template-columns: 1fr;
-    text-align: left;
+    margin-top: 0;
+    padding: 50px 0 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.2);
   }
-}
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 30px;
+    padding: 0 20px;
+  }
+
+  .brand h3 {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .brand p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 320px;
+  }
+
+  .links h4 {
+    color: white;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .links a {
+    display: block;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-size: 13px;
+    margin-bottom: 6px;
+    transition: 0.2s;
+  }
+
+  .links a:hover {
+    color: white;
+  }
+
+  .bottom {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      grid-template-columns: 1fr;
+      text-align: left;
+    }
+  }
 </style>

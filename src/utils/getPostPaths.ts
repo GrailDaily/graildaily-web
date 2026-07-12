@@ -16,7 +16,12 @@ function getPostPathSegments(filePath: string | undefined): string[] {
 }
 
 function getIdSlug(id: string): string {
-  return id.split("/").pop()?.replace(/\.(md|mdx)$/, "") ?? id;
+  return (
+    id
+      .split("/")
+      .pop()
+      ?.replace(/\.(md|mdx)$/, "") ?? id
+  );
 }
 
 function getPostSlugPath(id: string, filePath: string | undefined): string {

@@ -19,7 +19,7 @@
 
   /* Font (sementara tetap seperti sekarang) */
   --font-app: var(--font-inter);
---font-heading: var(--font-playfair);
+  --font-heading: var(--font-playfair);
 }
 
 /* ===========================================================
@@ -28,26 +28,25 @@
 
 :root,
 [data-theme="light"] {
-
   /* Background */
-  --background: #F6F7F9;
-  --surface: #FFFFFF;
-  --card: #FFFFFF;
+  --background: #f6f7f9;
+  --surface: #ffffff;
+  --card: #ffffff;
 
   /* Text */
-  --heading: #142A4A;
+  --heading: #142a4a;
   --foreground: #334155;
-  --muted-foreground: #64748B;
+  --muted-foreground: #64748b;
 
   /* Brand */
-  --primary: #142A4A;
-  --secondary: #D6B066;
-  --accent: #FFB84D;
-  --accent-foreground: #FFFFFF;
+  --primary: #142a4a;
+  --secondary: #d6b066;
+  --accent: #ffb84d;
+  --accent-foreground: #ffffff;
 
   /* UI */
-  --muted: #E6E9EE;
-  --border: #E6E9EE;
+  --muted: #e6e9ee;
+  --border: #e6e9ee;
 }
 
 /* ===========================================================
@@ -55,24 +54,23 @@
 =========================================================== */
 
 [data-theme="dark"] {
-
   /* Background */
-  --background: #0B0F19;
-  --surface: #0F172A;
-  --card: #1E293B;
+  --background: #0b0f19;
+  --surface: #0f172a;
+  --card: #1e293b;
 
   /* Text */
-  --heading: #FFFFFF;
-  --foreground: #CBD5E1;
-  --muted-foreground: #94A3B8;
+  --heading: #ffffff;
+  --foreground: #cbd5e1;
+  --muted-foreground: #94a3b8;
 
   /* Brand */
-  --primary: #D6B066;
-  --secondary: #FFB84D;
-  --accent: #FFB84D;
-  --accent-foreground: #0B0F19;
+  --primary: #d6b066;
+  --secondary: #ffb84d;
+  --accent: #ffb84d;
+  --accent-foreground: #0b0f19;
 
   /* UI */
-  --muted: #2A3345;
+  --muted: #2a3345;
   --border: #334155;
 }

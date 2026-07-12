@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import ArticleCard from "@/components/cards/ArticleCard.astro";
 
 interface Props {
   posts: CollectionEntry<"posts">[];
@@ -13,47 +12,226 @@ const { posts } = Astro.props;
   posts.length > 0 && (
     <section id="featured" class="editor-picks">
       <div class="app-layout">
+        <h2 class="title">Editor's Picks</h2>
 
-        <h2 class="title">
-          Editor Picks
-        </h2>
+        <div class="editor-layout">
+          <a href={`/posts/${posts[0].id}/`} class="featured">
+            {posts[0].data.ogImage && (
+              <img src={posts[0].data.ogImage} alt={posts[0].data.title} />
+            )}
 
-        <div class="grid">
-            {posts.slice(0, 4).map((post) => (
-                <ArticleCard
-                    post={post}
-                    variant="default"
-                />
+            <div class="featured-content">
+              <span class="category">
+                {posts[0].data.tags?.[0] ?? "History"}
+              </span>
+
+              <h3>{posts[0].data.title}</h3>
+
+              <p>{posts[0].data.description}</p>
+            </div>
+          </a>
+
+          <div class="side">
+            {posts.slice(1, 5).map(post => (
+              <a href={`/posts/${post.id}/`} class="side-card">
+                {post.data.ogImage && (
+                  <img src={post.data.ogImage} alt={post.data.title} />
+                )}
+
+                <div>
+                  <span class="category">
+                    {post.data.tags?.[0] ?? "History"}
+                  </span>
+
+                  <h4>{post.data.title}</h4>
+                </div>
+              </a>
             ))}
+          </div>
         </div>
-
       </div>
     </section>
   )
 }
 
 <style>
-.editor-picks {
-  padding: 48px 0;
-}
-
-.title {
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-}
-
-@media (max-width:768px) {
-
-  .grid {
-    grid-template-columns: 1fr;
+  .editor-picks {
+    padding: 20px 0;
   }
 
-}
+  .title {
+    font-size: 1.9rem;
+    font-weight: 700;
+    line-height: 1.2;
+
+    color: var(--foreground);
+
+    margin-bottom: 24px;
+  }
+
+  .editor-layout {
+    display: grid;
+
+    grid-template-columns: 1.5fr 0.9fr;
+
+    gap: 32px;
+  }
+
+  .featured {
+    display: block;
+
+    text-decoration: none;
+
+    color: inherit;
+
+    border-radius: 22px;
+
+    overflow: hidden;
+
+    background: color-mix(in srgb, var(--background) 96%, white 4%);
+
+    transition:
+      border-color 0.25s ease,
+      transform 0.25s ease,
+      background 0.25s ease;
+
+    border: 1px solid var(--border);
+  }
+
+  .featured:hover {
+    border-color: var(--accent);
+
+    transform: translateY(-4px);
+  }
+
+  .featured img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 18px 18px 0 0;
+  }
+
+  .featured-content {
+    padding: 20px;
+  }
+
+  .category {
+    display: inline-block;
+
+    margin-bottom: 12px;
+
+    font-size: 0.75rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+
+    color: #d6b066;
+  }
+
+  .featured h3 {
+    font-size: 1.7rem;
+
+    line-height: 1.25;
+
+    margin-bottom: 12px;
+  }
+
+  .featured p {
+    color: #94a3b8;
+
+    line-height: 1.8;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .side {
+    display: grid;
+
+    grid-template-rows: repeat(4, 1fr);
+
+    gap: 12px;
+
+    height: 100%;
+  }
+
+  .side-card {
+    display: grid;
+
+    grid-template-columns: 140px 1fr;
+
+    gap: 16px;
+
+    align-items: center;
+
+    padding: 10px;
+
+    border-radius: 18px;
+
+    background: var(--card-background);
+
+    text-decoration: none;
+
+    color: inherit;
+
+    transition:
+      border-color 0.25s ease,
+      transform 0.25s ease,
+      background 0.25s ease;
+
+    min-height: 0;
+
+    border: 1px solid var(--border);
+
+    background: color-mix(in srgb, var(--background) 96%, white 4%);
+  }
+
+  .side-card:hover {
+    border-color: var(--accent);
+
+    transform: translateX(6px);
+  }
+
+  .side-card img {
+    width: 100%;
+
+    height: 100px;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+  }
+
+  .side-card h4 {
+    font-size: 1rem;
+
+    line-height: 1.35;
+
+    margin-top: 6px;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  @media (max-width: 980px) {
+    .editor-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .side-card {
+      grid-template-columns: 140px 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .side-card {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>

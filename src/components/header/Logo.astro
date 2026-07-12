@@ -9,13 +9,13 @@ const locale = Astro.currentLocale ?? config.site.lang;
 
 <a
   href={getRelativeLocaleUrl(locale, "")}
-  class="flex items-center shrink-0"
+  class="flex shrink-0 items-center"
   aria-label="GrailDaily Home"
 >
   <img
     src={logoLight.src}
     alt="GrailDaily"
-    class="h-8 w-auto block dark:hidden"
+    class="block h-8 w-auto dark:hidden"
   />
 
   <img

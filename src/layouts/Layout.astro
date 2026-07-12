@@ -20,8 +20,7 @@ const {
   title = site.title,
   description = site.description,
   ogImage = resolveDefaultOgImagePath(config),
-  canonicalURL =
-  Astro.site
+  canonicalURL = Astro.site
     ? new URL(Astro.url.pathname, Astro.site).href
     : Astro.url.href,
 } = Astro.props;
@@ -49,14 +48,14 @@ const rssHref = getRelativeLocaleUrl(
 
     <!-- Font -->
     <Font
-  cssVariable="--font-inter"
-  preload={[{ subset: "latin", weight: 400, style: "normal" }]}
-/>
+      cssVariable="--font-inter"
+      preload={[{ subset: "latin", weight: 400, style: "normal" }]}
+    />
 
-<Font
-  cssVariable="--font-playfair"
-  preload={[{ subset: "latin", weight: 700, style: "normal" }]}
-/>
+    <Font
+      cssVariable="--font-playfair"
+      preload={[{ subset: "latin", weight: 700, style: "normal" }]}
+    />
 
     <!-- Primary meta -->
     <title>{title}</title>
@@ -64,9 +63,11 @@ const rssHref = getRelativeLocaleUrl(
     <meta name="description" content={description} />
     <meta name="author" content={site.author} />
     <link
-  rel="sitemap"
-  href={Astro.site ? new URL("sitemap-index.xml", Astro.site).href : "/sitemap-index.xml"}
-/>
+      rel="sitemap"
+      href={Astro.site
+        ? new URL("sitemap-index.xml", Astro.site).href
+        : "/sitemap-index.xml"}
+    />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -126,18 +127,18 @@ const rssHref = getRelativeLocaleUrl(
     </script>
 
     <script is:inline type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "GrailDaily",
-  "url": "https://your-domain.com",
-  "description": "Exploring history, science, mysteries, and ancient civilizations.",
-  "publisher": {
-    "@type": "Organization",
-    "name": "GrailDaily"
-  }
-}
-</script>
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "GrailDaily",
+        "url": "https://your-domain.com",
+        "description": "Exploring history, science, mysteries, and ancient civilizations.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "GrailDaily"
+        }
+      }
+    </script>
 
     <ClientRouter />
   </head>

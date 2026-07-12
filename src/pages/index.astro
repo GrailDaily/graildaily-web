@@ -1,56 +1,122 @@
 ---
 import { getCollection } from "astro:content";
-import { getRelativeLocaleUrl } from "astro:i18n";
-
-import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/header/Header.astro";
 import Footer from "@/components/Footer.astro";
-
-import LinkButton from "@/components/LinkButton.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
-import Hero from "@/components/Hero.astro";
-
+import HeroCarousel from "@/components/hero/HeroCarousel.astro";
 import Trending from "@/components/home/Trending.astro";
 import Categories from "@/components/home/Categories.astro";
 import Newsletter from "@/components/home/Newsletter.astro";
 import EditorPicks from "@/components/home/EditorPicks.astro";
 import RecentPosts from "@/components/home/RecentPosts.astro";
 
-
-const { posts: postsConfig } = config;
-
 const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
 
 const posts = await getCollection("posts");
+console.log("=== POSTS ===");
+
+posts.forEach(post => {
+  console.log({
+    id: post.id,
+    title: post.data.title,
+    featured: post.data.featured,
+  });
+});
 const sortedPosts = getSortedPosts(posts);
-const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
-const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
-const homePath = getRelativeLocaleUrl(locale, "");
+const featuredPosts = sortedPosts
+  .filter(({ data }) => data.featured)
+  .slice(0, 6);
+
+const recentPosts = sortedPosts.slice(0, 10);
 
 const categories = [
   {
+    name: "Archaeology",
+    description: "Ancient discoveries",
+    href: "/tags/archaeology",
+    image: "/images/categories/Archaeology.png",
+  },
+  {
+    name: "Economics",
+    description: "Markets & trade",
+    href: "/tags/economics",
+    image: "/images/categories/Economics.png",
+  },
+  {
+    name: "Entertainment",
+    description: "Movies, music & more",
+    href: "/tags/entertainment",
+    image: "/images/categories/Entertainment.png",
+  },
+  {
+    name: "Geography",
+    description: "Places & regions",
+    href: "/tags/geography",
+    image: "/images/categories/Geography.png",
+  },
+  {
     name: "History",
-    description: "Ancient civilizations, lost empires, historical events",
+    description: "Explore the past",
     href: "/tags/history",
+    image: "/images/categories/History.png",
+  },
+  {
+    name: "Humanity",
+    description: "People & culture",
+    href: "/tags/humanity",
+    image: "/images/categories/Humanity.png",
+  },
+  {
+    name: "Mysteries",
+    description: "Unsolved secrets",
+    href: "/tags/mysteries",
+    image: "/images/categories/Mysteries.png",
+  },
+  {
+    name: "Mythology",
+    description: "Legends & myths",
+    href: "/tags/mythology",
+    image: "/images/categories/Mythology.png",
+  },
+  {
+    name: "Nature",
+    description: "Our living world",
+    href: "/tags/nature",
+    image: "/images/categories/Nature.png",
+  },
+  {
+    name: "Politics",
+    description: "Power & diplomacy",
+    href: "/tags/politics",
+    image: "/images/categories/Politics.png",
+  },
+  {
+    name: "Religion",
+    description: "Beliefs & traditions",
+    href: "/tags/religion",
+    image: "/images/categories/Religion.png",
   },
   {
     name: "Science",
-    description: "Discoveries, theories, space, and research",
+    description: "Explore knowledge",
     href: "/tags/science",
+    image: "/images/categories/Science.png",
   },
   {
-    name: "Mystery",
-    description: "Unexplained phenomena and unsolved cases",
-    href: "/tags/mystery",
+    name: "Space",
+    description: "Beyond the stars",
+    href: "/tags/space",
+    image: "/images/categories/Space.png",
   },
   {
-    name: "Civilization",
-    description: "Lost cultures, archaeology, ancient knowledge",
-    href: "/tags/civilization",
+    name: "Technology",
+    description: "Ennovation",
+    href: "/tags/technology",
+    image: "/images/categories/Technology.png",
   },
 ];
 ---
@@ -58,36 +124,18 @@ const categories = [
 <Layout>
   <Header />
 
-  <Hero />
-
-  <Trending posts={recentPosts} />
-
-  <Categories categories={categories} />
-
-  <Newsletter />
-
-  <main
-    id="main-content"
-    data-layout="index"
-    data-home-path={homePath}
-    class="app-layout"
-  >
+  <HeroCarousel />
 
   <EditorPicks posts={featuredPosts} />
 
-  <RecentPosts
-    posts={recentPosts}
-    title={t.home.recentPosts}
-    limit={postsConfig.perIndex}
-  />
+  <Trending posts={recentPosts} />
 
-    <div class="my-8 text-center">
-      <LinkButton href={getRelativeLocaleUrl(locale, "posts")}>
-        {t.home.allPosts}
-        <IconArrowRight class="inline-block rtl:-rotate-180" />
-      </LinkButton>
-    </div>
-  </main>
+  <RecentPosts posts={recentPosts} title={t.home.recentPosts} limit={10} />
+
+  <Categories categories={categories} posts={posts} />
+
+  <Newsletter />
+
   <Footer />
 </Layout>
 
@@ -101,4 +149,3 @@ const categories = [
     }
   });
 </script>
-

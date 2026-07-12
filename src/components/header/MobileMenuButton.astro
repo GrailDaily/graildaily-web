@@ -8,46 +8,42 @@
 </button>
 
 <style>
-.mobile-menu-button {
-  display: none;
-}
-
-@media (max-width: 768px) {
   .mobile-menu-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 44px;
-    height: 44px;
-
-    padding: 0;
-
-    border: 1px solid var(--border);
-    border-radius: 10px;
-
-    background: transparent;
-    color: var(--foreground);
-
-    font-size: 22px;
-    line-height: 1;
-    cursor: pointer;
-
-    transition:
-      color .2s ease,
-      border-color .2s ease,
-      background-color .2s ease;
+    display: none;
   }
 
-  .mobile-menu-button:hover {
-    color: var(--accent);
-    border-color: var(--accent);
+  @media (max-width: 768px) {
+    .mobile-menu-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
 
-    background: color-mix(
-      in srgb,
-      var(--accent) 10%,
-      transparent
-    );
+      width: 44px;
+      height: 44px;
+
+      padding: 0;
+
+      border: 1px solid var(--border);
+      border-radius: 10px;
+
+      background: transparent;
+      color: var(--foreground);
+
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+
+      transition:
+        color 0.2s ease,
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+    }
+
+    .mobile-menu-button:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+    }
   }
-}
 </style>

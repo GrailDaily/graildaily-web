@@ -21,5 +21,10 @@ collections:
       - { label: "Publish Date", name: "pubDatetime", widget: "datetime" }
       - { label: "Slug", name: "slug", widget: "string" }
       - { label: "Tags", name: "tags", widget: "list" }
-      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - {
+          label: "Featured",
+          name: "featured",
+          widget: "boolean",
+          default: false,
+        }
       - { label: "Body", name: "body", widget: "markdown" }

@@ -13,45 +13,80 @@ const { posts, title, limit } = Astro.props;
 
 <section id="recent-posts" class="recent-posts">
   <div class="app-layout">
+    <div class="section-header">
+      <h2 class="title">
+        {title}
+      </h2>
 
-    <h2 class="title">
-      {title}
-    </h2>
-
-    <div class="grid">
-        {posts.slice(0, limit).map((post) => (
-            <ArticleCard
-            post={post}
-            variant="default"
-        />
-        ))}
+      <a href="/posts" class="view-all"> View All → </a>
     </div>
 
+    <div class="grid">
+      {
+        posts
+          .slice(0, limit)
+          .map(post => <ArticleCard post={post} variant="horizontal-small" />)
+      }
+    </div>
   </div>
 </section>
 
 <style>
-.recent-posts {
-  padding: 48px 0;
-}
-
-.title {
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 16px;
-}
-
-@media (max-width:768px) {
-
-  .grid {
-    grid-template-columns: 1fr;
+  .recent-posts {
+    padding: 20px 0;
   }
 
-}
+  .title {
+    font-size: 1.9rem;
+    font-weight: 700;
+    line-height: 1.2;
+
+    color: var(--foreground);
+
+    margin-bottom: 24px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 24px;
+  }
+
+  .view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+
+    transition: 0.2s;
+  }
+
+  .view-all:hover {
+    border-color: var(--accent);
+
+    transform: translateY(-2px);
+
+    color: var(--accent);
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 0px;
+  }
+
+  .view-all:hover {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 768px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>

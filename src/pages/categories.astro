@@ -21,14 +21,9 @@ const tags = getUniqueTags(posts);
 
   <Breadcrumb />
 
-  <Main
-    pageTitle="Categories"
-    pageDesc="Browse articles by category."
-  >
+  <Main pageTitle="Categories" pageDesc="Browse articles by category.">
     <ul class="flex flex-wrap gap-6">
-      {tags.map(({ tag, tagName }) => (
-        <Tag {tag} {tagName} />
-      ))}
+      {tags.map(({ tag, tagName }) => <Tag {tag} {tagName} />)}
     </ul>
   </Main>
 

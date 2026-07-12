@@ -13,9 +13,7 @@ const posts = await getCollection("posts", ({ data }) => {
 });
 
 const featuredPosts = posts.sort(
-  (a, b) =>
-    b.data.pubDatetime.getTime() -
-    a.data.pubDatetime.getTime()
+  (a, b) => b.data.pubDatetime.getTime() - a.data.pubDatetime.getTime()
 );
 ---
 
@@ -32,9 +30,7 @@ const featuredPosts = posts.sort(
     pageDesc="Explore our featured and editor's recommended articles."
   >
     <ul>
-      {featuredPosts.map(post => (
-        <Card {...post} />
-      ))}
+      {featuredPosts.map(post => <Card {...post} />)}
     </ul>
   </Main>
 

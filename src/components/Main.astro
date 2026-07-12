@@ -28,26 +28,20 @@ const backUrl = config.features.showBackButton
   data-backUrl={backUrl}
   id="main-content"
   class:list={[
-  narrow
-    ? "mx-auto w-full max-w-lg px-6"
-    : "app-layout",
-  "pb-4",
-  className,
-]}
+    narrow ? "mx-auto w-full max-w-lg px-6" : "app-layout",
+    "pb-4",
+    className,
+  ]}
 >
   {
-  !hideTitle && (
-    <>
-      <h1 class="text-2xl font-semibold sm:text-3xl">{pageTitle}</h1>
+    !hideTitle && (
+      <>
+        <h1 class="text-2xl font-semibold sm:text-3xl">{pageTitle}</h1>
 
-      {pageDesc && (
-        <p class="mt-2 mb-6 italic">
-          {pageDesc}
-        </p>
-      )}
-    </>
-  )
-}
+        {pageDesc && <p class="mt-2 mb-6 italic">{pageDesc}</p>}
+      </>
+    )
+  }
   <slot />
 </main>
 
