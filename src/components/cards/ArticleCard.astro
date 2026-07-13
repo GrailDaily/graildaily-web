@@ -184,13 +184,32 @@ const { post, variant = "compact" } = Astro.props;
 
   .article-link {
     display: block;
-
-    flex: 0 0 calc((100% - 56px) / 5);
-
-    min-width: calc((100% - 56px) / 5);
-
     text-decoration: none;
     color: inherit;
+
+    flex: 0 0 calc((100% - 56px) / 5);
+    min-width: calc((100% - 56px) / 5);
+  }
+
+  @media (max-width: 1024px) {
+    .article-link {
+      flex: 0 0 calc((100% - 28px) / 3);
+      min-width: calc((100% - 28px) / 3);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .article-link {
+      flex: 0 0 85%;
+      min-width: 85%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .article-link {
+      flex: 0 0 92%;
+      min-width: 92%;
+    }
   }
 
   .article-link:hover {

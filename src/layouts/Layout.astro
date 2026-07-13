@@ -6,6 +6,7 @@ import { resolveDefaultOgImagePath } from "@/utils/resolveDefaultOgImagePath";
 import config from "@/config";
 import "@/styles/global.css";
 import icon from "@/assets/images/logo/icon.png";
+import Footer from "@/components/Footer.astro";
 
 type Props = {
   title?: string;
@@ -149,5 +150,6 @@ const rssHref = getRelativeLocaleUrl(
     <script>
       import "@/scripts/theme";
     </script>
+    <Footer />
   </body>
 </html>

@@ -28,7 +28,24 @@ export default defineAstroPaperConfig({
     },
     search: "pagefind",
   },
-  socials: [],
+  socials: [
+  {
+    name: "facebook",
+    url: "https://facebook.com/GrailDaily",
+  },
+  {
+    name: "x",
+    url: "https://x.com/GrailDaily",
+  },
+  {
+    name: "instagram",
+    url: "https://instagram.com/GrailDaily",
+  },
+  {
+    name: "youtube",
+    url: "https://youtube.com/@GrailDaily",
+  },
+],
   shareLinks: [
     { name: "whatsapp", url: "https://wa.me/?text=" },
     { name: "facebook", url: "https://www.facebook.com/sharer.php?u=" },

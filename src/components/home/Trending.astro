@@ -116,10 +116,16 @@ const { posts } = Astro.props;
     overflow: hidden;
     position: relative;
     padding-top: 8px;
+    width: 100%;
   }
 
   .trending-viewport {
     overflow: hidden;
+    width: 100%;
+  }
+
+  .trending-track > * {
+    flex-shrink: 0;
   }
 
   @media (max-width: 768px) {

@@ -1,102 +1,52 @@
 ---
-import { getRelativeLocaleUrl } from "astro:i18n";
+import logoLight from "@/assets/images/logo/logo-light.png";
+import logoDark from "@/assets/images/logo/logo-dark.png";
+import "@/styles/footer.css";
+import Socials from "./Socials.astro";
 ---
 
 <footer class="footer">
-  <div class="container">
+  <div class="footer-container">
     <!-- Brand -->
-    <div class="brand">
-      <h3>GrailDaily</h3>
-      <p>
+    <div class="footer-brand">
+      <a href="/" class="footer-logo">
+        <img src={logoLight.src} alt="GrailDaily" class="footer-logo-light" />
+
+        <img src={logoDark.src} alt="GrailDaily" class="footer-logo-dark" />
+      </a>
+
+      <p class="footer-description">
         Exploring history, science, mysteries, and forgotten knowledge for
         curious minds around the world.
       </p>
+
+      <div class="footer-social">
+        <Socials />
+      </div>
     </div>
 
-    <!-- Sitemap -->
-    <div class="links">
-      <h4>Explore</h4>
-      <a href={getRelativeLocaleUrl("en", "/")}>Home</a>
-      <a href={getRelativeLocaleUrl("en", "/posts")}>Articles</a>
-      <a href="/tags/history">History</a>
-      <a href="/tags/science">Science</a>
-      <a href="/tags/mystery">Mystery</a>
+    <!-- About -->
+    <nav class="footer-column" aria-label="Footer navigation">
+      <h3>Company</h3>
+
+      <ul>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/rss.xml">RSS Feed</a></li>
+        <li><a href="/privacy-policy">Privacy Policy</a></li>
+        <li><a href="/terms">Terms of Service</a></li>
+      </ul>
+    </nav>
+
+    <!-- Map -->
+    <div class="footer-map">
+      <img src="/images/worldmap.png" alt="World Map" />
+
+      <p>Connecting curious minds around the world.</p>
     </div>
 
-    <!-- Company -->
-    <div class="links">
-      <h4>About</h4>
-      <a href={getRelativeLocaleUrl("en", "/about")}>About</a>
-      <a href="/rss.xml">RSS Feed</a>
-      <a href="#">Contact</a>
+    <div class="footer-bottom">
+      © {new Date().getFullYear()} GrailDaily. All rights reserved.
     </div>
-  </div>
-
-  <div class="bottom">
-    <p>© {new Date().getFullYear()} GrailDaily. All rights reserved.</p>
   </div>
 </footer>
-
-<style>
-  .footer {
-    margin-top: 0;
-    padding: 50px 0 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(0, 0, 0, 0.2);
-  }
-
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 30px;
-    padding: 0 20px;
-  }
-
-  .brand h3 {
-    color: white;
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-
-  .brand p {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 14px;
-    line-height: 1.6;
-    max-width: 320px;
-  }
-
-  .links h4 {
-    color: white;
-    font-size: 14px;
-    margin-bottom: 10px;
-  }
-
-  .links a {
-    display: block;
-    color: rgba(255, 255, 255, 0.6);
-    text-decoration: none;
-    font-size: 13px;
-    margin-bottom: 6px;
-    transition: 0.2s;
-  }
-
-  .links a:hover {
-    color: white;
-  }
-
-  .bottom {
-    margin-top: 30px;
-    text-align: center;
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.4);
-  }
-
-  @media (max-width: 768px) {
-    .container {
-      grid-template-columns: 1fr;
-      text-align: left;
-    }
-  }
-</style>
