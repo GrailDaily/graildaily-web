@@ -19,53 +19,32 @@ const topPosts = posts.slice(1, 6);
 
 <section id={category.slug} class="category-section">
   <div class="app-layout">
-    {
-      index % 2 === 0 ? (
-        <div class="category-grid">
-          <aside class="category-info">
-            <span class="category-number">
-              {String(index + 1).padStart(2, "0")}
-            </span>
+    <div
+      class:list={{
+        "category-grid": true,
+        reverse: index % 2 === 1,
+      }}
+    >
+      <aside class="category-info">
+        <span class="category-number">
+          {String(index + 1).padStart(2, "0")}
+        </span>
 
-            <h2>{category.name}</h2>
+        <h2>{category.name}</h2>
 
-            <p>{category.description}</p>
+        <p>{category.description}</p>
 
-            <a href={`/categories/${category.slug}`} class="category-link">
-              Explore Category →
-            </a>
-          </aside>
+        <a href={`/categories/${category.slug}`} class="category-link">
+          Explore Category →
+        </a>
+      </aside>
 
-          <div class="featured-column">
-            {featuredPost && <CategoryFeatured post={featuredPost} />}
-          </div>
+      <div class="featured-column">
+        {featuredPost && <CategoryFeatured post={featuredPost} />}
+      </div>
 
-          <CategoryTopArticles posts={topPosts} />
-        </div>
-      ) : (
-        <div class="category-grid reverse">
-          <CategoryTopArticles posts={topPosts} />
-
-          <div class="featured-column">
-            {featuredPost && <CategoryFeatured post={featuredPost} />}
-          </div>
-
-          <aside class="category-info">
-            <span class="category-number">
-              {String(index + 1).padStart(2, "0")}
-            </span>
-
-            <h2>{category.name}</h2>
-
-            <p>{category.description}</p>
-
-            <a href={`/categories/${category.slug}`} class="category-link">
-              Explore Category →
-            </a>
-          </aside>
-        </div>
-      )
-    }
+      <CategoryTopArticles posts={topPosts} />
+    </div>
   </div>
   <style>
     .category-section {
@@ -84,6 +63,8 @@ const topPosts = posts.slice(1, 6);
         var(--featured-width)
         var(--top-width);
 
+      grid-template-areas: "info featured top";
+
       gap: 38px;
 
       align-items: stretch;
@@ -94,9 +75,13 @@ const topPosts = posts.slice(1, 6);
         var(--top-width)
         var(--featured-width)
         var(--info-width);
+
+      grid-template-areas: "top featured info";
     }
 
     .featured-column {
+      grid-area: featured;
+
       display: flex;
 
       align-items: center;
@@ -108,6 +93,10 @@ const topPosts = posts.slice(1, 6);
       width: 100%;
     }
 
+    .top-articles {
+      grid-area: top;
+    }
+
     .category-number {
       display: block;
 
@@ -117,6 +106,10 @@ const topPosts = posts.slice(1, 6);
       color: var(--accent);
 
       opacity: 0.22;
+    }
+
+    .category-info {
+      grid-area: info;
     }
 
     .category-info h2 {
@@ -158,6 +151,24 @@ const topPosts = posts.slice(1, 6);
       align-items: center;
 
       justify-content: center;
+    }
+
+    @media (max-width: 768px) {
+      .category-grid,
+      .category-grid.reverse {
+        grid-template-columns: 1fr;
+
+        grid-template-areas:
+          "info"
+          "featured"
+          "top";
+
+        gap: 24px;
+      }
+
+      .category-info p {
+        max-width: 100%;
+      }
     }
   </style>
 </section>
