@@ -6,6 +6,7 @@ featured: true
 ogImage: /images/hero/viking.jpg
 tags:
   - Mythology
+  - Economics
 description: Meet Odin, Thor, Loki, and the legendary figures of Norse mythology.
 ---
 

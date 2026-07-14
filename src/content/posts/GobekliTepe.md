@@ -6,6 +6,7 @@ featured: true
 ogImage: /images/hero/gobeklitepe.jpg
 tags:
   - Space
+  - Economics
 description: Explore the legendary lost city of Atlantis and the evidence that continues to fascinate historians and archaeologists.
 ---
 

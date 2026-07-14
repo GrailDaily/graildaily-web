@@ -1,0 +1,111 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  posts: CollectionEntry<"posts">[];
+}
+
+const { posts } = Astro.props;
+---
+
+<aside class="top-articles">
+  <h3>Top Articles</h3>
+
+  {
+    posts.map(post => (
+      <a href={`/posts/${post.id}/`} class="top-item">
+        <img src={post.data.ogImage} alt={post.data.title} loading="lazy" />
+
+        <h4>{post.data.title}</h4>
+      </a>
+    ))
+  }
+</aside>
+<style>
+  .top-articles {
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    padding: 8px /* atas */ 20px /* kanan */ 8px /* bawah */ 20px; /* kiri */
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  .top-articles h3 {
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+  }
+
+  .top-item {
+    display: grid;
+
+    grid-template-columns: 78px 1fr;
+
+    gap: 12px;
+
+    align-items: center;
+
+    text-decoration: none;
+
+    color: inherit;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid var(--border);
+
+    transition: 0.25s ease;
+  }
+
+  .top-item img {
+    width: 78px;
+
+    aspect-ratio: 16/10;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    transition: transform 0.25s ease;
+  }
+
+  .top-item h4 {
+    margin: 0;
+
+    font-size: 0.8rem;
+
+    line-height: 1.35;
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 2;
+
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+
+    transition: color 0.25s ease;
+  }
+
+  .top-item:hover h4 {
+    color: var(--accent);
+  }
+
+  .top-item:hover img {
+    transform: scale(1.03);
+  }
+
+  .top-item:last-child {
+    border-bottom: none;
+  }
+
+  .top-item:first-of-type {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .top-item h4 {
+    font-size: 0.98rem;
+    line-height: 1.4;
+  }
+</style>

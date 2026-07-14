@@ -6,6 +6,8 @@ featured: true
 ogImage: /images/hero/bees.jpg
 tags:
   - Nature
+  - Archaeology
+  - Entertainment
 description: Discover why bees are among the most important species for global ecosystems and food production.
 ---
 

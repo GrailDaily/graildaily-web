@@ -6,6 +6,9 @@ featured: true
 ogImage: /images/hero/cave.jpg
 tags:
   - Geography
+  - Archaeology
+  - Economics
+  - Entertainment
 description: Explore the breathtaking Son Doong Cave, the largest cave ever discovered on Earth.
 ---
 

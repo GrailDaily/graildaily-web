@@ -1,0 +1,74 @@
+---
+import type { Category } from "@/data/categories";
+
+interface Props {
+  categories: Category[];
+}
+
+const { categories } = Astro.props;
+---
+
+<nav class="category-nav">
+  <div class="app-layout">
+    <div class="category-nav-track">
+      {
+        categories.map(category => (
+          <a href={`#${category.slug}`} class="category-link">
+            {category.name}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</nav>
+
+<style>
+  .category-nav {
+    position: sticky;
+    top: var(--header-height, 72px);
+    z-index: 40;
+
+    backdrop-filter: blur(12px);
+
+    background: color-mix(in srgb, var(--background) 88%, transparent);
+
+    border-bottom: 1px solid var(--border);
+  }
+
+  .category-nav-track {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    height: 56px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scrollbar-width: none;
+  }
+
+  .category-nav-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-link {
+    flex-shrink: 0;
+
+    text-decoration: none;
+
+    color: var(--muted-foreground);
+
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    white-space: nowrap;
+
+    transition: color 0.2s ease;
+  }
+
+  .category-link:hover {
+    color: var(--accent);
+  }
+</style>

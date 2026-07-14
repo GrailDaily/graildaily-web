@@ -1,29 +1,38 @@
 ---
-import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/header/Header.astro";
-import Breadcrumb from "@/components/Breadcrumb.astro";
-import Main from "@/components/Main.astro";
-import Footer from "@/components/Footer.astro";
-import Tag from "@/components/Tag.astro";
-import { getUniqueTags } from "@/utils/getUniqueTags";
+
+import CategoryNavigation from "@/components/categories/CategoryNavigation.astro";
+
 import config from "@/config";
+import { categories } from "@/data/categories";
+import CategorySection from "@/components/categories/CategorySection.astro";
+import { getCollection } from "astro:content";
 
 const posts = await getCollection("posts", ({ data }) => !data.draft);
-const tags = getUniqueTags(posts);
 ---
 
 <Layout
   title={`Categories | ${config.site.title}`}
-  description="Browse all article categories on GrailDaily."
+  description="Explore every category on GrailDaily."
 >
   <Header />
 
-  <Breadcrumb />
+  <CategoryNavigation categories={categories} />
 
-  <Main pageTitle="Categories" pageDesc="Browse articles by category.">
-    <ul class="flex flex-wrap gap-6">
-      {tags.map(({ tag, tagName }) => <Tag {tag} {tagName} />)}
-    </ul>
-  </Main>
+  {
+    categories.map((category, index) => {
+      const categoryPosts = posts.filter(post =>
+        post.data.tags?.includes(category.name)
+      );
+
+      return (
+        <CategorySection
+          category={category}
+          index={index}
+          posts={categoryPosts}
+        />
+      );
+    })
+  }
 </Layout>

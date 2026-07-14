@@ -1,0 +1,163 @@
+---
+import type { CollectionEntry } from "astro:content";
+import type { Category } from "@/data/categories";
+
+import CategoryFeatured from "./CategoryFeatured.astro";
+import CategoryTopArticles from "./CategoryTopArticles.astro";
+
+interface Props {
+  category: Category;
+  index: number;
+  posts: CollectionEntry<"posts">[];
+}
+
+const { category, index, posts } = Astro.props;
+
+const featuredPost = posts[0];
+const topPosts = posts.slice(1, 6);
+---
+
+<section id={category.slug} class="category-section">
+  <div class="app-layout">
+    {
+      index % 2 === 0 ? (
+        <div class="category-grid">
+          <aside class="category-info">
+            <span class="category-number">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+
+            <h2>{category.name}</h2>
+
+            <p>{category.description}</p>
+
+            <a href={`/categories/${category.slug}`} class="category-link">
+              Explore Category →
+            </a>
+          </aside>
+
+          <div class="featured-column">
+            {featuredPost && <CategoryFeatured post={featuredPost} />}
+          </div>
+
+          <CategoryTopArticles posts={topPosts} />
+        </div>
+      ) : (
+        <div class="category-grid reverse">
+          <CategoryTopArticles posts={topPosts} />
+
+          <div class="featured-column">
+            {featuredPost && <CategoryFeatured post={featuredPost} />}
+          </div>
+
+          <aside class="category-info">
+            <span class="category-number">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+
+            <h2>{category.name}</h2>
+
+            <p>{category.description}</p>
+
+            <a href={`/categories/${category.slug}`} class="category-link">
+              Explore Category →
+            </a>
+          </aside>
+        </div>
+      )
+    }
+  </div>
+  <style>
+    .category-section {
+      padding: 30px 0;
+    }
+
+    .category-grid {
+      --info-width: 250px;
+      --featured-width: 620px;
+      --top-width: 320px;
+
+      display: grid;
+
+      grid-template-columns:
+        var(--info-width)
+        var(--featured-width)
+        var(--top-width);
+
+      gap: 38px;
+
+      align-items: stretch;
+    }
+
+    .category-grid.reverse {
+      grid-template-columns:
+        var(--top-width)
+        var(--featured-width)
+        var(--info-width);
+    }
+
+    .featured-column {
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+    }
+
+    .featured-column > * {
+      width: 100%;
+    }
+
+    .category-number {
+      display: block;
+
+      font-size: 3rem;
+      font-weight: 700;
+
+      color: var(--accent);
+
+      opacity: 0.22;
+    }
+
+    .category-info h2 {
+      margin-top: 12px;
+      font-size: 2rem;
+    }
+
+    .category-info p {
+      margin-top: 16px;
+      max-width: 280px;
+
+      color: var(--muted-foreground);
+
+      line-height: 1.7;
+    }
+
+    .category-link {
+      display: inline-block;
+
+      margin-top: 24px;
+
+      color: var(--accent);
+
+      text-decoration: none;
+
+      font-weight: 600;
+    }
+
+    .category-featured,
+    .category-list {
+      min-height: 420px;
+
+      border: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
+
+      border-radius: 14px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+    }
+  </style>
+</section>

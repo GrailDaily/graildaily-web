@@ -7,6 +7,8 @@ ogImage: /images/hero/blackhole.jpg
 tags:
   - Mysteries
   - Space
+  - Archaeology
+  - Entertainment
 description: Explore the legendary lost city of Atlantis and the evidence that continues to fascinate historians and archaeologists.
 ---
 
