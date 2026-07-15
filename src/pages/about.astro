@@ -1,33 +1,33 @@
 ---
-import { getEntry, render } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/header/Header.astro";
-import Breadcrumb from "@/components/Breadcrumb.astro";
-import Main from "@/components/Main.astro";
+import Footer from "@/components/Footer.astro";
+
 import config from "@/config";
 
-const about = await getEntry("pages", "about");
-
-if (!about) {
-  throw new Error(
-    "Missing content entry: `about.md` or `about.mdx` in `src/content/pages/`"
-  );
-}
-
-const { Content } = await render(about);
+import AboutHero from "@/components/about/AboutHero.astro";
+import OurMission from "@/components/about/OurMission.astro";
+import WhatWeCover from "@/components/about/WhatWeCover.astro";
+import EditorialPrinciples from "@/components/about/EditorialPrinciples.astro";
+import ByTheNumbers from "@/components/about/ByTheNumbers.astro";
+import WhyGrailDaily from "@/components/about/WhyGrailDaily.astro";
+import AboutCTA from "@/components/about/AboutCTA.astro";
 ---
 
 <Layout
-  title={`${about.data.title} | ${config.site.title}`}
-  description={about.data.description}
-  ogImage={about.data.ogImage}
-  canonicalURL={about.data.canonicalURL}
+  title={`About | ${config.site.title}`}
+  description="Learn more about GrailDaily."
 >
   <Header />
 
-  <Breadcrumb />
+  <AboutHero />
 
-  <Main pageTitle={about.data.title} class="app-prose">
-    <Content />
-  </Main>
+  <main class="app-layout about-page">
+    <OurMission />
+    <WhatWeCover />
+    <EditorialPrinciples />
+    <ByTheNumbers />
+    <WhyGrailDaily />
+    <AboutCTA />
+  </main>
 </Layout>

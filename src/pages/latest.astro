@@ -1,0 +1,30 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/header/Header.astro";
+
+import config from "@/config";
+
+import { getCollection } from "astro:content";
+import { getSortedPosts } from "@/utils/getSortedPosts";
+
+import LatestHero from "@/components/latest/LatestHero.astro";
+import LatestFeed from "@/components/latest/LatestFeed.astro";
+
+const posts = getSortedPosts(
+  await getCollection("posts", ({ data }) => !data.draft)
+);
+
+const latestPost = posts[0];
+---
+
+<Layout
+  title={`Latest | ${config.site.title}`}
+  description="Discover the latest stories on GrailDaily."
+>
+  <Header />
+
+  <main class="app-layout latest-page">
+    <LatestHero post={latestPost} />
+    <LatestFeed posts={posts.slice(1, 31)} />
+  </main>
+</Layout>

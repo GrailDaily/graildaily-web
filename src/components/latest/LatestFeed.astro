@@ -1,0 +1,171 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  posts: CollectionEntry<"posts">[];
+}
+
+const { posts } = Astro.props;
+---
+
+<section class="latest-feed">
+  <h2>Latest Stories</h2>
+
+  {
+    posts.map(post => (
+      <a href={`/posts/${post.id}/`} class="latest-item">
+        <img src={post.data.ogImage} alt={post.data.title} loading="lazy" />
+
+        <div class="latest-content">
+          <span class="category">{post.data.tags?.[0]}</span>
+
+          <h3>{post.data.title}</h3>
+
+          <p>{post.data.description}</p>
+          <div class="article-meta">
+            <span>
+              {new Date(post.data.pubDatetime).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </span>
+
+            <span>•</span>
+
+            <span>8 min read</span>
+          </div>
+        </div>
+      </a>
+    ))
+  }
+</section>
+<style>
+  .latest-feed {
+    margin-top: 24px;
+  }
+
+  .latest-feed h2 {
+    margin-bottom: 10px;
+
+    font-size: 2rem;
+  }
+
+  .latest-item {
+    display: grid;
+
+    grid-template-columns: 240px 1fr;
+
+    gap: 28px;
+
+    align-items: center;
+
+    padding: 28px 0;
+
+    border-bottom: 1px solid var(--border);
+
+    text-decoration: none;
+
+    color: inherit;
+
+    transition: 0.25s ease;
+  }
+
+  .latest-item:hover {
+    background: color-mix(in srgb, var(--accent) 4%, transparent);
+  }
+
+  .latest-item img {
+    width: 100%;
+
+    aspect-ratio: 16 / 10;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+
+    transition: transform 0.35s ease;
+  }
+
+  .latest-item:hover img {
+    transform: scale(1.03);
+  }
+
+  .category {
+    display: inline-block;
+
+    margin-bottom: 10px;
+
+    padding: 4px 10px;
+
+    border-radius: 999px;
+
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+
+    color: var(--accent);
+
+    font-size: 0.78rem;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.04em;
+  }
+
+  .latest-content h3 {
+    margin: 0;
+
+    font-size: 1.55rem;
+
+    line-height: 1.35;
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 2;
+
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+
+    transition: color 0.25s ease;
+  }
+
+  .latest-item:hover h3 {
+    color: var(--accent);
+  }
+
+  .latest-content p {
+    margin-top: 14px;
+
+    color: var(--muted-foreground);
+
+    line-height: 1.8;
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 2;
+
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+  }
+
+  .latest-item:last-child {
+    border-bottom: none;
+  }
+
+  .article-meta {
+    display: flex;
+
+    gap: 10px;
+
+    align-items: center;
+
+    margin-top: 18px;
+
+    font-size: 0.9rem;
+
+    color: var(--muted-foreground);
+  }
+</style>

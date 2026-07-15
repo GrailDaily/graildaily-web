@@ -1,0 +1,244 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  posts: CollectionEntry<"posts">[];
+}
+
+const { posts } = Astro.props;
+---
+
+<div class="popular-section-header">
+  <span class="section-label">TOP 5</span>
+
+  <h2>Trending Rankings</h2>
+
+  <p>
+    Discover the five most-read stories on GrailDaily, selected from readers'
+    interests across history, archaeology, science, mysteries, and beyond.
+  </p>
+</div>
+
+<section class="popular-grid">
+  {
+    posts.map((post, index) => (
+      <a href={`/posts/${post.id}/`} class="popular-card">
+        <span class="popular-rank">#{index + 2}</span>
+
+        <div class="card-image">
+          <img src={post.data.ogImage} alt={post.data.title} loading="lazy" />
+        </div>
+
+        <div class="card-content">
+          <h3>{post.data.title}</h3>
+
+          <p>{post.data.description}</p>
+        </div>
+      </a>
+    ))
+  }
+</section>
+
+<style>
+  .popular-grid {
+    margin-top: 56px;
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 32px;
+  }
+
+  .popular-card {
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    border: 1px solid var(--border);
+
+    background: var(--card);
+
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+
+    text-decoration: none;
+
+    color: inherit;
+  }
+
+  .popular-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  .popular-rank {
+    position: absolute;
+
+    top: 18px;
+    left: 18px;
+
+    font-size: 3rem;
+
+    letter-spacing: -2px;
+
+    font-weight: 800;
+
+    color: rgba(255, 255, 255, 0.82);
+
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+
+    z-index: 2;
+
+    pointer-events: none;
+  }
+
+  .card-image {
+    position: relative;
+
+    aspect-ratio: 16 / 10;
+
+    overflow: hidden;
+
+    border-bottom: 1px solid var(--border);
+  }
+
+  .card-image::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.35),
+      transparent 45%
+    );
+
+    pointer-events: none;
+  }
+
+  .card-image img {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: 0.4s ease;
+  }
+
+  .popular-card:hover img {
+    transform: scale(1.06);
+  }
+
+  .card-content {
+    padding: 24px;
+  }
+
+  .card-content h3 {
+    font-size: 1.35rem;
+
+    line-height: 1.35;
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 2;
+
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+
+    transition: color 0.25s ease;
+  }
+
+  .popular-card:hover h3 {
+    color: var(--accent);
+  }
+
+  .card-content p {
+    margin-top: 14px;
+
+    color: var(--muted-foreground);
+
+    line-height: 1.75;
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 2;
+
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+  }
+
+  .popular-section-header {
+    margin-top: 40px;
+    margin-bottom: 36px;
+
+    text-align: center;
+  }
+
+  .section-label {
+    display: inline-block;
+
+    padding: 6px 14px;
+
+    border-radius: 999px;
+
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+
+    color: var(--accent);
+
+    font-size: 0.8rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+  }
+
+  .popular-section-header h2 {
+    margin-top: 18px;
+
+    font-size: clamp(2rem, 3vw, 2.6rem);
+
+    line-height: 1.2;
+  }
+
+  .popular-section-header p {
+    margin: 16px auto 0;
+
+    max-width: 700px;
+
+    color: var(--muted-foreground);
+
+    line-height: 1.8;
+  }
+
+  @media (max-width: 900px) {
+    .popular-grid {
+      grid-template-columns: 1fr;
+
+      gap: 24px;
+    }
+
+    .popular-rank {
+      font-size: 2.4rem;
+    }
+
+    .card-content {
+      padding: 20px;
+    }
+
+    .card-content h3 {
+      font-size: 1.2rem;
+    }
+  }
+</style>

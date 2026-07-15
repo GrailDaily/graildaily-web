@@ -1,0 +1,202 @@
+---
+const categories = [
+  {
+    title: "Archaeology",
+    description:
+      "Ancient ruins, artifacts, excavations, and forgotten civilizations.",
+    image: "/images/categories/Archaeology.png",
+  },
+  {
+    title: "Economics",
+    description:
+      "Global markets, trade, finance, and the forces shaping economies.",
+    image: "/images/categories/Economics.png",
+  },
+  {
+    title: "Entertainment",
+    description: "Cinema, television, music, literature, and popular culture.",
+    image: "/images/categories/Entertainment.png",
+  },
+  {
+    title: "Geography",
+    description:
+      "Countries, landscapes, cultures, and remarkable places around the world.",
+    image: "/images/categories/Geography.png",
+  },
+  {
+    title: "History",
+    description: "Empires, historical figures, battles, and remarkable events.",
+    image: "/images/categories/History.png",
+  },
+  {
+    title: "Humanity",
+    description:
+      "People, societies, traditions, and the evolution of civilization.",
+    image: "/images/categories/Humanity.png",
+  },
+  {
+    title: "Mysteries",
+    description:
+      "Unsolved events, unexplained phenomena, and enduring questions.",
+    image: "/images/categories/Mysteries.png",
+  },
+  {
+    title: "Mythology",
+    description: "Legends, myths, gods, heroes, and ancient folklore.",
+    image: "/images/categories/Mythology.png",
+  },
+  {
+    title: "Nature",
+    description: "Wildlife, ecosystems, natural wonders, and Earth's beauty.",
+    image: "/images/categories/Nature.png",
+  },
+  {
+    title: "Politics",
+    description: "Governments, diplomacy, conflicts, and global affairs.",
+    image: "/images/categories/Politics.png",
+  },
+  {
+    title: "Religion",
+    description: "Beliefs, traditions, sacred places, and religious history.",
+    image: "/images/categories/Religion.png",
+  },
+  {
+    title: "Science",
+    description:
+      "Breakthroughs, discoveries, and the fascinating world of research.",
+    image: "/images/categories/Science.png",
+  },
+  {
+    title: "Space",
+    description:
+      "Galaxies, planets, black holes, and the mysteries beyond Earth.",
+    image: "/images/categories/Space.png",
+  },
+  {
+    title: "Technology",
+    description: "Innovation, AI, engineering, and the future of technology.",
+    image: "/images/categories/Technology.png",
+  },
+];
+---
+
+<section class="what-we-cover">
+  <div class="app-layout">
+    <div class="section-header">
+      <span class="section-label">WHAT WE COVER</span>
+
+      <h2>Explore the topics we are passionate about</h2>
+
+      <p>
+        From ancient civilizations to the latest scientific discoveries,
+        GrailDaily explores the stories that inspire curiosity and expand our
+        understanding of the world.
+      </p>
+    </div>
+
+    <div class="cover-grid">
+      {
+        categories.map(category => (
+          <article
+            class="cover-card"
+            style={`background-image:
+          linear-gradient(
+            to top,
+            rgba(0,0,0,.82),
+            rgba(0,0,0,.45),
+            rgba(0,0,0,.15)
+          ),
+          url('${category.image}')`}
+          >
+            <h3>{category.title}</h3>
+
+            <p>{category.description}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+<style>
+  .what-we-cover {
+    padding: 90px 0;
+  }
+
+  .section-header {
+    max-width: 760px;
+
+    margin: 0 auto 56px;
+
+    text-align: center;
+  }
+
+  .section-header h2 {
+    margin: 18px 0;
+
+    font-size: 2.7rem;
+  }
+
+  .section-header p {
+    color: var(--muted-foreground);
+
+    line-height: 1.8;
+  }
+
+  .cover-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 28px;
+  }
+
+  .cover-card {
+    position: relative;
+
+    min-height: 320px;
+
+    padding: 28px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+    overflow: hidden;
+
+    border-radius: 22px;
+
+    border: 1px solid var(--border);
+
+    background-size: cover;
+
+    background-position: center;
+
+    color: white;
+
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .cover-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+  }
+
+  .cover-card h3 {
+    margin-bottom: 12px;
+
+    font-size: 1.5rem;
+
+    color: white;
+  }
+
+  .cover-card p {
+    color: rgba(255, 255, 255, 0.9);
+
+    line-height: 1.7;
+  }
+</style>

@@ -1,35 +1,23 @@
 ---
-import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/header/Header.astro";
-import Breadcrumb from "@/components/Breadcrumb.astro";
-import Main from "@/components/Main.astro";
-import Card from "@/components/Card.astro";
-import config from "@/config";
+import PopularHero from "@/components/popular/PopularHero.astro";
+import PopularGrid from "@/components/popular/PopularGrid.astro";
+import PopularList from "@/components/popular/PopularList.astro";
 
-const posts = await getCollection("posts", ({ data }) => {
-  return !data.draft && data.featured;
-});
+import { getCollection } from "astro:content";
 
-const featuredPosts = posts.sort(
-  (a, b) => b.data.pubDatetime.getTime() - a.data.pubDatetime.getTime()
-);
+const posts = await getCollection("posts", ({ data }) => !data.draft);
 ---
 
-<Layout
-  title={`Popular | ${config.site.title}`}
-  description="Editor's recommended and featured articles from GrailDaily."
->
+<Layout>
   <Header />
 
-  <Breadcrumb />
+  <PopularHero />
 
-  <Main
-    pageTitle="Popular"
-    pageDesc="Explore our featured and editor's recommended articles."
-  >
-    <ul>
-      {featuredPosts.map(post => <Card {...post} />)}
-    </ul>
-  </Main>
+  <div class="app-layout">
+    <PopularGrid posts={posts.slice(1, 5)} />
+
+    <PopularList posts={posts.slice(5, 20)} />
+  </div>
 </Layout>

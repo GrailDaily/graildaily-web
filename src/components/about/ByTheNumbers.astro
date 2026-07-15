@@ -1,0 +1,109 @@
+<section class="by-the-numbers">
+  <div class="app-layout">
+    <div class="section-header">
+      <span class="section-label">BY THE NUMBERS</span>
+
+      <h2>Growing with every story we publish</h2>
+
+      <p>
+        Every article, every discovery, and every reader helps shape the
+        GrailDaily journey.
+      </p>
+    </div>
+
+    <div class="numbers-grid">
+      <div class="number-card">
+        <span class="number">30+</span>
+        <h3>Articles</h3>
+      </div>
+
+      <div class="number-card">
+        <span class="number">6</span>
+        <h3>Categories</h3>
+      </div>
+
+      <div class="number-card">
+        <span class="number">2026</span>
+        <h3>Founded</h3>
+      </div>
+
+      <div class="number-card">
+        <span class="number">∞</span>
+        <h3>Curiosity</h3>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .by-the-numbers {
+    padding: 90px 0;
+  }
+
+  .section-header {
+    max-width: 760px;
+
+    margin: 0 auto 72px;
+
+    text-align: center;
+  }
+
+  .section-header h2 {
+    margin: 18px 0;
+
+    font-size: 2.7rem;
+  }
+
+  .section-header p {
+    color: var(--muted-foreground);
+
+    line-height: 1.8;
+  }
+
+  .numbers-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 28px;
+  }
+
+  .number-card {
+    padding: 48px 28px;
+
+    text-align: center;
+
+    border-radius: 22px;
+
+    border: 1px solid var(--border);
+
+    background: var(--card);
+
+    transition: 0.3s ease;
+  }
+
+  .number-card:hover {
+    transform: translateY(-6px);
+
+    border-color: var(--accent);
+  }
+
+  .number {
+    display: block;
+
+    margin-bottom: 18px;
+
+    font-size: 3.4rem;
+
+    font-weight: 800;
+
+    color: var(--accent);
+
+    line-height: 1;
+  }
+
+  .number-card h3 {
+    font-size: 1.2rem;
+
+    font-weight: 600;
+  }
+</style>

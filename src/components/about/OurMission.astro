@@ -1,0 +1,123 @@
+---
+import aboutMission from "@/assets/images/about/about-mission.png";
+---
+
+<section class="our-mission">
+  <div class="app-layout">
+    <div class="mission-grid">
+      <div class="mission-text">
+        <span class="section-label">OUR MISSION</span>
+
+        <h2>Making history, science, and mysteries accessible to everyone.</h2>
+
+        <p>
+          GrailDaily was created to bring together fascinating stories from
+          archaeology, ancient civilizations, scientific discoveries, and
+          unexplained mysteries into one carefully curated publication.
+        </p>
+
+        <p>
+          We believe that knowledge should be engaging, visually appealing, and
+          easy to understand—without sacrificing accuracy or curiosity.
+        </p>
+      </div>
+
+      <div class="mission-media">
+        <img
+          src={aboutMission.src}
+          alt="Ancient artifacts and historical research"
+          loading="lazy"
+        />
+
+        <blockquote>
+          "Every civilization has a story. Every mystery deserves exploration."
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .our-mission {
+    padding: 80px 0;
+  }
+
+  .mission-grid {
+    display: grid;
+
+    grid-template-columns: 1.1fr 1fr;
+
+    gap: 64px;
+
+    align-items: start;
+  }
+
+  .section-label {
+    display: inline-block;
+
+    margin-bottom: 18px;
+
+    font-size: 0.8rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.12em;
+
+    color: var(--accent);
+  }
+
+  .mission-text h2 {
+    font-size: 2.6rem;
+
+    line-height: 1.25;
+
+    margin-bottom: 24px;
+  }
+
+  .mission-text p {
+    margin-bottom: 18px;
+
+    color: var(--muted-foreground);
+
+    line-height: 1.9;
+  }
+
+  .mission-media {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 24px;
+  }
+
+  .mission-media img {
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    object-fit: cover;
+
+    display: block;
+
+    border-radius: 22px;
+
+    border: 1px solid var(--border);
+  }
+
+  .mission-media blockquote {
+    margin: 0;
+
+    padding: 28px;
+
+    border-radius: 18px;
+
+    border: 1px solid var(--border);
+
+    background: color-mix(in srgb, var(--accent) 5%, transparent);
+
+    font-size: 1.3rem;
+
+    line-height: 1.7;
+
+    font-style: italic;
+  }
+</style>

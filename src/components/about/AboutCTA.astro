@@ -1,0 +1,114 @@
+<section class="about-cta">
+  <div class="app-layout">
+    <div class="cta-box">
+      <span class="section-label"> START EXPLORING </span>
+
+      <h2>Ready to discover remarkable stories?</h2>
+
+      <p>
+        Explore ancient civilizations, scientific breakthroughs, historical
+        events, and mysteries that continue to shape our understanding of the
+        world.
+      </p>
+
+      <div class="cta-actions">
+        <a href="/latest" class="btn-primary"> Explore Articles </a>
+
+        <a href="/categories" class="btn-secondary"> Browse Categories </a>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .about-cta {
+    padding: 100px 0 120px;
+  }
+
+  .cta-box {
+    padding: 80px;
+
+    text-align: center;
+
+    border-radius: 28px;
+
+    border: 1px solid var(--border);
+
+    background:
+      linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--accent) 14%, transparent),
+        transparent 55%
+      ),
+      var(--card);
+  }
+
+  .cta-box h2 {
+    margin: 18px auto 24px;
+
+    max-width: 760px;
+
+    font-size: 3rem;
+
+    line-height: 1.2;
+  }
+
+  .cta-box p {
+    max-width: 700px;
+
+    margin: 0 auto;
+
+    color: var(--muted-foreground);
+
+    line-height: 1.9;
+  }
+
+  .cta-actions {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 18px;
+
+    margin-top: 42px;
+  }
+
+  .btn-primary {
+    padding: 14px 28px;
+
+    border-radius: 999px;
+
+    background: var(--accent);
+
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    transition: 0.25s;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    padding: 14px 28px;
+
+    border-radius: 999px;
+
+    border: 1px solid var(--border);
+
+    text-decoration: none;
+
+    color: inherit;
+
+    transition: 0.25s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--accent);
+
+    color: var(--accent);
+  }
+</style>

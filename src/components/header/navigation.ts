@@ -18,7 +18,7 @@ export const navigation: NavItem[] = [
   },
   {
     label: "Latest",
-    href: "/posts",
+    href: "/latest",
   },
   {
     label: "About",

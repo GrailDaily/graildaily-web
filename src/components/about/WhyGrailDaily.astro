@@ -1,0 +1,111 @@
+<section class="why-graildaily">
+  <div class="app-layout">
+    <div class="why-grid">
+      <div class="why-left">
+        <span class="section-label"> WHY GRAILDAILY </span>
+
+        <h2>More than news. A place to satisfy curiosity.</h2>
+
+        <p>
+          GrailDaily isn't built to chase headlines. It's built for readers who
+          enjoy learning about history, archaeology, science, and the mysteries
+          that continue to inspire exploration.
+        </p>
+      </div>
+
+      <div class="why-right">
+        <div class="feature-item">
+          <h3>Carefully Curated</h3>
+
+          <p>
+            Every article is selected to educate, inspire, and spark curiosity.
+          </p>
+        </div>
+
+        <div class="feature-item">
+          <h3>Visual Storytelling</h3>
+
+          <p>
+            Rich imagery and clean layouts make every story enjoyable to read.
+          </p>
+        </div>
+
+        <div class="feature-item">
+          <h3>Always Learning</h3>
+
+          <p>
+            GrailDaily continues to evolve with every new discovery and
+            publication.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .why-graildaily {
+    padding: 90px 0;
+  }
+
+  .why-grid {
+    display: grid;
+
+    grid-template-columns: 1.1fr 1fr;
+
+    gap: 80px;
+
+    align-items: start;
+  }
+
+  .why-left h2 {
+    margin: 18px 0 24px;
+
+    font-size: 2.8rem;
+
+    line-height: 1.2;
+  }
+
+  .why-left p {
+    color: var(--muted-foreground);
+
+    line-height: 1.9;
+  }
+
+  .why-right {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 24px;
+  }
+
+  .feature-item {
+    padding: 28px;
+
+    border-radius: 18px;
+
+    border: 1px solid var(--border);
+
+    background: var(--card);
+
+    transition: 0.25s ease;
+  }
+
+  .feature-item:hover {
+    transform: translateX(8px);
+
+    border-color: var(--accent);
+  }
+
+  .feature-item h3 {
+    margin-bottom: 12px;
+
+    font-size: 1.3rem;
+  }
+
+  .feature-item p {
+    color: var(--muted-foreground);
+
+    line-height: 1.75;
+  }
+</style>
