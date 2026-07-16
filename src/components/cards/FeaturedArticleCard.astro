@@ -1,0 +1,144 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"posts">;
+}
+
+const { post } = Astro.props;
+---
+
+<a href={`/posts/${post.id}/`} class="featured-link">
+  <article class="featured-card">
+    {
+      post.data.ogImage && (
+        <div class="thumbnail">
+          <img src={post.data.ogImage} alt={post.data.title} loading="lazy" />
+        </div>
+      )
+    }
+
+    <div class="content">
+      <span class="badge">
+        {post.data.tags?.[0] ?? "General"}
+      </span>
+
+      <h2>{post.data.title}</h2>
+
+      <p class="excerpt">
+        {post.data.description}
+      </p>
+
+      <div class="meta">
+        <time datetime={post.data.pubDatetime.toISOString()}>
+          {
+            post.data.pubDatetime.toLocaleDateString("en-US", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })
+          }
+        </time>
+      </div>
+
+      <span class="read-more"> Read Article → </span>
+    </div>
+  </article>
+</a>
+
+<style>
+  .featured-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .featured-card {
+    display: grid;
+    grid-template-columns: 460px 1fr;
+    gap: 32px;
+
+    padding: 22px;
+
+    border: 1px solid var(--border);
+    border-radius: 22px;
+
+    background: var(--background);
+
+    transition: 0.25s;
+  }
+
+  .featured-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+  }
+
+  .thumbnail {
+    overflow: hidden;
+    border-radius: 18px;
+    aspect-ratio: 16/10;
+  }
+
+  .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    transition: 0.35s;
+  }
+
+  .featured-card:hover img {
+    transform: scale(1.04);
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .badge {
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  .content h2 {
+    font-size: 2.1rem;
+    line-height: 1.15;
+    margin-bottom: 18px;
+  }
+
+  .excerpt {
+    color: var(--muted-foreground);
+    line-height: 1.8;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .meta {
+    margin-top: 22px;
+    color: var(--muted-foreground);
+  }
+
+  .read-more {
+    margin-top: 22px;
+
+    color: var(--accent);
+
+    font-weight: 700;
+  }
+
+  @media (max-width: 900px) {
+    .featured-card {
+      grid-template-columns: 1fr;
+    }
+
+    .content h2 {
+      font-size: 1.7rem;
+    }
+  }
+</style>

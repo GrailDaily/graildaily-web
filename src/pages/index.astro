@@ -8,7 +8,7 @@ import config from "@/config";
 import HeroCarousel from "@/components/hero/HeroCarousel.astro";
 import Trending from "@/components/home/Trending.astro";
 import Categories from "@/components/home/Categories.astro";
-import Newsletter from "@/components/home/Newsletter.astro";
+// import Newsletter from "@/components/home/Newsletter.astro";
 import EditorPicks from "@/components/home/EditorPicks.astro";
 import RecentPosts from "@/components/home/RecentPosts.astro";
 
@@ -36,85 +36,85 @@ const categories = [
   {
     name: "Archaeology",
     description: "Ancient discoveries",
-    href: "/tags/archaeology",
+    href: "/categories/archaeology",
     image: "/images/categories/Archaeology.png",
   },
   {
     name: "Economics",
     description: "Markets & trade",
-    href: "/tags/economics",
+    href: "/categories/economics",
     image: "/images/categories/Economics.png",
   },
   {
     name: "Entertainment",
     description: "Movies, music & more",
-    href: "/tags/entertainment",
+    href: "/categories/entertainment",
     image: "/images/categories/Entertainment.png",
   },
   {
     name: "Geography",
     description: "Places & regions",
-    href: "/tags/geography",
+    href: "/categories/geography",
     image: "/images/categories/Geography.png",
   },
   {
     name: "History",
     description: "Explore the past",
-    href: "/tags/history",
+    href: "/categories/history",
     image: "/images/categories/History.png",
   },
   {
     name: "Humanity",
     description: "People & culture",
-    href: "/tags/humanity",
+    href: "/categories/humanity",
     image: "/images/categories/Humanity.png",
   },
   {
     name: "Mysteries",
     description: "Unsolved secrets",
-    href: "/tags/mysteries",
+    href: "/categories/mysteries",
     image: "/images/categories/Mysteries.png",
   },
   {
     name: "Mythology",
     description: "Legends & myths",
-    href: "/tags/mythology",
+    href: "/categories/mythology",
     image: "/images/categories/Mythology.png",
   },
   {
     name: "Nature",
     description: "Our living world",
-    href: "/tags/nature",
+    href: "/categories/nature",
     image: "/images/categories/Nature.png",
   },
   {
     name: "Politics",
     description: "Power & diplomacy",
-    href: "/tags/politics",
+    href: "/categories/politics",
     image: "/images/categories/Politics.png",
   },
   {
     name: "Religion",
     description: "Beliefs & traditions",
-    href: "/tags/religion",
+    href: "/categories/religion",
     image: "/images/categories/Religion.png",
   },
   {
     name: "Science",
     description: "Explore knowledge",
-    href: "/tags/science",
+    href: "/categories/science",
     image: "/images/categories/Science.png",
   },
   {
     name: "Space",
     description: "Beyond the stars",
-    href: "/tags/space",
+    href: "/categories/space",
     image: "/images/categories/Space.png",
   },
   {
     name: "Technology",
     description: "Ennovation",
-    href: "/tags/technology",
+    href: "/categories/technology",
     image: "/images/categories/Technology.png",
   },
 ];
@@ -133,7 +133,11 @@ const categories = [
 
   <Categories categories={categories} posts={posts} />
 
-  <Newsletter />
+  {
+    /*
+<Newsletter />
+*/
+  }
 </Layout>
 
 <script>

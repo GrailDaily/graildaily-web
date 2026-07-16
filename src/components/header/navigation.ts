@@ -14,7 +14,7 @@ export const navigation: NavItem[] = [
   },
   {
     label: "Popular",
-    href: "/popular",
+    href: "/popular/all",
   },
   {
     label: "Latest",

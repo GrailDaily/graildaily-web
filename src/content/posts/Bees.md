@@ -1,7 +1,7 @@
 ---
 author: GrailDaily
 pubDatetime: 2026-07-09T13:00:00Z
-title: Why Bees Are Essential to Life on Earth
+title: Why Bees Are Essential to Life on Earth, This is a dummy article
 featured: true
 ogImage: /images/hero/bees.jpg
 tags:

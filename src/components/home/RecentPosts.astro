@@ -17,8 +17,6 @@ const { posts, title, limit } = Astro.props;
       <h2 class="title">
         {title}
       </h2>
-
-      <a href="/posts" class="view-all"> View All → </a>
     </div>
 
     <div class="grid">
@@ -52,36 +50,8 @@ const { posts, title, limit } = Astro.props;
     gap: 18px 24px;
   }
 
-  .view-all {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-
-    color: var(--accent);
-    font-weight: 600;
-    text-decoration: none;
-
-    transition: 0.2s;
-  }
-
-  .view-all:hover {
-    border-color: var(--accent);
-
-    transform: translateY(-2px);
-
-    color: var(--accent);
-  }
-
   .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    margin-bottom: 0px;
-  }
-
-  .view-all:hover {
-    transform: translateX(4px);
+    margin-bottom: 0;
   }
 
   @media (max-width: 768px) {

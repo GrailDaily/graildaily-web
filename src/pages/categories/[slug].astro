@@ -1,0 +1,237 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/header/Header.astro";
+import ArticleCard from "@/components/cards/ArticleCard.astro";
+
+import { categories } from "@/data/categories";
+
+export async function getStaticPaths() {
+  return categories.map(category => ({
+    params: {
+      slug: category.slug,
+    },
+  }));
+}
+
+const { slug } = Astro.params;
+
+const category = categories.find(c => c.slug === slug);
+
+if (!category) {
+  throw new Error("Category not found");
+}
+
+const posts = await getCollection("posts");
+
+const categoryPosts = posts.filter(post =>
+  post.data.tags?.some(tag => tag.toLowerCase() === category.name.toLowerCase())
+);
+
+const POSTS_PER_PAGE = 30;
+
+const visiblePosts = categoryPosts.slice(0, POSTS_PER_PAGE);
+---
+
+<Layout
+  title={`${category.name} | GrailDaily`}
+  description={category.description}
+>
+  <Header />
+
+  <main class="app-layout">
+    <section class="category-hero">
+      <img src={category.image} alt={category.name} class="hero-image" />
+
+      <div class="hero-overlay"></div>
+
+      <div class="hero-content">
+        <p class="hero-label">CATEGORY</p>
+
+        <h1>{category.name}</h1>
+
+        <p class="hero-description">
+          {category.description}
+        </p>
+
+        <span class="hero-count">
+          {categoryPosts.length} Articles
+        </span>
+      </div>
+    </section>
+
+    <section class="category-posts">
+      <h2>Latest Articles</h2>
+
+      <div class="posts-grid">
+        {
+          visiblePosts.map(post => (
+            <ArticleCard post={post} variant="horizontal" />
+          ))
+        }
+      </div>
+      {
+        categoryPosts.length > POSTS_PER_PAGE && (
+          <div class="pagination-placeholder">
+            Pagination will be available soon.
+          </div>
+        )
+      }
+    </section>
+  </main>
+  <style>
+    .category-hero {
+      position: relative;
+
+      width: 100%;
+      height: 420px;
+
+      overflow: hidden;
+
+      border-radius: 24px;
+
+      margin: 40px 0 60px;
+    }
+
+    .hero-image {
+      position: absolute;
+
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+    }
+
+    .hero-overlay {
+      position: absolute;
+
+      inset: 0;
+
+      background: linear-gradient(
+        90deg,
+        rgba(7, 12, 22, 0.88) 0%,
+        rgba(7, 12, 22, 0.7) 35%,
+        rgba(7, 12, 22, 0.35) 65%,
+        rgba(7, 12, 22, 0.15) 100%
+      );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+
+      height: 100%;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      align-items: flex-start;
+
+      max-width: 620px;
+
+      padding-left: 60px;
+      padding-right: 40px;
+    }
+
+    .hero-label {
+      color: var(--accent);
+
+      font-size: 0.9rem;
+
+      font-weight: 700;
+
+      letter-spacing: 0.15em;
+
+      margin-bottom: 12px;
+    }
+
+    .hero-content h1 {
+      font-size: 3.6rem;
+
+      line-height: 1.05;
+
+      margin-bottom: 20px;
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+
+      line-height: 1.8;
+
+      max-width: 600px;
+
+      color: var(--muted-foreground);
+    }
+
+    .hero-count {
+      display: inline-block;
+
+      margin-top: 24px;
+
+      padding: 8px 16px;
+
+      border-radius: 999px;
+
+      background: var(--card);
+
+      border: 1px solid var(--border);
+
+      color: var(--accent);
+
+      font-weight: 600;
+    }
+
+    .category-posts {
+      padding-bottom: 80px;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+
+      margin-bottom: 28px;
+    }
+
+    .category-posts h2 {
+      font-size: 2rem;
+      margin-bottom: 28px;
+    }
+
+    .posts-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .article-total {
+      color: var(--muted-foreground);
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .pagination-placeholder {
+      margin-top: 48px;
+
+      text-align: center;
+
+      color: var(--muted-foreground);
+
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
+      .category-hero {
+        height: 320px;
+      }
+
+      .hero-content {
+        padding: 30px;
+      }
+
+      .hero-content h1 {
+        font-size: 2.4rem;
+      }
+    }
+  </style>
+</Layout>

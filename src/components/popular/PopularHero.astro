@@ -4,6 +4,13 @@ import { getCollection } from "astro:content";
 const posts = await getCollection("posts", ({ data }) => !data.draft);
 
 const featuredPost = posts[0];
+
+interface Props {
+  range: string;
+}
+
+const { range } = Astro.props;
+console.log("Range =", range);
 ---
 
 <section class="popular-hero">
@@ -18,10 +25,21 @@ const featuredPost = posts[0];
     </div>
 
     <nav class="popular-filter">
-      <button class="active">All Time</button>
-      <button>This Month</button>
-      <button>This Week</button>
-      <button>Today</button>
+      <a href="/popular/all" class:list={{ active: range === "all" }}>
+        All Time
+      </a>
+
+      <a href="/popular/month" class:list={{ active: range === "month" }}>
+        This Month
+      </a>
+
+      <a href="/popular/week" class:list={{ active: range === "week" }}>
+        This Week
+      </a>
+
+      <a href="/popular/today" class:list={{ active: range === "today" }}>
+        Today
+      </a>
     </nav>
 
     {
@@ -78,7 +96,11 @@ const featuredPost = posts[0];
     margin-top: 36px;
   }
 
-  .popular-filter button {
+  .popular-filter a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
     padding: 10px 18px;
 
     border-radius: 999px;
@@ -87,13 +109,22 @@ const featuredPost = posts[0];
 
     background: transparent;
 
-    cursor: pointer;
+    color: var(--foreground);
+
+    text-decoration: none;
+
+    transition: all 0.2s ease;
   }
 
   .popular-filter .active {
     background: var(--accent);
 
     color: white;
+  }
+
+  .popular-filter a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
   }
 
   .popular-featured {

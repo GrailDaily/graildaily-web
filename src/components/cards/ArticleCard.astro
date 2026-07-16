@@ -4,9 +4,10 @@ import type { CollectionEntry } from "astro:content";
 interface Props {
   post: CollectionEntry<"posts">;
   variant?: "featured" | "horizontal" | "horizontal-small" | "compact";
+  showReadingTime?: boolean;
 }
 
-const { post, variant = "compact" } = Astro.props;
+const { post, variant = "compact", showReadingTime = false } = Astro.props;
 ---
 
 <a href={`/posts/${post.id}/`} class="article-link">
@@ -50,9 +51,14 @@ const { post, variant = "compact" } = Astro.props;
           }
         </time>
 
-        <span>•</span>
-
-        <span>5 min read</span>
+        {
+          showReadingTime && (
+            <>
+              <span>•</span>
+              <span>5 min read</span>
+            </>
+          )
+        }
       </div>
     </div>
   </article>
@@ -232,16 +238,23 @@ const { post, variant = "compact" } = Astro.props;
     display: grid;
     grid-template-columns: 170px 1fr;
     gap: 14px;
+
     align-items: center;
+
     padding: 12px;
+
+    min-height: 150px;
   }
 
   .article-card.horizontal-small .thumbnail {
     margin: 0;
     width: 100%;
-    height: 110px;
+    height: 126px;
+
     aspect-ratio: auto;
+
     border-radius: 10px;
+    align-self: center;
   }
 
   .article-card.horizontal-small .thumbnail img {
@@ -253,35 +266,42 @@ const { post, variant = "compact" } = Astro.props;
   .article-card.horizontal-small .content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .article-card.horizontal-small h3 {
     margin: 0;
-    min-height: auto;
+
     font-size: 1rem;
     line-height: 1.35;
+
+    height: 2.7em;
 
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+
     overflow: hidden;
   }
 
   .article-card.horizontal-small .excerpt {
     margin-top: 8px;
     font-size: 0.9rem;
-    line-height: 1.5;
+    line-height: 1.5em;
 
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
+
     overflow: hidden;
+    text-overflow: ellipsis;
+
+    height: 4.5em;
   }
 
   .article-card.horizontal-small .meta {
-    margin-top: 10px;
-    padding-top: 0;
+    margin-top: auto;
+    padding-top: 10px;
     font-size: 0.8rem;
   }
 
