@@ -120,4 +120,33 @@ import aboutMission from "@/assets/images/about/about-mission.png";
 
     font-style: italic;
   }
+
+  @media (max-width: 768px) {
+    .our-mission {
+      padding: 56px 0;
+    }
+
+    .mission-grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    .mission-text h2 {
+      font-size: 2rem;
+    }
+
+    .mission-text p {
+      font-size: 0.96rem;
+      line-height: 1.75;
+    }
+
+    .mission-media img {
+      aspect-ratio: 16 / 10;
+    }
+
+    .mission-media blockquote {
+      padding: 20px;
+      font-size: 1.05rem;
+    }
+  }
 </style>

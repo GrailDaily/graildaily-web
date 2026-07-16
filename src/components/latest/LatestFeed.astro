@@ -30,10 +30,6 @@ const { posts } = Astro.props;
                 year: "numeric",
               })}
             </span>
-
-            <span>•</span>
-
-            <span>8 min read</span>
           </div>
         </div>
       </a>
@@ -156,16 +152,48 @@ const { posts } = Astro.props;
   }
 
   .article-meta {
-    display: flex;
-
-    gap: 10px;
-
-    align-items: center;
-
     margin-top: 18px;
 
     font-size: 0.9rem;
 
     color: var(--muted-foreground);
+  }
+
+  @media (max-width: 768px) {
+    .latest-feed {
+      margin-top: 0;
+    }
+
+    .latest-feed h2 {
+      font-size: 1.8rem;
+      margin-bottom: 6px;
+    }
+
+    .latest-item {
+      grid-template-columns: 1fr;
+      gap: 18px;
+      padding: 20px 0;
+    }
+
+    .latest-item img {
+      width: 100%;
+    }
+
+    .latest-content h3 {
+      font-size: 1.25rem;
+    }
+
+    .latest-content p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+
+      -webkit-line-clamp: 3;
+    }
+
+    .article-meta {
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.85rem;
+    }
   }
 </style>

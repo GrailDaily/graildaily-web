@@ -190,4 +190,47 @@ const featuredPost = posts[0];
       transparent
     );
   }
+
+  @media (max-width: 768px) {
+    .latest-hero {
+      padding-bottom: 40px;
+    }
+
+    .latest-header h1 {
+      font-size: 2.2rem;
+    }
+
+    .latest-header p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .latest-featured {
+      margin-top: 20px;
+      aspect-ratio: 4 / 5;
+    }
+
+    .featured-overlay {
+      padding: 24px;
+    }
+
+    .featured-overlay h2 {
+      font-size: 1.8rem;
+    }
+
+    .featured-overlay p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .featured-badge {
+      font-size: 0.72rem;
+      padding: 7px 14px;
+    }
+  }
 </style>

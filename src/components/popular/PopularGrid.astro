@@ -222,15 +222,13 @@ const { posts } = Astro.props;
     line-height: 1.8;
   }
 
-  @media (max-width: 900px) {
+  /* =========================
+   Tablet
+========================= */
+
+  @media (max-width: 1024px) {
     .popular-grid {
-      grid-template-columns: 1fr;
-
       gap: 24px;
-    }
-
-    .popular-rank {
-      font-size: 2.4rem;
     }
 
     .card-content {
@@ -239,6 +237,93 @@ const { posts } = Astro.props;
 
     .card-content h3 {
       font-size: 1.2rem;
+    }
+
+    .popular-rank {
+      font-size: 2.6rem;
+    }
+  }
+
+  /* =========================
+   Mobile
+========================= */
+
+  @media (max-width: 768px) {
+    .popular-section-header {
+      margin-top: 24px;
+      margin-bottom: 24px;
+    }
+
+    .popular-section-header h2 {
+      font-size: 1.9rem;
+    }
+
+    .popular-section-header p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      padding: 0 6px;
+    }
+
+    .popular-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-top: 32px;
+    }
+
+    .popular-card {
+      border-radius: 16px;
+    }
+
+    .popular-rank {
+      top: 14px;
+      left: 14px;
+      font-size: 2.2rem;
+    }
+
+    .card-content {
+      padding: 18px;
+    }
+
+    .card-content h3 {
+      font-size: 1.1rem;
+      line-height: 1.4;
+    }
+
+    .card-content p {
+      margin-top: 10px;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+  }
+
+  /* =========================
+   Small Mobile
+========================= */
+
+  @media (max-width: 480px) {
+    .popular-section-header h2 {
+      font-size: 1.7rem;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      padding: 5px 12px;
+    }
+
+    .popular-rank {
+      font-size: 1.9rem;
+    }
+
+    .card-content {
+      padding: 16px;
+    }
+
+    .card-content h3 {
+      font-size: 1rem;
+    }
+
+    .card-content p {
+      font-size: 0.88rem;
     }
   }
 </style>

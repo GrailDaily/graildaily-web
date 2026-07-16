@@ -178,15 +178,93 @@ const { posts } = Astro.props;
     line-height: 1.8;
   }
 
-  @media (max-width: 768px) {
+  /* ===========================
+   Tablet
+=========================== */
+
+  @media (max-width: 1024px) {
     .popular-row {
-      grid-template-columns: 1fr;
-      gap: 16px;
-      padding: 18px 16px;
+      grid-template-columns: 60px 150px 1fr;
+      gap: 18px;
+    }
+
+    .popular-row img {
+      width: 150px;
     }
 
     .rank {
-      font-size: 1.8rem;
+      font-size: 2rem;
+    }
+
+    .row-content h3 {
+      font-size: 1.15rem;
+    }
+  }
+
+  /* ===========================
+   Mobile
+=========================== */
+
+  @media (max-width: 768px) {
+    .popular-list {
+      margin-top: 56px;
+    }
+
+    .popular-section-header {
+      margin-bottom: 26px;
+    }
+
+    .popular-section-header h2 {
+      font-size: 1.9rem;
+    }
+
+    .popular-section-header p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      padding: 0 6px;
+    }
+
+    .popular-row {
+      grid-template-columns: 46px 120px 1fr;
+      gap: 14px;
+      padding: 16px 0;
+    }
+
+    .rank {
+      font-size: 1.7rem;
+    }
+
+    .popular-row img {
+      width: 120px;
+    }
+
+    .row-content h3 {
+      font-size: 1rem;
+      line-height: 1.45;
+    }
+
+    .row-content p {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      line-height: 1.6;
+
+      -webkit-line-clamp: 3;
+    }
+  }
+
+  /* ===========================
+   Small Mobile
+=========================== */
+
+  @media (max-width: 480px) {
+    .popular-row {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      padding: 18px 0;
+    }
+
+    .rank {
+      font-size: 1.5rem;
     }
 
     .popular-row img {
@@ -194,7 +272,11 @@ const { posts } = Astro.props;
     }
 
     .row-content h3 {
-      font-size: 1.1rem;
+      font-size: 1rem;
+    }
+
+    .row-content p {
+      -webkit-line-clamp: 2;
     }
   }
 </style>
