@@ -3,7 +3,12 @@ import type { CollectionEntry } from "astro:content";
 
 interface Props {
   post: CollectionEntry<"posts">;
-  variant?: "featured" | "horizontal" | "horizontal-small" | "compact";
+  variant?:
+    | "featured"
+    | "horizontal"
+    | "horizontal-small"
+    | "compact"
+    | "related";
   showReadingTime?: boolean;
 }
 
@@ -18,6 +23,7 @@ const { post, variant = "compact", showReadingTime = false } = Astro.props;
       featured: variant === "featured",
       horizontal: variant === "horizontal",
       "horizontal-small": variant === "horizontal-small",
+      related: variant === "related",
     }}
   >
     {
@@ -357,6 +363,22 @@ const { post, variant = "compact", showReadingTime = false } = Astro.props;
     margin-top: 18px;
 
     padding-top: 0;
+  }
+
+  .article-card.related {
+    overflow: hidden;
+  }
+
+  .article-card.related .thumbnail {
+    margin-bottom: 0;
+  }
+
+  .article-card.related .content {
+    padding: 16px;
+  }
+
+  .article-card.related:hover {
+    transform: translateY(-6px);
   }
 
   @media (max-width: 768px) {

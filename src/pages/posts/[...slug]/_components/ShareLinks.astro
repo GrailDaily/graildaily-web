@@ -32,18 +32,18 @@ const items = await Promise.all(
 {
   items.some(({ Icon }) => Icon) && (
     <div class="flex flex-none flex-col items-center justify-center gap-1 md:items-start">
-      <span class="italic">{t.post.sharePostIntro}</span>
-      <div class="text-center">
+      <span class="share-title">{t.post.sharePostIntro}</span>
+      <div class="flex flex-wrap items-center justify-center gap-2">
         {items.map(({ url, title, Icon }) =>
           Icon ? (
             <LinkButton
               href={`${url}${pageUrl}`}
-              class="scale-90 p-2 hover:rotate-6 sm:p-1"
+              class="rounded-full p-2 transition-all duration-300 hover:-translate-y-1 hover:text-[#D6B066]"
               title={title}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Icon class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" />
+              <Icon class="inline-block size-7 stroke-current stroke-2 opacity-90 transition-all duration-300" />
               <span class="sr-only">{title}</span>
             </LinkButton>
           ) : null
@@ -52,3 +52,12 @@ const items = await Promise.all(
     </div>
   )
 }
+
+<style>
+  .share-title {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.04em;
+  }
+</style>
