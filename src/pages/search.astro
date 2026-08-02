@@ -35,14 +35,11 @@ const t = useTranslations(locale);
 <script>
   import { initSearch } from "@/scripts/pagefind";
 
-  console.log("SEARCH PAGE LOADED");
-
   document.addEventListener("astro:after-swap", () => {
-    console.log("AFTER SWAP");
-    initSearch("#pagefind-modal-search");
+    initSearch("#pagefind-search");
   });
 
-  initSearch("#pagefind-modal-search");
+  initSearch("#pagefind-search");
 </script>
 
 <style is:global>

@@ -34,15 +34,12 @@ export async function initSearch(selector: string) {
 
   const query = params.get("q");
 
-  console.log("query =", query);
-
   if (query) {
-    setTimeout(() => {
-      console.log("Triggering search:", query);
-      search.triggerSearch(query);
-
-      console.log("triggerSearch called");
-    }, 300);
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        search.triggerSearch(query);
+      }, 50);
+    });
   }
 
   requestAnimationFrame(() => {
