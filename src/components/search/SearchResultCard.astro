@@ -1,0 +1,65 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  category?: string;
+  url: string;
+  date?: string;
+}
+
+const {
+  title,
+  description,
+  image,
+  category,
+  url,
+  date,
+} = Astro.props;
+---
+
+<article class="search-result-card">
+
+  {
+    image && (
+      <a href={url} class="search-result-image">
+        <img src={image} alt={title} loading="lazy" />
+      </a>
+    )
+  }
+
+  <div class="search-result-content">
+
+    {
+      category && (
+        <span class="search-result-category">
+          {category}
+        </span>
+      )
+    }
+
+    <h2 class="search-result-title">
+      <a href={url}>
+        {title}
+      </a>
+    </h2>
+
+    {
+      description && (
+        <p class="search-result-description">
+          {description}
+        </p>
+      )
+    }
+
+    {
+      date && (
+        <div class="search-result-date">
+          {date}
+        </div>
+      )
+    }
+
+  </div>
+
+</article>

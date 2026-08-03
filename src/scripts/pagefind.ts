@@ -17,11 +17,11 @@ export async function initSearch(selector: string) {
   const { PagefindUI } = await import("@pagefind/default-ui");
 
   const search = new PagefindUI({
-    element: selector,
-    bundlePath,
+  element: selector,
+  bundlePath,
 
-    showImages: false,
-    showSubResults: false,
+  showImages: true,
+  showSubResults: false,
 
     processTerm(term: string) {
       params.set("q", term);

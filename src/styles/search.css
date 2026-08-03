@@ -1,0 +1,351 @@
+/* ==========================================================
+   SEARCH HERO
+========================================================== */
+
+.search-hero {
+  padding: 4rem 0 2rem;
+}
+
+.search-hero-content {
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.search-label {
+  display: inline-block;
+
+  margin-bottom: 1rem;
+
+  color: var(--secondary);
+
+  font-size: 0.75rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.18em;
+
+  text-transform: uppercase;
+}
+
+.search-title {
+  margin: 0;
+
+  font-family: var(--font-heading);
+
+  font-size: clamp(3rem, 6vw, 4.5rem);
+
+  line-height: 1.05;
+
+  color: var(--heading);
+}
+
+.search-description {
+  max-width: 700px;
+
+  margin: 1.5rem auto 3rem;
+
+  font-size: 1.15rem;
+
+  line-height: 1.9;
+
+  color: var(--muted-foreground);
+}
+
+/* ==========================================================
+   PAGEFIND SEARCH BOX
+========================================================== */
+
+#pagefind-search {
+  --pagefind-ui-font: var(--font-app);
+
+  --pagefind-ui-text: var(--foreground);
+
+  --pagefind-ui-background: var(--surface);
+
+  --pagefind-ui-border: var(--border);
+
+  --pagefind-ui-primary: var(--secondary);
+
+  --pagefind-ui-tag: transparent;
+
+  --pagefind-ui-border-radius: 18px;
+
+  --pagefind-ui-border-width: 1px;
+}
+
+#pagefind-search .pagefind-ui__search-input {
+  height: 64px;
+
+  padding-inline: 24px;
+
+  border-radius: 18px;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+
+  color: var(--foreground);
+
+  font-size: 1.05rem;
+
+  transition: 0.25s;
+}
+
+#pagefind-search .pagefind-ui__search-input:focus {
+  outline: none;
+
+  border-color: var(--secondary);
+
+  box-shadow: 0 0 0 4px rgba(214, 176, 102, 0.15);
+}
+
+#pagefind-search .pagefind-ui__search-input::placeholder {
+  color: var(--muted-foreground);
+}
+
+#pagefind-search form::before {
+  color: var(--secondary);
+}
+
+/* ==========================================================
+   SEARCH RESULTS
+========================================================== */
+
+#pagefind-search .pagefind-ui__results {
+  margin-top: 3rem;
+}
+
+#pagefind-search .pagefind-ui__result {
+  padding: 2rem 0;
+
+  border-bottom: 1px solid var(--border);
+
+  transition: 0.25s;
+}
+
+#pagefind-search .pagefind-ui__result:hover {
+  transform: translateY(-2px);
+}
+
+#pagefind-search .pagefind-ui__result-title {
+  margin-bottom: 0.8rem;
+}
+
+#pagefind-search .pagefind-ui__result-title a {
+  font-family: var(--font-heading);
+
+  font-size: 2rem;
+
+  color: var(--heading);
+
+  text-decoration: none;
+
+  transition: 0.25s;
+}
+
+#pagefind-search .pagefind-ui__result-title a:hover {
+  color: var(--secondary);
+}
+
+#pagefind-search .pagefind-ui__result-excerpt {
+  margin-top: 0.75rem;
+
+  color: var(--foreground);
+
+  line-height: 1.9;
+
+  font-size: 1.05rem;
+}
+
+#pagefind-search .pagefind-ui__result-meta {
+  margin-top: 1rem;
+
+  color: var(--muted-foreground);
+
+  font-size: 0.9rem;
+}
+
+/* ==========================================================
+   RESULT LAYOUT
+========================================================== */
+
+#pagefind-search .pagefind-ui__result {
+  display: grid;
+
+  grid-template-columns: 240px 1fr;
+
+  gap: 2rem;
+
+  align-items: start;
+}
+
+#pagefind-search .pagefind-ui__result-thumb {
+  overflow: hidden;
+
+  border-radius: 18px;
+
+  aspect-ratio: 16 / 10;
+
+  background: var(--surface);
+}
+
+#pagefind-search .pagefind-ui__result-thumb img {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 0.35s ease;
+}
+
+#pagefind-search .pagefind-ui__result:hover img {
+  transform: scale(1.04);
+}
+
+#pagefind-search .pagefind-ui__result-inner {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+#pagefind-search .pagefind-ui__result-link {
+  text-decoration: none;
+}
+
+#pagefind-search .pagefind-ui__result-excerpt {
+  max-width: 700px;
+}
+
+@media (max-width: 900px) {
+  #pagefind-search .pagefind-ui__result {
+    grid-template-columns: 1fr;
+
+    gap: 1.5rem;
+  }
+}
+
+.pagefind-ui__message {
+  margin: 2rem 0;
+
+  font-size: 0.95rem;
+
+  color: var(--muted-foreground);
+
+  font-weight: 500;
+}
+
+.pagefind-ui__no-results {
+  padding: 5rem 0;
+
+  text-align: center;
+
+  font-size: 1.1rem;
+
+  color: var(--muted-foreground);
+}
+
+
+/* ===========================================================
+   SEARCH HERO
+=========================================================== */
+
+.search-hero {
+  max-width: 900px;
+  margin: 0 auto 5rem;
+  text-align: center;
+}
+
+.search-hero-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: .45rem 1rem;
+
+  border-radius: 999px;
+
+  background: rgba(214,176,102,.12);
+
+  color: var(--gold);
+
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+
+  text-transform: uppercase;
+}
+
+.search-title {
+  margin-top: 1.6rem;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: clamp(2.8rem,5vw,4.5rem);
+
+  line-height: 1.05;
+
+  color: var(--heading);
+}
+
+.search-description {
+  max-width: 760px;
+
+  margin-top: 1.4rem;
+
+  font-size: 1.15rem;
+
+  line-height: 1.9;
+
+  color: var(--muted-foreground);
+}
+
+/* ===========================================================
+   PAGEFIND SEARCH BOX
+=========================================================== */
+
+#pagefind-search {
+  width: 100%;
+
+  margin-top: 2.5rem;
+}
+
+#pagefind-search .pagefind-ui__form {
+  margin-bottom: 0;
+}
+
+#pagefind-search .pagefind-ui__search-input {
+  height: 68px !important;
+
+  padding-inline: 24px !important;
+
+  border-radius: 18px !important;
+
+  border: 1px solid var(--border) !important;
+
+  background: var(--surface) !important;
+
+  color: var(--foreground) !important;
+
+  font-size: 1.05rem !important;
+
+  transition: all .25s ease;
+}
+
+#pagefind-search .pagefind-ui__search-input:focus {
+  border-color: var(--gold) !important;
+
+  box-shadow: 0 0 0 4px rgba(214,176,102,.12);
+}
+
+#pagefind-search .pagefind-ui__search-input::placeholder {
+  color: var(--muted-foreground);
+}

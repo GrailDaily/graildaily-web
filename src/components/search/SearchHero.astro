@@ -1,0 +1,34 @@
+---
+interface Props {
+  pagefindBundlePath: string;
+}
+
+const { pagefindBundlePath } = Astro.props;
+---
+
+<section class="search-hero">
+
+  <div class="search-hero-inner">
+
+    <span class="search-badge">
+      SEARCH
+    </span>
+
+    <h1 class="search-title">
+      Discover Knowledge
+    </h1>
+
+    <p class="search-description">
+      Search thousands of articles about history,
+      archaeology, science, mysteries,
+      mythology and ancient civilizations.
+    </p>
+
+    <div
+      id="pagefind-search"
+      data-bundle-path={pagefindBundlePath}
+    ></div>
+
+  </div>
+
+</section>

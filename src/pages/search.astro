@@ -8,6 +8,8 @@ import Main from "@/components/Main.astro";
 import { getAssetPath } from "@/utils/withBase";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
+import "@/styles/search.css";
+import SearchHero from "@/components/search/SearchHero.astro";
 
 const locale = Astro.currentLocale ?? config.site.lang;
 
@@ -27,8 +29,8 @@ const t = useTranslations(locale);
 
   <Breadcrumb />
 
-  <Main pageTitle={t.pages.searchTitle} pageDesc={t.pages.searchDesc}>
-    <div id="pagefind-search" data-bundle-path={pagefindBundlePath}></div>
+  <Main>
+    <SearchHero pagefindBundlePath={pagefindBundlePath} />
   </Main>
 </Layout>
 
