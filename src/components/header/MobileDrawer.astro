@@ -1,5 +1,7 @@
 ---
 import { navigation } from "./navigation";
+import ThemeToggle from "./ThemeToggle.astro";
+
 const currentPath = Astro.url.pathname;
 ---
 
@@ -37,6 +39,21 @@ const currentPath = Astro.url.pathname;
         })
       }
     </nav>
+    <div class="mobile-actions">
+      <button id="mobile-search-button" class="mobile-action" type="button">
+        <span>🔍</span>
+
+        <span>Search</span>
+      </button>
+
+      <div class="mobile-theme">
+        <span>Theme</span>
+
+        <ThemeToggle />
+      </div>
+    </div>
+
+    <div class="mobile-footer">GrailDaily</div>
   </aside>
 </div>
 
@@ -141,6 +158,74 @@ const currentPath = Astro.url.pathname;
 
     background: color-mix(in srgb, var(--accent) 12%, transparent);
   }
+
+  .mobile-actions {
+    margin-top: 34px;
+
+    padding-top: 24px;
+
+    border-top: 1px solid var(--border);
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+  }
+
+  .mobile-action {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    width: 100%;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: transparent;
+
+    color: var(--foreground);
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+  }
+
+  .mobile-action:hover {
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+  }
+
+  .mobile-theme {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 12px;
+  }
+
+  .mobile-footer {
+    margin-top: 30px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--muted-foreground);
+
+    font-size: 13px;
+
+    text-align: center;
+  }
 </style>
 
 <script>
@@ -149,6 +234,7 @@ const currentPath = Astro.url.pathname;
     const open = document.getElementById("mobile-menu-button");
     const close = document.getElementById("mobile-close");
     const backdrop = document.getElementById("mobile-backdrop");
+    const searchButton = document.getElementById("mobile-search-button");
 
     if (!drawer || !open) return;
 
@@ -178,6 +264,12 @@ const currentPath = Astro.url.pathname;
     open.onclick = show;
     close?.addEventListener("click", hide);
     backdrop?.addEventListener("click", hide);
+
+    searchButton?.addEventListener("click", () => {
+      hide();
+
+      document.dispatchEvent(new Event("open-search"));
+    });
 
     document.addEventListener("keydown", e => {
       if (e.key === "Escape") hide();
