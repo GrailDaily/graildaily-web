@@ -1,0 +1,226 @@
+---
+interface CmsArticle {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  featuredImage: string | null;
+  category: string;
+  author: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string | null;
+}
+
+interface Props {
+  currentArticle: CmsArticle;
+}
+
+const { currentArticle } = Astro.props;
+
+const apiUrl = `${import.meta.env.CMS_API_URL ?? "http://localhost:3000"}/api/articles`;
+
+const response = await fetch(apiUrl);
+
+let articles: CmsArticle[] = [];
+
+if (response.ok) {
+  const data = await response.json();
+
+  articles = data.articles
+    .filter(
+      (article: CmsArticle) =>
+        article.status === "Published" &&
+        article.slug !== currentArticle.slug &&
+        article.category === currentArticle.category
+    )
+    .sort((a: CmsArticle, b: CmsArticle) => {
+      const dateA = new Date(a.publishedAt ?? a.createdAt).getTime();
+
+      const dateB = new Date(b.publishedAt ?? b.createdAt).getTime();
+
+      return dateB - dateA;
+    })
+    .slice(0, 3);
+}
+---
+
+{
+  articles.length > 0 && (
+    <section class="related-posts">
+      <h2>Related Stories</h2>
+
+      <div class="related-grid">
+        {articles.map(article => (
+          <a href={`/cms-posts/${article.slug}/`} class="cms-related-card">
+            <article class="article-card related">
+              {article.featuredImage && (
+                <div class="thumbnail">
+                  <img
+                    src={article.featuredImage}
+                    alt={article.title}
+                    loading="lazy"
+                  />
+                </div>
+              )}
+
+              <div class="content">
+                <h3>{article.title}</h3>
+
+                <p class="excerpt">{article.excerpt}</p>
+
+                <div class="meta">
+                  <span class="tag">{article.category}</span>
+
+                  <span>•</span>
+
+                  <time datetime={article.publishedAt ?? article.createdAt}>
+                    {new Date(
+                      article.publishedAt ?? article.createdAt
+                    ).toLocaleDateString("en-US", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </time>
+                </div>
+              </div>
+            </article>
+          </a>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .related-posts {
+    margin-top: 7rem;
+    padding-top: 4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .related-posts h2 {
+    font-family: "Playfair Display";
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 2.5rem;
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.75rem;
+  }
+
+  .cms-related-card {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .cms-related-card:hover {
+    text-decoration: none;
+  }
+
+  .article-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 18px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--background) 96%, white 4%);
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      background 0.2s ease;
+  }
+
+  .article-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--background) 92%, white 8%);
+  }
+
+  .thumbnail {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 14px;
+  }
+
+  .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.25s ease;
+  }
+
+  .article-card:hover .thumbnail img {
+    transform: scale(1.03);
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .article-card h3 {
+    font-size: 1.05rem;
+    line-height: 1.4;
+    min-height: 3em;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .excerpt {
+    margin-top: 0.75rem;
+    color: var(--muted-foreground);
+    line-height: 1.7;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+    min-height: 5.2em;
+  }
+
+  .meta {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-top: 18px;
+
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+  }
+
+  .tag {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  time {
+    white-space: nowrap;
+  }
+
+  @media (max-width: 900px) {
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,49 @@
+export interface CmsArticle {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  featuredImage: string | null;
+  category: string;
+  author: string;
+  status: "Draft" | "Review" | "Scheduled" | "Published" | "Archived";
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string | null;
+}
+
+interface CmsArticlesResponse {
+  articles: CmsArticle[];
+  total: number;
+}
+
+const CMS_API_URL = import.meta.env.CMS_API_URL ?? "http://localhost:3000";
+
+export async function getCmsArticles(): Promise<CmsArticle[]> {
+  const response = await fetch(`${CMS_API_URL}/api/articles`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch CMS articles: ${response.status}`);
+  }
+
+  const data = (await response.json()) as CmsArticlesResponse;
+
+  return data.articles;
+}
+
+export async function getCmsArticle(slug: string): Promise<CmsArticle | null> {
+  const response = await fetch(
+    `${CMS_API_URL}/api/articles/${encodeURIComponent(slug)}`
+  );
+
+  if (response.status === 404) {
+    return null;
+  }
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch CMS article: ${response.status}`);
+  }
+
+  return (await response.json()) as CmsArticle;
+}

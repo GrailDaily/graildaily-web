@@ -1,0 +1,36 @@
+---
+import Datetime from "./Datetime.astro";
+
+interface CmsArticle {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  category: string;
+  author: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string | null;
+}
+
+interface Props {
+  article: CmsArticle;
+}
+
+const { article } = Astro.props;
+const publishedDate = new Date(article.publishedAt ?? article.createdAt);
+---
+
+<li class="my-6">
+  <a
+    href={`/cms-posts/${article.slug}/`}
+    class="text-accent inline-block text-lg font-medium decoration-dashed underline-offset-4 hover:underline focus-visible:no-underline focus-visible:underline-offset-0"
+  >
+    {article.title}
+  </a>
+
+  <Datetime pubDatetime={publishedDate} />
+
+  <p>{article.excerpt}</p>
+</li>

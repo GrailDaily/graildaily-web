@@ -1,0 +1,86 @@
+---
+import IconArrowLeft from "@/assets/icons/IconArrowLeft.svg";
+import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
+
+interface CmsArticle {
+  id: string;
+  title: string;
+  slug: string;
+  publishedAt: string | null;
+  createdAt: string;
+}
+
+interface Props {
+  currentSlug: string;
+}
+
+const { currentSlug } = Astro.props;
+
+const apiUrl = `${import.meta.env.CMS_API_URL ?? "http://localhost:3000"}/api/articles`;
+
+const response = await fetch(apiUrl);
+
+let articles: CmsArticle[] = [];
+
+if (response.ok) {
+  const data = await response.json();
+
+  articles = data.articles
+    .filter(
+      (article: CmsArticle & { status: string }) =>
+        article.status === "Published"
+    )
+    .sort((a: CmsArticle, b: CmsArticle) => {
+      const dateA = new Date(a.publishedAt ?? a.createdAt).getTime();
+
+      const dateB = new Date(b.publishedAt ?? b.createdAt).getTime();
+
+      return dateB - dateA;
+    });
+}
+
+const currentIndex = articles.findIndex(
+  article => article.slug === currentSlug
+);
+
+const prevPost =
+  currentIndex >= 0 ? (articles[currentIndex + 1] ?? null) : null;
+
+const nextPost = currentIndex > 0 ? (articles[currentIndex - 1] ?? null) : null;
+---
+
+<div data-pagefind-ignore class="my-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
+  {
+    prevPost && (
+      <a
+        href={`/cms-posts/${prevPost.slug}/`}
+        class="flex w-full gap-1 hover:opacity-75"
+      >
+        <IconArrowLeft class="inline-block flex-none rtl:rotate-180" />
+
+        <div>
+          <span>Previous Post</span>
+
+          <div class="text-accent/85 text-sm">{prevPost.title}</div>
+        </div>
+      </a>
+    )
+  }
+
+  {
+    nextPost && (
+      <a
+        href={`/cms-posts/${nextPost.slug}/`}
+        class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"
+      >
+        <div>
+          <span>Next Post</span>
+
+          <div class="text-accent/85 text-sm">{nextPost.title}</div>
+        </div>
+
+        <IconArrowRight class="inline-block flex-none rtl:rotate-180" />
+      </a>
+    )
+  }
+</div>

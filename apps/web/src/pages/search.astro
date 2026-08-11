@@ -1,0 +1,31 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/header/Header.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import Main from "@/components/Main.astro";
+import SearchHero from "@/components/search/SearchHero.astro";
+
+import "../styles/search.css";
+
+import { getAssetPath } from "@/utils/withBase";
+
+const pagefindBundlePath = getAssetPath("pagefind/");
+---
+
+<Layout title="Search | GrailDaily">
+  <Header />
+
+  <Breadcrumb />
+
+  <Main>
+    <SearchHero pagefindBundlePath={pagefindBundlePath} />
+  </Main>
+</Layout>
+
+<script>
+  import { initSearch } from "@/scripts/pagefind";
+
+  document.addEventListener("astro:page-load", () => {
+    initSearch("#pagefind-search");
+  });
+</script>

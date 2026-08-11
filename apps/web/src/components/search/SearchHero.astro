@@ -1,0 +1,47 @@
+---
+interface Props {
+  pagefindBundlePath: string;
+}
+
+const { pagefindBundlePath } = Astro.props;
+
+const popularSearches = [
+  "History",
+  "Archaeology",
+  "Vikings",
+  "Ancient Egypt",
+  "Rome",
+  "Science",
+  "Space",
+  "Mythology",
+];
+---
+
+<section class="search-page">
+  <header class="search-header">
+    <span class="search-badge"> Search </span>
+
+    <h1>Search the GrailDaily Archive</h1>
+
+    <p>
+      Explore thousands of articles covering history, archaeology, science,
+      mythology, mysteries, and ancient civilizations.
+    </p>
+  </header>
+
+  <div id="pagefind-search" data-bundle-path={pagefindBundlePath}></div>
+
+  <section class="popular-searches">
+    <h2>Popular Searches</h2>
+
+    <div class="popular-search-list">
+      {
+        popularSearches.map(tag => (
+          <button class="popular-search" data-search={tag}>
+            {tag}
+          </button>
+        ))
+      }
+    </div>
+  </section>
+</section>

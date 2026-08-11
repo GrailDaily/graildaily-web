@@ -1,20 +1,10 @@
-# Ignore everything
-/*
-
-# Except these files & folders
-!/src
-!/public
-!/.github
-!tsconfig.json
-!astro.config.ts
-!package.json
-!.prettierrc
-!eslint.config.js
-!README.md
-!.vscode
-
-# Ignore MDX files
-*.mdx
-
-# Ignore AstroPaper tutorial backup
-src/content/tutorial-backup/**
+node_modules
+.next
+.astro
+dist
+build
+coverage
+public/pagefind
+apps/cms/.agents
+apps/cms/lib/generated
+apps/web/src/content/tutorial-backup

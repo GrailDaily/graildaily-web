@@ -1,0 +1,135 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  category: string;
+  author: string;
+  date: Date;
+}
+
+const { title, description, category, author, date } = Astro.props;
+---
+
+<section class="article-header">
+  <nav class="breadcrumb">
+    <a href="/">Home</a>
+    <span>/</span>
+    <a href={`/categories/${category.toLowerCase()}`}>
+      {category}
+    </a>
+  </nav>
+
+  <span class="category">
+    {category}
+  </span>
+
+  <h1>{title}</h1>
+
+  <p class="description">
+    {description}
+  </p>
+
+  <div class="meta">
+    <div class="author">
+      <strong>{author}</strong>
+      <span>
+        {
+          date.toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          })
+        }
+      </span>
+    </div>
+
+    <button class="share-btn"> Share </button>
+  </div>
+</section>
+<style>
+  .article-header {
+    max-width: 900px;
+
+    margin: 0 auto 56px;
+  }
+
+  .breadcrumb {
+    display: flex;
+
+    gap: 0.5rem;
+
+    font-size: 0.9rem;
+
+    color: #94a3b8;
+
+    margin-bottom: 24px;
+  }
+
+  .category {
+    display: inline-block;
+
+    color: #d6b066;
+
+    letter-spacing: 0.15em;
+
+    font-size: 0.78rem;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    margin-bottom: 18px;
+  }
+
+  .article-header h1 {
+    font-family: "Playfair Display";
+
+    font-size: 3.4rem;
+
+    line-height: 1.1;
+
+    color: white;
+
+    margin-bottom: 24px;
+  }
+
+  .description {
+    max-width: 720px;
+
+    font-size: 1.2rem;
+
+    color: #cbd5e1;
+
+    line-height: 1.8;
+  }
+
+  .meta {
+    margin-top: 36px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+  }
+
+  .author {
+    display: flex;
+
+    gap: 18px;
+
+    color: #94a3b8;
+  }
+
+  .share-btn {
+    padding: 10px 20px;
+
+    border-radius: 999px;
+
+    border: 1px solid #334155;
+
+    background: none;
+
+    color: white;
+  }
+</style>

@@ -1,0 +1,218 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/header/Header.astro";
+import { useTranslations } from "@/i18n";
+import config from "@/config";
+import { getCmsArticles } from "@/lib/cms";
+import { cmsArticlesToHomePosts } from "@/lib/cms-adapter";
+import type { HomePost } from "@/lib/home-post";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+
+// Redirect to 404 page if `showArchives` config is false
+const notFoundUrl = getRelativeLocaleUrl(locale, "404");
+
+if (!config.features.showArchives && notFoundUrl) {
+  return Astro.rewrite(notFoundUrl);
+}
+
+const t = useTranslations(locale);
+
+const cmsArticles = await getCmsArticles();
+
+const posts: HomePost[] = cmsArticlesToHomePosts(
+  cmsArticles.filter(article => article.status === "Published")
+);
+
+const sortedPosts = [...posts].sort(
+  (a, b) =>
+    new Date(b.data.pubDatetime).getTime() -
+    new Date(a.data.pubDatetime).getTime()
+);
+
+const monthFormatter = new Intl.DateTimeFormat(locale, {
+  month: "long",
+});
+
+interface MonthGroup {
+  month: number;
+  posts: HomePost[];
+}
+
+interface YearGroup {
+  year: number;
+  posts: HomePost[];
+  months: MonthGroup[];
+}
+
+const yearMap = new Map<number, HomePost[]>();
+
+for (const post of sortedPosts) {
+  const year = post.data.pubDatetime.getFullYear();
+
+  if (!yearMap.has(year)) {
+    yearMap.set(year, []);
+  }
+
+  yearMap.get(year)!.push(post);
+}
+
+const yearGroups: YearGroup[] = [...yearMap.entries()]
+  .sort(([yearA], [yearB]) => yearB - yearA)
+  .map(([year, yearPosts]) => {
+    const monthMap = new Map<number, HomePost[]>();
+
+    for (const post of yearPosts) {
+      const month = post.data.pubDatetime.getMonth() + 1;
+
+      if (!monthMap.has(month)) {
+        monthMap.set(month, []);
+      }
+
+      monthMap.get(month)!.push(post);
+    }
+
+    const months: MonthGroup[] = [...monthMap.entries()]
+      .sort(([monthA], [monthB]) => monthB - monthA)
+      .map(([month, monthPosts]) => ({
+        month,
+        posts: monthPosts,
+      }));
+
+    return {
+      year,
+      posts: yearPosts,
+      months,
+    };
+  });
+---
+
+<Layout title={`${t.pages.archivesTitle} | ${config.site.title}`}>
+  <Header />
+
+  <main class="archives-page">
+    {
+      yearGroups.map(yearGroup => (
+        <section class="archive-year">
+          <div class="archive-year-header">
+            <h2>{yearGroup.year}</h2>
+
+            <span>{yearGroup.posts.length}</span>
+          </div>
+
+          {yearGroup.months.map(monthGroup => (
+            <section class="archive-month">
+              <div class="archive-month-header">
+                <h3>
+                  {monthFormatter.format(
+                    new Date(2000, monthGroup.month - 1, 1)
+                  )}
+                </h3>
+
+                <span>{monthGroup.posts.length}</span>
+              </div>
+
+              <ul>
+                {monthGroup.posts.map(post => (
+                  <li class="archive-post">
+                    <a href={post.href}>{post.data.title}</a>
+
+                    <time datetime={post.data.pubDatetime.toISOString()}>
+                      {post.data.pubDatetime.toLocaleDateString(locale, {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    </time>
+
+                    <p>{post.data.description}</p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </section>
+      ))
+    }
+  </main>
+</Layout>
+
+<style>
+  .archives-page {
+    width: min(100% - 2rem, 1100px);
+    margin: 0 auto;
+    padding: 3rem 0 5rem;
+  }
+
+  .archive-year {
+    margin-bottom: 4rem;
+  }
+
+  .archive-year-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .archive-year-header h2 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  .archive-year-header span,
+  .archive-month-header span {
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+  }
+
+  .archive-month {
+    margin-bottom: 2.5rem;
+  }
+
+  .archive-month-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .archive-month-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .archive-post {
+    margin: 1.5rem 0;
+    list-style: none;
+  }
+
+  .archive-post a {
+    display: inline-block;
+    color: var(--accent);
+    font-size: 1.125rem;
+    font-weight: 500;
+    text-decoration: none;
+    text-decoration-style: dashed;
+    text-underline-offset: 4px;
+  }
+
+  .archive-post a:hover {
+    text-decoration: underline;
+  }
+
+  .archive-post time {
+    display: block;
+    margin-top: 0.35rem;
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+  }
+
+  .archive-post p {
+    margin-top: 0.5rem;
+    line-height: 1.7;
+  }
+</style>

@@ -1,0 +1,171 @@
+---
+import Header from "@/components/header/Header.astro";
+import PostLayout from "@/layouts/PostLayout.astro";
+import Datetime from "@/components/Datetime.astro";
+
+import ShareLinks from "../../posts/[...slug]/_components/ShareLinks.astro";
+import CmsAdjacentPostNav from "@/components/post/CmsAdjacentPostNav.astro";
+import CmsRelatedPosts from "@/components/post/CmsRelatedPosts.astro";
+
+import { getCmsArticle } from "@/lib/cms";
+import { renderCmsMarkdown } from "@/lib/cms-markdown";
+
+import config from "@/config";
+import { slugifyStr } from "@/utils/slugify";
+
+interface Props {
+  slug: string;
+}
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect("/404");
+}
+
+const article = await getCmsArticle(slug);
+
+if (!article || article.status !== "Published") {
+  return Astro.redirect("/404", 404);
+}
+
+const contentHtml = await renderCmsMarkdown(article.content);
+
+const publishedDate = new Date(article.publishedAt ?? article.createdAt);
+
+const modifiedDate = new Date(article.updatedAt);
+---
+
+<PostLayout
+  title={`${article.title} | ${config.site.title}`}
+  description={article.excerpt}
+  canonicalURL={`/cms-posts/${article.slug}/`}
+  ogImage={article.featuredImage ?? undefined}
+  pubDatetime={publishedDate}
+  modDatetime={modifiedDate}
+>
+  <Header />
+
+  <!-- Reading Progress -->
+  <div class="reading-progress">
+    <div id="reading-progress-bar"></div>
+  </div>
+
+  <main class="article-page">
+    <!-- ================= HEADER ================= -->
+
+    <section class="article-header">
+      <nav class="article-breadcrumb">
+        <a href="/">Home</a>
+
+        <span>/</span>
+
+        <a href={`/categories/${slugifyStr(article.category)}`}>
+          {article.category}
+        </a>
+      </nav>
+
+      <div class="article-category">
+        {article.category}
+      </div>
+
+      <h1 class="article-title">
+        {article.title}
+      </h1>
+
+      <p class="article-description">
+        {article.excerpt}
+      </p>
+
+      <div class="article-meta">
+        <div class="article-author">
+          <div class="author-avatar">GD</div>
+
+          <div class="author-info">
+            <strong>{article.author}</strong>
+
+            <Datetime
+              pubDatetime={new Date(article.publishedAt ?? article.createdAt)}
+            />
+          </div>
+        </div>
+
+        <ShareLinks />
+      </div>
+    </section>
+
+    <!-- ================= HERO ================= -->
+
+    {
+      article.featuredImage && (
+        <section class="article-hero">
+          <img src={article.featuredImage} alt={article.title} />
+        </section>
+      )
+    }
+
+    <!-- ================= CONTENT ================= -->
+
+    <section class="article-container">
+      <article
+        id="article"
+        class="article-content"
+        data-pagefind-body
+        set:html={contentHtml}
+      />
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+
+    <section class="article-bottom">
+      <div class="article-footer-inner">
+        <CmsAdjacentPostNav currentSlug={article.slug} />
+
+        <CmsRelatedPosts currentArticle={article} />
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= READING PROGRESS ================= -->
+
+  <script is:inline>
+    function initReadingProgress() {
+      const article = document.querySelector(".article-content");
+      const bar = document.getElementById("reading-progress-bar");
+
+      if (!article || !bar) return;
+
+      function updateProgress() {
+        const rect = article.getBoundingClientRect();
+
+        const articleTop = window.scrollY + rect.top;
+        const articleHeight = article.offsetHeight;
+
+        const scroll = window.scrollY - articleTop + window.innerHeight * 0.25;
+
+        const percent = Math.min(
+          Math.max((scroll / articleHeight) * 100, 0),
+          100
+        );
+
+        bar.style.width = percent + "%";
+      }
+
+      updateProgress();
+
+      window.addEventListener("scroll", updateProgress, {
+        passive: true,
+      });
+
+      window.addEventListener("resize", updateProgress);
+    }
+
+    document.addEventListener("astro:page-load", initReadingProgress);
+
+    document.addEventListener("DOMContentLoaded", initReadingProgress);
+
+    initReadingProgress();
+  </script>
+</PostLayout>

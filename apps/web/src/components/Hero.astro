@@ -1,0 +1,12 @@
+---
+import type { HomePost } from "@/lib/home-post";
+import HeroCarousel from "./hero/HeroCarousel.astro";
+
+interface Props {
+  posts: HomePost[];
+}
+
+const { posts } = Astro.props;
+---
+
+<HeroCarousel posts={posts} />

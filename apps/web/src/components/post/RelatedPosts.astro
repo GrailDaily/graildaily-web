@@ -1,0 +1,64 @@
+---
+import { getCollection } from "astro:content";
+import ArticleCard from "@/components/cards/ArticleCard.astro";
+import { getSortedPosts } from "@/utils/getSortedPosts";
+import type { HomePostData } from "@/lib/home-post";
+
+const { currentPost } = Astro.props;
+
+const posts = getSortedPosts(await getCollection("posts"));
+
+const currentData = currentPost.data as HomePostData;
+
+const relatedPosts = posts
+  .filter(post => {
+    if (post.id === currentPost.id) return false;
+
+    const data = post.data as HomePostData;
+
+    return data.tags.some((tag: string) => currentData.tags.includes(tag));
+  })
+  .slice(0, 3);
+---
+
+<section class="related-posts">
+  <h2>Related Stories</h2>
+
+  <div class="related-grid">
+    {relatedPosts.map(post => <ArticleCard post={post} variant="related" />)}
+  </div>
+</section>
+
+<style>
+  .related-posts {
+    margin-top: 7rem;
+
+    padding-top: 4rem;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .related-posts h2 {
+    font-family: "Playfair Display";
+
+    font-size: 2.4rem;
+
+    font-weight: 700;
+
+    margin-bottom: 2.5rem;
+  }
+
+  .related-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 1.75rem;
+  }
+
+  @media (max-width: 900px) {
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
