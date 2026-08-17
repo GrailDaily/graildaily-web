@@ -1,0 +1,303 @@
+---
+import PostLayout from "@/layouts/PostLayout.astro";
+import { getCmsArticles } from "@/lib/cms";
+import config from "@/config";
+
+export const prerender = false;
+
+const articles = await getCmsArticles();
+---
+
+<PostLayout
+  title={`CMS Articles | ${config.site.title}`}
+  description={`Published articles from ${config.site.title} CMS.`}
+>
+  <main class="cms-posts-page">
+    <div class="cms-posts-container">
+      <header class="cms-posts-header">
+        <span class="cms-posts-eyebrow">GrailDaily CMS</span>
+
+        <h1>Published Articles</h1>
+
+        <p>
+          Explore articles published through the GrailDaily content management
+          system.
+        </p>
+      </header>
+
+      {
+        articles.length === 0 ? (
+          <div class="cms-empty">
+            <p>No published articles found.</p>
+          </div>
+        ) : (
+          <div class="cms-posts-grid">
+            {articles.map(article => (
+              <article class="cms-post-card">
+                {article.featuredImage ? (
+                  <a
+                    href={`/cms-posts/${article.slug}/`}
+                    class="cms-post-image-link"
+                  >
+                    <img
+                      src={article.featuredImage}
+                      alt={article.title}
+                      class="cms-post-image"
+                      loading="lazy"
+                    />
+                  </a>
+                ) : (
+                  <a
+                    href={`/cms-posts/${article.slug}/`}
+                    class="cms-post-image-link cms-post-image-placeholder"
+                  >
+                    <span>No Image</span>
+                  </a>
+                )}
+
+                <div class="cms-post-card-content">
+                  <a
+                    href={`/categories/${article.category
+                      .toLowerCase()
+                      .replace(/\s+/g, "-")}/`}
+                    class="cms-post-category"
+                  >
+                    {article.category}
+                  </a>
+
+                  <h2>
+                    <a href={`/cms-posts/${article.slug}/`}>{article.title}</a>
+                  </h2>
+
+                  <p class="cms-post-excerpt">{article.excerpt}</p>
+
+                  <div class="cms-post-meta">
+                    <span>{article.author}</span>
+
+                    <span class="cms-post-dot">•</span>
+
+                    <span>
+                      {new Date(
+                        article.publishedAt ?? article.createdAt
+                      ).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </span>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </main>
+</PostLayout>
+
+<style>
+  .cms-posts-page {
+    width: 100%;
+    padding: 72px 24px 96px;
+  }
+
+  .cms-posts-container {
+    width: min(1180px, 100%);
+    margin: 0 auto;
+  }
+
+  .cms-posts-header {
+    max-width: 720px;
+    margin: 0 auto 56px;
+    text-align: center;
+  }
+
+  .cms-posts-eyebrow {
+    display: inline-block;
+    margin-bottom: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #d6b066;
+  }
+
+  .cms-posts-header h1 {
+    margin: 0;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+  }
+
+  .cms-posts-header p {
+    max-width: 620px;
+    margin: 18px auto 0;
+    color: var(--color-text-secondary, #64748b);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .cms-posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+  }
+
+  .cms-post-card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--color-border, #e6e9ee);
+    border-radius: 14px;
+    background: var(--color-bg-card, #ffffff);
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .cms-post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 36px rgba(15, 23, 42, 0.09);
+  }
+
+  .cms-post-image-link {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #e6e9ee;
+  }
+
+  .cms-post-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 300ms ease;
+  }
+
+  .cms-post-card:hover .cms-post-image {
+    transform: scale(1.035);
+  }
+
+  .cms-post-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    font-size: 0.875rem;
+  }
+
+  .cms-post-card-content {
+    padding: 22px 22px 24px;
+  }
+
+  .cms-post-category {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: #b58d3d;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .cms-post-card h2 {
+    margin: 0;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 1.35rem;
+    line-height: 1.3;
+  }
+
+  .cms-post-card h2 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .cms-post-card h2 a:hover {
+    opacity: 0.72;
+  }
+
+  .cms-post-excerpt {
+    display: -webkit-box;
+    margin: 12px 0 20px;
+    overflow: hidden;
+    color: var(--color-text-secondary, #64748b);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .cms-post-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: var(--color-text-secondary, #64748b);
+    font-size: 0.75rem;
+  }
+
+  .cms-post-dot {
+    opacity: 0.5;
+  }
+
+  .cms-empty {
+    display: flex;
+    min-height: 240px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border, #e6e9ee);
+    border-radius: 14px;
+    color: var(--color-text-secondary, #64748b);
+  }
+
+  @media (max-width: 900px) {
+    .cms-posts-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .cms-posts-page {
+      padding: 48px 16px 72px;
+    }
+
+    .cms-posts-header {
+      margin-bottom: 36px;
+    }
+
+    .cms-posts-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .cms-post-card-content {
+      padding: 20px;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .cms-post-card {
+      background: var(--color-bg-card, #0f172a);
+      border-color: #2a3345;
+    }
+
+    .cms-post-image-link {
+      background: #1e293b;
+    }
+
+    .cms-posts-header p,
+    .cms-post-excerpt,
+    .cms-post-meta,
+    .cms-empty {
+      color: #94a3b8;
+    }
+
+    .cms-empty {
+      border-color: #2a3345;
+    }
+  }
+</style>

@@ -42,6 +42,8 @@ export function RecentArticles({ articles }: Props) {
 
               <TableHead>Category</TableHead>
 
+              <TableHead>Views</TableHead>
+
               <TableHead>Status</TableHead>
 
               <TableHead>Date</TableHead>
@@ -54,6 +56,8 @@ export function RecentArticles({ articles }: Props) {
                 <TableCell className="font-medium">{article.title}</TableCell>
 
                 <TableCell>{article.category}</TableCell>
+
+                <TableCell>{article._count?.views ?? 0}</TableCell>
 
                 <TableCell>
                   <Badge>{article.status}</Badge>

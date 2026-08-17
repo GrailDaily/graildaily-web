@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { MarkdownEditor } from "@/features/articles/editor/markdown-editor";
 import Image from "next/image";
 import { ARTICLE_STATUS } from "@/features/articles/constants/article-status";
-import { ARTICLE_CATEGORIES } from "@/features/articles/constants/categories";
+
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MediaPicker } from "@/features/media/components/media-picker";
@@ -43,9 +43,17 @@ interface Props {
     width: number | null;
     height: number | null;
   }[];
+  categories: {
+    id: string;
+    name: string;
+    slug: string;
+    description: string;
+    image: string | null;
+    status: "Active" | "Inactive";
+  }[];
 }
 
-export function ArticleForm({ article, media }: Props) {
+export function ArticleForm({ article, media, categories }: Props) {
   const router = useRouter();
   const initialValues = article
     ? {
@@ -56,7 +64,7 @@ export function ArticleForm({ article, media }: Props) {
         category: article.category,
         author: article.author,
         status: article.status,
-        featuredImage: null,
+        featuredImage: article.featuredImage ?? null,
       }
     : defaultArticleForm;
 
@@ -332,9 +340,9 @@ export function ArticleForm({ article, media }: Props) {
                         </SelectTrigger>
 
                         <SelectContent>
-                          {ARTICLE_CATEGORIES.map((category) => (
-                            <SelectItem key={category} value={category}>
-                              {category}
+                          {categories.map((category) => (
+                            <SelectItem key={category.id} value={category.name}>
+                              {category.name}
                             </SelectItem>
                           ))}
                         </SelectContent>

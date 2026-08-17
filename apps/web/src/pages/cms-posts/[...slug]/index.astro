@@ -168,4 +168,33 @@ const modifiedDate = new Date(article.updatedAt);
 
     initReadingProgress();
   </script>
+
+  <!-- ================= ARTICLE VIEW ================= -->
+
+  <script is:inline define:vars={{ slug }}>
+    async function recordArticleView() {
+      try {
+        const response = await fetch(
+          `/api/cms/articles/${encodeURIComponent(slug)}/view`,
+          {
+            method: "POST",
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Failed to record article view: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        console.log("Article view recorded:", data);
+      } catch (error) {
+        console.error("Failed to record article view:", error);
+      }
+    }
+
+    document.addEventListener("astro:page-load", recordArticleView, {
+      once: true,
+    });
+  </script>
 </PostLayout>

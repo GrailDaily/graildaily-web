@@ -1,30 +1,31 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import type { LatestArticle } from "@/lib/latest";
 
 interface Props {
-  posts: CollectionEntry<"posts">[];
+  articles: LatestArticle[];
 }
 
-const { posts } = Astro.props;
+const { articles } = Astro.props;
 ---
 
 <section class="latest-feed">
   <h2>Latest Stories</h2>
 
   {
-    posts.map(post => (
-      <a href={`/posts/${post.id}/`} class="latest-item">
-        <img src={post.data.ogImage} alt={post.data.title} loading="lazy" />
+    articles.map(article => (
+      <a href={article.href} class="latest-item">
+        <img src={article.image} alt={article.title} loading="lazy" />
 
         <div class="latest-content">
-          <span class="category">{post.data.tags?.[0]}</span>
+          <span class="category">{article.category}</span>
 
-          <h3>{post.data.title}</h3>
+          <h3>{article.title}</h3>
 
-          <p>{post.data.description}</p>
+          <p>{article.description}</p>
+
           <div class="article-meta">
             <span>
-              {new Date(post.data.pubDatetime).toLocaleDateString("en-US", {
+              {new Date(article.publishedAt).toLocaleDateString("en-US", {
                 month: "short",
                 day: "numeric",
                 year: "numeric",

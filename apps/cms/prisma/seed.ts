@@ -1,9 +1,16 @@
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import "dotenv/config";
 
+import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@/lib/generated/prisma/client";
 
-const adapter = new PrismaBetterSqlite3({
-  url: "file:./dev.db",
+const connectionString = process.env.DATABASE_URL;
+
+if (!connectionString) {
+  throw new Error("DATABASE_URL is not configured.");
+}
+
+const adapter = new PrismaPg({
+  connectionString,
 });
 
 const prisma = new PrismaClient({
@@ -13,88 +20,307 @@ const prisma = new PrismaClient({
 async function main() {
   console.log("🌱 Seeding database...");
 
-  await prisma.article.deleteMany();
+  const users = await Promise.all([
+    prisma.user.upsert({
+      where: {
+        email: "dimas@graildaily.com",
+      },
+      update: {
+        name: "Dimas",
+        role: "Admin",
+        status: "Active",
+      },
+      create: {
+        name: "Dimas",
+        email: "dimas@graildaily.com",
+        role: "Admin",
+        status: "Active",
+      },
+    }),
 
-  await prisma.article.createMany({
-    data: [
-      {
-        id: "1",
-        title: "The Mystery of Atlantis",
-        slug: "the-mystery-of-atlantis",
-        excerpt:
-          "Exploring the enduring legend of Atlantis and the evidence behind the myth.",
-        content: "# Atlantis\n\nThis is a sample article.",
-        featuredImage: "/images/atlantis.jpg",
-        category: "History",
-        author: "GrailDaily",
-        status: "Published",
-        publishedAt: new Date("2026-07-21"),
+    prisma.user.upsert({
+      where: {
+        email: "admin@graildaily.com",
       },
-      {
-        id: "2",
-        title: "The Secrets of the Bermuda Triangle",
-        slug: "the-secrets-of-the-bermuda-triangle",
-        excerpt:
-          "A closer look at the mysterious disappearances linked to the Bermuda Triangle.",
-        content: "# Bermuda Triangle\n\nThis is a sample article.",
-        featuredImage: "/images/bermuda-triangle.jpg",
-        category: "Mysteries",
-        author: "GrailDaily",
-        status: "Draft",
+      update: {
+        name: "GrailDaily Admin",
+        role: "Admin",
+        status: "Active",
       },
-      {
-        id: "3",
-        title: "How the Great Pyramid Was Built",
-        slug: "how-the-great-pyramid-was-built",
-        excerpt:
-          "Examining the theories behind the construction of Egypt's greatest monument.",
-        content: "# Great Pyramid\n\nThis is a sample article.",
-        featuredImage: "/images/great-pyramid.jpg",
-        category: "Archaeology",
-        author: "GrailDaily",
-        status: "Review",
+      create: {
+        name: "GrailDaily Admin",
+        email: "admin@graildaily.com",
+        role: "Admin",
+        status: "Active",
       },
-      {
-        id: "4",
-        title: "Could Life Exist on Mars?",
-        slug: "could-life-exist-on-mars",
-        excerpt:
-          "Discover the latest scientific discoveries about the possibility of life on Mars.",
-        content: "# Mars\n\nThis is a sample article.",
-        featuredImage: "/images/mars.jpg",
-        category: "Space",
-        author: "GrailDaily",
-        status: "Scheduled",
+    }),
+
+    prisma.user.upsert({
+      where: {
+        email: "editor@graildaily.com",
       },
-      {
-        id: "5",
-        title: "The Rise of Artificial Intelligence",
-        slug: "the-rise-of-artificial-intelligence",
-        excerpt:
-          "Understanding how AI is transforming industries and everyday life.",
-        content: "# Artificial Intelligence\n\nThis is a sample article.",
-        featuredImage: "/images/artificial-intelligence.jpg",
-        category: "Technology",
-        author: "GrailDaily",
-        status: "Archived",
+      update: {
+        name: "GrailDaily Editor",
+        role: "Editor",
+        status: "Active",
       },
-      {
-        id: "6",
-        title: "The Lost City of Machu Picchu",
-        slug: "the-lost-city-of-machu-picchu",
-        excerpt:
-          "Discover the fascinating history and mystery surrounding the ancient Inca city.",
-        content: "# Machu Picchu\n\nThis is a sample article.",
-        featuredImage: "/images/machu-picchu.jpg",
-        category: "History",
-        author: "GrailDaily",
-        status: "Published",
-        publishedAt: new Date("2026-08-06"),
+      create: {
+        name: "GrailDaily Editor",
+        email: "editor@graildaily.com",
+        role: "Editor",
+        status: "Active",
       },
-    ],
+    }),
+
+    prisma.user.upsert({
+      where: {
+        email: "editor.inactive@graildaily.com",
+      },
+      update: {
+        name: "Inactive Editor",
+        role: "Editor",
+        status: "Inactive",
+      },
+      create: {
+        name: "Inactive Editor",
+        email: "editor.inactive@graildaily.com",
+        role: "Editor",
+        status: "Inactive",
+      },
+    }),
+
+    prisma.user.upsert({
+      where: {
+        email: "author@graildaily.com",
+      },
+      update: {
+        name: "GrailDaily Author",
+        role: "Author",
+        status: "Active",
+      },
+      create: {
+        name: "GrailDaily Author",
+        email: "author@graildaily.com",
+        role: "Author",
+        status: "Active",
+      },
+    }),
+
+    prisma.user.upsert({
+      where: {
+        email: "author.two@graildaily.com",
+      },
+      update: {
+        name: "Author Two",
+        role: "Author",
+        status: "Active",
+      },
+      create: {
+        name: "Author Two",
+        email: "author.two@graildaily.com",
+        role: "Author",
+        status: "Active",
+      },
+    }),
+
+    prisma.user.upsert({
+      where: {
+        email: "author.inactive@graildaily.com",
+      },
+      update: {
+        name: "Inactive Author",
+        role: "Author",
+        status: "Inactive",
+      },
+      create: {
+        name: "Inactive Author",
+        email: "author.inactive@graildaily.com",
+        role: "Author",
+        status: "Inactive",
+      },
+    }),
+  ]);
+
+  const categories = [
+    {
+      name: "Archaeology",
+      slug: "archaeology",
+      description:
+        "Explore ancient artifacts, excavations, lost cities, and discoveries that uncover humanity's distant past.",
+      image: "/images/categories/Archaeology.png",
+    },
+    {
+      name: "Economics",
+      slug: "economics",
+      description:
+        "Understand global markets, finance, trade, economic systems, and the forces shaping modern economies.",
+      image: "/images/categories/Economics.png",
+    },
+    {
+      name: "Entertainment",
+      slug: "entertainment",
+      description:
+        "Discover stories from film, television, music, gaming, and the entertainment industry around the world.",
+      image: "/images/categories/Entertainment.png",
+    },
+    {
+      name: "Geography",
+      slug: "geography",
+      description:
+        "Explore countries, landscapes, natural wonders, climates, and the diverse regions of our planet.",
+      image: "/images/categories/Geography.png",
+    },
+    {
+      name: "History",
+      slug: "history",
+      description:
+        "Journey through historical events, influential figures, wars, revolutions, and civilizations across time.",
+      image: "/images/categories/History.png",
+    },
+    {
+      name: "Humanity",
+      slug: "humanity",
+      description:
+        "Learn about human culture, society, civilization, behavior, and the stories that connect us all.",
+      image: "/images/categories/Humanity.png",
+    },
+    {
+      name: "Mysteries",
+      slug: "mysteries",
+      description:
+        "Investigate unexplained phenomena, unsolved cases, strange events, and enduring historical mysteries.",
+      image: "/images/categories/Mysteries.png",
+    },
+    {
+      name: "Mythology",
+      slug: "mythology",
+      description:
+        "Dive into myths, legends, gods, heroes, folklore, and ancient beliefs from civilizations worldwide.",
+      image: "/images/categories/Mythology.png",
+    },
+    {
+      name: "Nature",
+      slug: "nature",
+      description:
+        "Discover wildlife, ecosystems, environmental science, and the extraordinary beauty of the natural world.",
+      image: "/images/categories/Nature.png",
+    },
+    {
+      name: "Politics",
+      slug: "politics",
+      description:
+        "Understand governments, political systems, diplomacy, international relations, and public policy.",
+      image: "/images/categories/Politics.png",
+    },
+    {
+      name: "Religion",
+      slug: "religion",
+      description:
+        "Explore world religions, beliefs, traditions, sacred texts, and the history of spiritual thought.",
+      image: "/images/categories/Religion.png",
+    },
+    {
+      name: "Science",
+      slug: "science",
+      description:
+        "Learn about scientific discoveries, physics, biology, chemistry, medicine, and groundbreaking research.",
+      image: "/images/categories/Science.png",
+    },
+    {
+      name: "Space",
+      slug: "space",
+      description:
+        "Explore astronomy, planets, stars, galaxies, black holes, and humanity's journey into the universe.",
+      image: "/images/categories/Space.png",
+    },
+    {
+      name: "Technology",
+      slug: "technology",
+      description:
+        "Stay informed about innovation, artificial intelligence, computing, engineering, and emerging technologies.",
+      image: "/images/categories/Technology.png",
+    },
+  ];
+
+  await Promise.all(
+    categories.map((category) =>
+      prisma.category.upsert({
+        where: {
+          slug: category.slug,
+        },
+        update: {
+          name: category.name,
+          description: category.description,
+          image: category.image,
+          status: "Active",
+        },
+        create: {
+          ...category,
+          status: "Active",
+        },
+      }),
+    ),
+  );
+
+  console.log(`✅ Seeded ${categories.length} categories successfully.`);
+
+  const [dimas, admin, editor, inactiveEditor, author, authorTwo] = users;
+
+  await prisma.article.updateMany({
+    where: {
+      slug: "the-mystery-of-atlantis",
+    },
+    data: {
+      authorUserId: dimas.id,
+    },
   });
 
-  console.log("✅ Database seeded successfully");
+  await prisma.article.updateMany({
+    where: {
+      slug: "the-secrets-of-the-bermuda-triangle",
+    },
+    data: {
+      authorUserId: editor.id,
+    },
+  });
+
+  await prisma.article.updateMany({
+    where: {
+      slug: "how-the-great-pyramid-was-built",
+    },
+    data: {
+      authorUserId: author.id,
+    },
+  });
+
+  await prisma.article.updateMany({
+    where: {
+      slug: "could-life-exist-on-mars",
+    },
+    data: {
+      authorUserId: authorTwo.id,
+    },
+  });
+
+  await prisma.article.updateMany({
+    where: {
+      slug: "the-rise-of-artificial-intelligence",
+    },
+    data: {
+      authorUserId: admin.id,
+    },
+  });
+
+  await prisma.article.updateMany({
+    where: {
+      slug: "the-lost-city-of-machu-picchu",
+    },
+    data: {
+      authorUserId: dimas.id,
+    },
+  });
+
+  console.log(`✅ Seeded ${users.length} users successfully.`);
 }
 
 main()

@@ -8,65 +8,7 @@ import { ArticleFormData } from "@/features/articles/types/article-form";
 
 import type { ArticleStatus } from "@/types/article";
 
-import cloudinary from "@/lib/cloudinary";
-
-function getCloudinaryPublicId(url: string) {
-  const match = url.match(/\/upload\/(?:v\d+\/)?(.+)\.[^/.]+$/);
-
-  return match?.[1] ?? null;
-}
-
-async function deleteCloudinaryImage(url: string | null) {
-  if (!url) return;
-
-  const publicId = getCloudinaryPublicId(url);
-
-  if (!publicId) return;
-
-  await cloudinary.uploader.destroy(publicId);
-}
-
-/**
- * Menghapus Media record dan file Cloudinary
- * hanya jika gambar tersebut sudah tidak digunakan
- * oleh artikel mana pun.
- */
-async function cleanupMediaImage(url: string | null) {
-  if (!url) return;
-
-  const media = await prisma.media.findFirst({
-    where: {
-      path: url,
-    },
-  });
-
-  if (!media) {
-    await deleteCloudinaryImage(url);
-    return;
-  }
-
-  const usageCount = await prisma.article.count({
-    where: {
-      featuredImage: url,
-    },
-  });
-
-  if (usageCount > 0) {
-    return;
-  }
-
-  if (media.publicId) {
-    await cloudinary.uploader.destroy(media.publicId);
-  } else {
-    await deleteCloudinaryImage(url);
-  }
-
-  await prisma.media.delete({
-    where: {
-      id: media.id,
-    },
-  });
-}
+import { cleanupMediaIfUnused } from "@/features/media/utils/media-cleanup";
 
 export async function createArticleAction(data: ArticleFormData) {
   await prisma.article.create({
@@ -78,6 +20,7 @@ export async function createArticleAction(data: ArticleFormData) {
   });
 
   revalidatePath("/articles");
+  revalidatePath("/media");
 }
 
 export async function updateArticleAction(id: string, data: ArticleFormData) {
@@ -91,23 +34,19 @@ export async function updateArticleAction(id: string, data: ArticleFormData) {
     throw new Error("Article not found");
   }
 
-  const oldImage = currentArticle.featuredImage;
-  const newImage = data.featuredImage;
-
   await prisma.article.update({
     where: {
       id,
     },
     data: {
       ...data,
-      featuredImage: newImage,
-      publishedAt: data.status === "Published" ? new Date() : null,
+      featuredImage: data.featuredImage,
+      publishedAt:
+        data.status === "Published"
+          ? (currentArticle.publishedAt ?? new Date())
+          : null,
     },
   });
-
-  if (oldImage && oldImage !== newImage) {
-    await cleanupMediaImage(oldImage);
-  }
 
   revalidatePath("/articles");
   revalidatePath("/media");
@@ -117,6 +56,10 @@ export async function deleteArticleAction(id: string) {
   const article = await prisma.article.findUnique({
     where: {
       id,
+    },
+    select: {
+      id: true,
+      featuredImage: true,
     },
   });
 
@@ -130,7 +73,27 @@ export async function deleteArticleAction(id: string) {
     },
   });
 
-  await cleanupMediaImage(article.featuredImage);
+  /*
+   * The article has now been removed.
+   *
+   * If its Featured Image is no longer referenced
+   * anywhere else, cleanupMediaIfUnused() will remove
+   * the corresponding media from Cloudinary and Media DB.
+   *
+   * If the image is still used by another article or
+   * inside article content, it will be preserved.
+   */
+  if (article.featuredImage) {
+    const media = await prisma.media.findFirst({
+      where: {
+        path: article.featuredImage,
+      },
+    });
+
+    if (media) {
+      await cleanupMediaIfUnused(media.id);
+    }
+  }
 
   revalidatePath("/articles");
   revalidatePath("/media");
@@ -204,6 +167,7 @@ export async function duplicateArticleAction(id: string) {
   });
 
   revalidatePath("/articles");
+  revalidatePath("/media");
 }
 
 export async function bulkUpdateStatusAction(
@@ -246,7 +210,14 @@ export async function bulkDeleteArticlesAction(ids: string[]) {
     },
   });
 
-  const imageUrls = [
+  /*
+   * The articles have now been deleted.
+   *
+   * Check every Featured Image that belonged to those
+   * articles. A media item is removed only when it is
+   * no longer referenced anywhere else.
+   */
+  const featuredImages = [
     ...new Set(
       articles
         .map((article) => article.featuredImage)
@@ -254,7 +225,17 @@ export async function bulkDeleteArticlesAction(ids: string[]) {
     ),
   ];
 
-  await Promise.all(imageUrls.map((image) => cleanupMediaImage(image)));
+  for (const featuredImage of featuredImages) {
+    const media = await prisma.media.findFirst({
+      where: {
+        path: featuredImage,
+      },
+    });
+
+    if (media) {
+      await cleanupMediaIfUnused(media.id);
+    }
+  }
 
   revalidatePath("/articles");
   revalidatePath("/media");

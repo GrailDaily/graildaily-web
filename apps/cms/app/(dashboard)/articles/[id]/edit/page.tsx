@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-
+import { getCategories } from "@/services/categories.service";
 import { PageHeader } from "@/components/common/page-header";
 import { ArticleForm } from "@/features/articles/forms/article-form";
 import { getMedia } from "@/services/media.service";
@@ -15,11 +15,16 @@ export default async function EditArticlePage({ params }: Props) {
   const { id } = await params;
 
   const article = await getArticleById(id);
-  const media = await getMedia();
 
   if (!article) {
     notFound();
   }
+
+  const [media, categories] = await Promise.all([getMedia(), getCategories()]);
+
+  const activeCategories = categories.filter(
+    (category) => category.status === "Active",
+  );
 
   return (
     <div className="space-y-8">
@@ -28,7 +33,11 @@ export default async function EditArticlePage({ params }: Props) {
         description="Update an existing article."
       />
 
-      <ArticleForm article={article} media={media} />
+      <ArticleForm
+        article={article}
+        media={media}
+        categories={activeCategories}
+      />
     </div>
   );
 }

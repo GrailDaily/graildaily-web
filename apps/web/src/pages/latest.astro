@@ -4,17 +4,15 @@ import Header from "@/components/header/Header.astro";
 
 import config from "@/config";
 
-import { getCollection } from "astro:content";
-import { getSortedPosts } from "@/utils/getSortedPosts";
-
 import LatestHero from "@/components/latest/LatestHero.astro";
 import LatestFeed from "@/components/latest/LatestFeed.astro";
 
-const posts = getSortedPosts(
-  await getCollection("posts", ({ data }) => !data.draft)
-);
+import { getLatestArticles } from "@/lib/latest";
 
-const latestPost = posts[0];
+const articles = await getLatestArticles();
+
+const latestArticle = articles[0];
+const remainingArticles = articles.slice(1, 31);
 ---
 
 <Layout
@@ -24,7 +22,8 @@ const latestPost = posts[0];
   <Header />
 
   <main class="app-layout latest-page">
-    <LatestHero post={latestPost} />
-    <LatestFeed posts={posts.slice(1, 31)} />
+    <LatestHero article={latestArticle} />
+
+    <LatestFeed articles={remainingArticles} />
   </main>
 </Layout>

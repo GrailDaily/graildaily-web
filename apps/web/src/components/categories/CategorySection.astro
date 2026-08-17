@@ -1,48 +1,34 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import type { CmsArticle } from "@/lib/cms";
 import type { Category } from "@/data/categories";
-
 import CategoryFeatured from "./CategoryFeatured.astro";
 import CategoryTopArticles from "./CategoryTopArticles.astro";
-
 interface Props {
   category: Category;
   index: number;
-  posts: CollectionEntry<"posts">[];
+  posts: CmsArticle[];
 }
-
 const { category, index, posts } = Astro.props;
-
 const featuredPost = posts[0];
 const topPosts = posts.slice(1, 6);
 ---
 
 <section id={category.slug} class="category-section">
   <div class="app-layout">
-    <div
-      class:list={{
-        "category-grid": true,
-        reverse: index % 2 === 1,
-      }}
-    >
+    <div class:list={{ "category-grid": true, reverse: index % 2 === 1 }}>
       <aside class="category-info">
         <span class="category-number">
           {String(index + 1).padStart(2, "0")}
         </span>
-
         <h2>{category.name}</h2>
-
         <p>{category.description}</p>
-
         <a href={`/categories/${category.slug}`} class="category-link">
           Explore Category →
         </a>
       </aside>
-
       <div class="featured-column">
         {featuredPost && <CategoryFeatured post={featuredPost} />}
       </div>
-
       <CategoryTopArticles posts={topPosts} />
     </div>
   </div>
@@ -50,122 +36,79 @@ const topPosts = posts.slice(1, 6);
     .category-section {
       padding: 30px 0;
     }
-
     .category-grid {
       --info-width: 250px;
       --featured-width: 620px;
       --top-width: 320px;
-
       display: grid;
-
-      grid-template-columns:
-        var(--info-width)
-        var(--featured-width)
-        var(--top-width);
-
+      grid-template-columns: var(--info-width) var(--featured-width) var(
+          --top-width
+        );
       grid-template-areas: "info featured top";
-
       gap: 38px;
-
       align-items: stretch;
     }
-
     .category-grid.reverse {
-      grid-template-columns:
-        var(--top-width)
-        var(--featured-width)
-        var(--info-width);
-
+      grid-template-columns: var(--top-width) var(--featured-width) var(
+          --info-width
+        );
       grid-template-areas: "top featured info";
     }
-
     .featured-column {
       grid-area: featured;
-
       display: flex;
-
       align-items: center;
-
       justify-content: center;
     }
-
     .featured-column > * {
       width: 100%;
     }
-
     .top-articles {
       grid-area: top;
     }
-
     .category-number {
       display: block;
-
       font-size: 3rem;
       font-weight: 700;
-
       color: var(--accent);
-
       opacity: 0.22;
     }
-
     .category-info {
       grid-area: info;
     }
-
     .category-info h2 {
       margin-top: 12px;
       font-size: 2rem;
     }
-
     .category-info p {
       margin-top: 16px;
       max-width: 280px;
-
       color: var(--muted-foreground);
-
       line-height: 1.7;
     }
-
     .category-link {
       display: inline-block;
-
       margin-top: 24px;
-
       color: var(--accent);
-
       text-decoration: none;
-
       font-weight: 600;
     }
-
     .category-featured,
     .category-list {
       min-height: 420px;
-
       border: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
-
       border-radius: 14px;
-
       display: flex;
-
       align-items: center;
-
       justify-content: center;
     }
-
     @media (max-width: 768px) {
       .category-grid,
       .category-grid.reverse {
         grid-template-columns: 1fr;
-
-        grid-template-areas:
-          "info"
-          "featured"
-          "top";
-
+        grid-template-areas: "info" "featured" "top";
         gap: 24px;
       }
-
       .category-info p {
         max-width: 100%;
       }

@@ -9,6 +9,7 @@ export interface HomePostData {
   tags: string[];
   ogImage: string | undefined;
   canonicalURL: string | undefined;
+  views?: number;
 }
 
 export interface HomePost {

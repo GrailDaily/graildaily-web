@@ -64,7 +64,9 @@ export function MediaActions({ mediaId, url, originalName }: Props) {
     } catch (error) {
       console.error(error);
 
-      toast.error("Failed to delete media");
+      toast.error(
+        error instanceof Error ? error.message : "Failed to delete media",
+      );
     } finally {
       setDeleting(false);
     }
@@ -112,8 +114,9 @@ export function MediaActions({ mediaId, url, originalName }: Props) {
 
             <AlertDialogDescription>
               Are you sure you want to delete <strong>{originalName}</strong>?
-              This will permanently remove the image from the media library and
-              Cloudinary.
+              The image will be permanently removed from the media library and
+              Cloudinary. If the image is still used by an article, deletion
+              will be blocked.
             </AlertDialogDescription>
           </AlertDialogHeader>
 

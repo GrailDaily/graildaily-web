@@ -11,6 +11,7 @@ export interface CmsArticle {
   createdAt: string;
   updatedAt: string;
   publishedAt: string | null;
+  views: number;
 }
 
 interface CmsArticlesResponse {
@@ -25,6 +26,22 @@ export async function getCmsArticles(): Promise<CmsArticle[]> {
 
   if (!response.ok) {
     throw new Error(`Failed to fetch CMS articles: ${response.status}`);
+  }
+
+  const data = (await response.json()) as CmsArticlesResponse;
+
+  return data.articles;
+}
+
+export async function getCmsPopularArticles(
+  range: "all" | "month" | "week" | "today" = "all"
+): Promise<CmsArticle[]> {
+  const response = await fetch(
+    `${CMS_API_URL}/api/articles/popular?range=${range}`
+  );
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch CMS popular articles: ${response.status}`);
   }
 
   const data = (await response.json()) as CmsArticlesResponse;

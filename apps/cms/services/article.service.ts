@@ -1,5 +1,4 @@
 import { prisma } from "@/lib/prisma";
-import { ARTICLE_CATEGORIES } from "@/features/articles/constants/categories";
 import { ARTICLE_STATUS } from "@/features/articles/constants/article-status";
 
 interface GetRecentArticlesOptions {
@@ -29,9 +28,20 @@ export async function getRecentArticles({
 
   const matchedCategory =
     normalizedCategory !== "all"
-      ? ARTICLE_CATEGORIES.find(
-          (item) => item.toLowerCase() === normalizedCategory,
-        )
+      ? (
+          await prisma.category.findFirst({
+            where: {
+              name: {
+                equals: category,
+                mode: "insensitive",
+              },
+              status: "Active",
+            },
+            select: {
+              name: true,
+            },
+          })
+        )?.name
       : undefined;
 
   const where = {
@@ -64,6 +74,13 @@ export async function getRecentArticles({
       },
       skip,
       take: limit,
+      include: {
+        _count: {
+          select: {
+            views: true,
+          },
+        },
+      },
     }),
 
     prisma.article.count({
@@ -72,7 +89,10 @@ export async function getRecentArticles({
   ]);
 
   return {
-    articles,
+    articles: articles.map((article) => ({
+      ...article,
+      views: article._count.views,
+    })),
     total,
     page,
     limit,
@@ -81,9 +101,21 @@ export async function getRecentArticles({
 }
 
 export async function getArticleById(id: string) {
-  return prisma.article.findUnique({
+  const article = await prisma.article.findUnique({
     where: {
       id,
     },
+    include: {
+      views: true,
+    },
   });
+
+  if (!article) {
+    return null;
+  }
+
+  return {
+    ...article,
+    views: article.views.length,
+  };
 }

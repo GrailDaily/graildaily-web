@@ -1,15 +1,12 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/header/Header.astro";
-
 import CategoryNavigation from "@/components/categories/CategoryNavigation.astro";
-
+import CategorySection from "@/components/categories/CategorySection.astro";
 import config from "@/config";
 import { categories } from "@/data/categories";
-import CategorySection from "@/components/categories/CategorySection.astro";
-import { getCollection } from "astro:content";
-
-const posts = await getCollection("posts", ({ data }) => !data.draft);
+import { getCmsArticles } from "@/lib/cms";
+const articles = await getCmsArticles();
 ---
 
 <Layout
@@ -17,20 +14,18 @@ const posts = await getCollection("posts", ({ data }) => !data.draft);
   description="Explore every category on GrailDaily."
 >
   <Header />
-
   <CategoryNavigation categories={categories} />
-
   {
     categories.map((category, index) => {
-      const categoryPosts = posts.filter(post =>
-        post.data.tags?.includes(category.name)
+      const categoryArticles = articles.filter(
+        article =>
+          article.category.toLowerCase() === category.name.toLowerCase()
       );
-
       return (
         <CategorySection
           category={category}
           index={index}
-          posts={categoryPosts}
+          posts={categoryArticles}
         />
       );
     })

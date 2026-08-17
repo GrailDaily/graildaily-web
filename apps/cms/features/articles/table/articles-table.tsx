@@ -71,6 +71,8 @@ export function ArticlesTable({ articles, selected, onSelectedChange }: Props) {
 
               <TableHead>Date</TableHead>
 
+              <TableHead className="w-20 text-right">Views</TableHead>
+
               <TableHead className="w-16 text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -115,6 +117,8 @@ export function ArticlesTable({ articles, selected, onSelectedChange }: Props) {
                 <TableCell>{article.author}</TableCell>
 
                 <TableCell>{formatDate(article.publishedAt)}</TableCell>
+
+                <TableCell className="text-right">{article.views}</TableCell>
 
                 <TableCell className="text-right">
                   <RowActions articleId={article.id} slug={article.slug} />

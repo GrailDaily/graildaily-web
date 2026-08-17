@@ -8,7 +8,6 @@ import { cmsArticlesToHomePosts } from "@/lib/cms-adapter";
 import HeroCarousel from "@/components/hero/HeroCarousel.astro";
 import Trending from "@/components/home/Trending.astro";
 import Categories from "@/components/home/Categories.astro";
-// import Newsletter from "@/components/home/Newsletter.astro";
 import EditorPicks from "@/components/home/EditorPicks.astro";
 import RecentPosts from "@/components/home/RecentPosts.astro";
 
@@ -16,7 +15,12 @@ const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
 
 const cmsArticles = await getCmsArticles();
-const posts = cmsArticlesToHomePosts(cmsArticles);
+
+const cmsPosts = cmsArticlesToHomePosts(
+  cmsArticles.filter(article => article.status === "Published")
+);
+
+const posts = cmsPosts;
 
 const sortedPosts = [...posts].sort(
   (a, b) =>

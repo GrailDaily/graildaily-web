@@ -29,4 +29,10 @@ export interface Article {
   updatedAt: Date;
 
   createdAt: Date;
+
+  views: number;
+
+  _count?: {
+    views: number;
+  };
 }

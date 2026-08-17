@@ -1,8 +1,8 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import type { HomePost } from "@/lib/home-post";
 
 interface Props {
-  posts: CollectionEntry<"posts">[];
+  posts: HomePost[];
 }
 
 const { posts } = Astro.props;
@@ -22,7 +22,7 @@ const { posts } = Astro.props;
 
   {
     posts.map((post, index) => (
-      <a href={`/posts/${post.id}/`} class="popular-row">
+      <a href={post.href} class="popular-row">
         <span class="rank">{String(index + 6).padStart(2, "0")}</span>
 
         <img src={post.data.ogImage} alt={post.data.title} loading="lazy" />

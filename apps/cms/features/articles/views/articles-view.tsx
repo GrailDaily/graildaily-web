@@ -14,9 +14,22 @@ interface Props {
   articles: Article[];
   page: number;
   totalPages: number;
+  categories: {
+    id: string;
+    name: string;
+    slug: string;
+    description: string;
+    image: string | null;
+    status: "Active" | "Inactive";
+  }[];
 }
 
-export function ArticlesView({ articles, page, totalPages }: Props) {
+export function ArticlesView({
+  articles,
+  page,
+  totalPages,
+  categories,
+}: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -78,6 +91,7 @@ export function ArticlesView({ articles, page, totalPages }: Props) {
         search={search}
         status={status}
         category={category}
+        categories={categories}
         onSearchChange={handleSearchChange}
         onStatusChange={handleStatusChange}
         onCategoryChange={handleCategoryChange}

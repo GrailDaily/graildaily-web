@@ -1,9 +1,11 @@
 ---
-import { getCollection } from "astro:content";
+import type { LatestArticle } from "@/lib/latest";
 
-const posts = await getCollection("posts", ({ data }) => !data.draft);
+interface Props {
+  article?: LatestArticle;
+}
 
-const featuredPost = posts[0];
+const { article } = Astro.props;
 ---
 
 <section class="latest-hero">
@@ -17,16 +19,16 @@ const featuredPost = posts[0];
   </div>
 
   {
-    featuredPost && (
-      <a href={`/posts/${featuredPost.id}/`} class="latest-featured">
-        <img src={featuredPost.data.ogImage} alt={featuredPost.data.title} />
+    article && (
+      <a href={article.href} class="latest-featured">
+        <img src={article.image} alt={article.title} />
 
         <div class="featured-overlay">
           <span class="featured-badge">NEWEST ARTICLE</span>
 
-          <h2>{featuredPost.data.title}</h2>
+          <h2>{article.title}</h2>
 
-          <p>{featuredPost.data.description}</p>
+          <p>{article.description}</p>
         </div>
       </a>
     )

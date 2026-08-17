@@ -1,9 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/header/Header.astro";
-
 import config from "@/config";
-
 import AboutHero from "@/components/about/AboutHero.astro";
 import OurMission from "@/components/about/OurMission.astro";
 import WhatWeCover from "@/components/about/WhatWeCover.astro";
@@ -11,6 +9,10 @@ import EditorialPrinciples from "@/components/about/EditorialPrinciples.astro";
 import ByTheNumbers from "@/components/about/ByTheNumbers.astro";
 import WhyGrailDaily from "@/components/about/WhyGrailDaily.astro";
 import AboutCTA from "@/components/about/AboutCTA.astro";
+import { getCmsArticles } from "@/lib/cms";
+const articles = await getCmsArticles();
+const articleCount = articles.length;
+const categoryCount = new Set(articles.map(article => article.category)).size;
 ---
 
 <Layout
@@ -18,14 +20,16 @@ import AboutCTA from "@/components/about/AboutCTA.astro";
   description="Learn more about GrailDaily."
 >
   <Header />
-
   <AboutHero />
-
   <main class="app-layout about-page">
     <OurMission />
     <WhatWeCover />
     <EditorialPrinciples />
-    <ByTheNumbers />
+    <ByTheNumbers
+      articleCount={articleCount}
+      categoryCount={categoryCount}
+      foundedYear={2026}
+    />
     <WhyGrailDaily />
     <AboutCTA />
   </main>

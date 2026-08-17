@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ArticlesView } from "@/features/articles/views/articles-view";
 
 import { getRecentArticles } from "@/services/article.service";
+import { getCategories } from "@/services/categories.service";
 
 interface Props {
   searchParams: Promise<{
@@ -24,12 +25,19 @@ export default async function ArticlesPage({ searchParams }: Props) {
   const status = params.status ?? "all";
   const category = params.category ?? "all";
 
-  const result = await getRecentArticles({
-    page,
-    search,
-    status,
-    category,
-  });
+  const [result, categories] = await Promise.all([
+    getRecentArticles({
+      page,
+      search,
+      status,
+      category,
+    }),
+    getCategories(),
+  ]);
+
+  const activeCategories = categories.filter(
+    (item) => item.status === "Active",
+  );
 
   return (
     <div className="space-y-8">
@@ -47,6 +55,7 @@ export default async function ArticlesPage({ searchParams }: Props) {
         articles={result.articles}
         page={result.page}
         totalPages={result.totalPages}
+        categories={activeCategories}
       />
     </div>
   );

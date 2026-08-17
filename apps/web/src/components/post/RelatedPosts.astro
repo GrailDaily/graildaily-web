@@ -1,33 +1,47 @@
 ---
-import { getCollection } from "astro:content";
 import ArticleCard from "@/components/cards/ArticleCard.astro";
-import { getSortedPosts } from "@/utils/getSortedPosts";
-import type { HomePostData } from "@/lib/home-post";
+import { getCmsArticles } from "@/lib/cms";
+import { cmsArticlesToHomePosts } from "@/lib/cms-adapter";
+import type { HomePost } from "@/lib/home-post";
 
-const { currentPost } = Astro.props;
+const { currentPost } = Astro.props as {
+  currentPost: HomePost;
+};
 
-const posts = getSortedPosts(await getCollection("posts"));
+const cmsArticles = await getCmsArticles();
 
-const currentData = currentPost.data as HomePostData;
+const posts = cmsArticlesToHomePosts(
+  cmsArticles.filter(article => article.status === "Published")
+);
 
 const relatedPosts = posts
+  .filter(post => post.id !== currentPost.id)
   .filter(post => {
-    if (post.id === currentPost.id) return false;
+    const currentCategory = currentPost.data.tags?.[0];
+    const postCategory = post.data.tags?.[0];
 
-    const data = post.data as HomePostData;
-
-    return data.tags.some((tag: string) => currentData.tags.includes(tag));
+    return (
+      currentCategory &&
+      postCategory &&
+      currentCategory.toLowerCase() === postCategory.toLowerCase()
+    );
   })
   .slice(0, 3);
 ---
 
-<section class="related-posts">
-  <h2>Related Stories</h2>
+{
+  relatedPosts.length > 0 && (
+    <section class="related-posts">
+      <h2>Related Stories</h2>
 
-  <div class="related-grid">
-    {relatedPosts.map(post => <ArticleCard post={post} variant="related" />)}
-  </div>
-</section>
+      <div class="related-grid">
+        {relatedPosts.map(post => (
+          <ArticleCard post={post} variant="related" />
+        ))}
+      </div>
+    </section>
+  )
+}
 
 <style>
   .related-posts {

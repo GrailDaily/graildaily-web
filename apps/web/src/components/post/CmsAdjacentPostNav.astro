@@ -43,10 +43,10 @@ const currentIndex = articles.findIndex(
   article => article.slug === currentSlug
 );
 
-const prevPost =
-  currentIndex >= 0 ? (articles[currentIndex + 1] ?? null) : null;
+const prevPost = currentIndex > 0 ? (articles[currentIndex - 1] ?? null) : null;
 
-const nextPost = currentIndex > 0 ? (articles[currentIndex - 1] ?? null) : null;
+const nextPost =
+  currentIndex >= 0 ? (articles[currentIndex + 1] ?? null) : null;
 ---
 
 <div data-pagefind-ignore class="my-8 grid grid-cols-1 gap-6 sm:grid-cols-2">

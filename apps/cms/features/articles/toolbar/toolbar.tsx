@@ -12,12 +12,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { ARTICLE_CATEGORIES } from "../constants/categories";
-
 interface Props {
   search: string;
   status: string;
   category: string;
+
+  categories: {
+    id: string;
+    name: string;
+    slug: string;
+    description: string;
+    image: string | null;
+    status: "Active" | "Inactive";
+  }[];
 
   onSearchChange: (value: string) => void;
   onStatusChange: (value: string) => void;
@@ -28,6 +35,7 @@ export function ArticlesToolbar({
   search,
   status,
   category,
+  categories,
   onSearchChange,
   onStatusChange,
   onCategoryChange,
@@ -78,9 +86,9 @@ export function ArticlesToolbar({
           <SelectContent>
             <SelectItem value="all">All Categories</SelectItem>
 
-            {ARTICLE_CATEGORIES.map((categoryName) => (
-              <SelectItem key={categoryName} value={categoryName.toLowerCase()}>
-                {categoryName}
+            {categories.map((item) => (
+              <SelectItem key={item.id} value={item.name.toLowerCase()}>
+                {item.name}
               </SelectItem>
             ))}
           </SelectContent>

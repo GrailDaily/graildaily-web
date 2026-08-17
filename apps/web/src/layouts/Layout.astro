@@ -7,6 +7,7 @@ import config from "@/config";
 import "@/styles/global.css";
 import icon from "@/assets/images/logo/icon.png";
 import Footer from "@/components/Footer.astro";
+import { getSiteSettings } from "@/lib/site-settings";
 
 type Props = {
   title?: string;
@@ -17,9 +18,11 @@ type Props = {
 
 const { site } = config;
 
+const cmsSettings = await getSiteSettings();
+
 const {
-  title = site.title,
-  description = site.description,
+  title = cmsSettings.siteName,
+  description = cmsSettings.description,
   ogImage = resolveDefaultOgImagePath(config),
   canonicalURL = Astro.site
     ? new URL(Astro.url.pathname, Astro.site).href
@@ -72,7 +75,7 @@ const rssHref = getRelativeLocaleUrl(
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={site.title} />
+    <meta property="og:site_name" content={cmsSettings.siteName} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
@@ -89,7 +92,7 @@ const rssHref = getRelativeLocaleUrl(
     <link
       rel="alternate"
       type="application/rss+xml"
-      title={site.title}
+      title={cmsSettings.siteName}
       href={new URL(rssHref, Astro.site ?? Astro.url)}
     />
 
@@ -127,16 +130,16 @@ const rssHref = getRelativeLocaleUrl(
       })();
     </script>
 
-    <script is:inline type="application/ld+json">
+<script is:inline type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "GrailDaily",
-    "url": {JSON.stringify(config.site.url)},
-    "description": {JSON.stringify(site.description)},
+    "name": {JSON.stringify(cmsSettings.siteName)},
+    "url": {JSON.stringify(cmsSettings.siteUrl)},
+    "description": {JSON.stringify(cmsSettings.description)},
     "publisher": {
       "@type": "Organization",
-      "name": "GrailDaily"
+      "name": {JSON.stringify(cmsSettings.siteName)}
     }
   }
 </script>

@@ -5,7 +5,7 @@ import PopularHero from "@/components/popular/PopularHero.astro";
 import PopularGrid from "@/components/popular/PopularGrid.astro";
 import PopularList from "@/components/popular/PopularList.astro";
 
-import { getCollection } from "astro:content";
+import { getPopularPosts } from "@/lib/popular";
 
 export async function getStaticPaths() {
   return [
@@ -16,15 +16,17 @@ export async function getStaticPaths() {
   ];
 }
 
-const { range } = Astro.params;
+type PopularRange = "all" | "month" | "week" | "today";
 
-const posts = await getCollection("posts", ({ data }) => !data.draft);
+const range = Astro.params.range as PopularRange;
+
+const posts = await getPopularPosts(range);
 ---
 
 <Layout title="Popular Articles | GrailDaily">
   <Header />
 
-  <PopularHero range={range} />
+  <PopularHero post={posts[0]} range={range} />
 
   <div class="app-layout">
     <PopularGrid posts={posts.slice(1, 5)} />

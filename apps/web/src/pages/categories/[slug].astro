@@ -4,6 +4,7 @@ import Header from "@/components/header/Header.astro";
 import ArticleCard from "@/components/cards/ArticleCard.astro";
 
 import { categories } from "@/data/categories";
+
 import { getCmsArticles } from "@/lib/cms";
 import { cmsArticlesToHomePosts } from "@/lib/cms-adapter";
 
@@ -25,7 +26,15 @@ if (!category) {
 
 const cmsArticles = await getCmsArticles();
 
-const posts = cmsArticlesToHomePosts(cmsArticles);
+const cmsPosts = cmsArticlesToHomePosts(
+  cmsArticles.filter(article => article.status === "Published")
+);
+
+const posts = [...cmsPosts].sort(
+  (a, b) =>
+    new Date(b.data.modDatetime ?? b.data.pubDatetime).getTime() -
+    new Date(a.data.modDatetime ?? a.data.pubDatetime).getTime()
+);
 
 const categoryPosts = posts.filter(post =>
   post.data.tags?.some(tag => tag.toLowerCase() === category.name.toLowerCase())

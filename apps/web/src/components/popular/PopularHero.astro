@@ -1,15 +1,12 @@
 ---
-import { getCollection } from "astro:content";
-
-const posts = await getCollection("posts", ({ data }) => !data.draft);
-
-const featuredPost = posts[0];
+import type { HomePost } from "@/lib/home-post";
 
 interface Props {
+  post: HomePost | undefined;
   range: string;
 }
 
-const { range } = Astro.props;
+const { post, range } = Astro.props;
 ---
 
 <section class="popular-hero">
@@ -42,16 +39,18 @@ const { range } = Astro.props;
     </nav>
 
     {
-      featuredPost && (
-        <a href={`/posts/${featuredPost.id}/`} class="popular-featured">
-          <img src={featuredPost.data.ogImage} alt={featuredPost.data.title} />
+      post && (
+        <a href={post.href} class="popular-featured">
+          {post.data.ogImage && (
+            <img src={post.data.ogImage} alt={post.data.title} />
+          )}
 
           <div class="featured-overlay">
             <span class="featured-badge">#1 MOST READ</span>
 
-            <h2>{featuredPost.data.title}</h2>
+            <h2>{post.data.title}</h2>
 
-            <p>{featuredPost.data.description}</p>
+            <p>{post.data.description}</p>
           </div>
         </a>
       )
