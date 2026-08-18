@@ -146,7 +146,7 @@ async function main() {
       name: "Archaeology",
       slug: "archaeology",
       description:
-        "Explore ancient artifacts, excavations, lost cities, and discoveries that uncover humanity's distant past.",
+        "Explore ancient artifacts, excavations, lost cities, and civilizations that reveal humanity's distant past.",
       image: "/images/categories/Archaeology.png",
     },
     {
@@ -160,14 +160,14 @@ async function main() {
       name: "Entertainment",
       slug: "entertainment",
       description:
-        "Discover stories from film, television, music, gaming, and the entertainment industry around the world.",
+        "Discover stories from film, television, music, gaming, and entertainment from around the world.",
       image: "/images/categories/Entertainment.png",
     },
     {
       name: "Geography",
       slug: "geography",
       description:
-        "Explore countries, landscapes, natural wonders, climates, and the diverse regions of our planet.",
+        "Explore countries, landscapes, natural wonders, climate, and the diverse regions of our planet.",
       image: "/images/categories/Geography.png",
     },
     {
@@ -181,21 +181,21 @@ async function main() {
       name: "Humanity",
       slug: "humanity",
       description:
-        "Learn about human culture, society, civilization, behavior, and the stories that connect us all.",
+        "Explore human culture, society, behavior, ideas, and the stories that connect us.",
       image: "/images/categories/Humanity.png",
     },
     {
       name: "Mysteries",
       slug: "mysteries",
       description:
-        "Investigate unexplained phenomena, unsolved cases, strange events, and enduring historical mysteries.",
+        "Explore unexplained phenomena, unsolved cases, strange events, and mysteries that continue to spark curiosity.",
       image: "/images/categories/Mysteries.png",
     },
     {
       name: "Mythology",
       slug: "mythology",
       description:
-        "Dive into myths, legends, gods, heroes, folklore, and ancient beliefs from civilizations worldwide.",
+        "Dive into myths, legends, gods, heroes, folklore, and ancient beliefs from cultures around the world.",
       image: "/images/categories/Mythology.png",
     },
     {
@@ -223,7 +223,7 @@ async function main() {
       name: "Science",
       slug: "science",
       description:
-        "Learn about scientific discoveries, physics, biology, chemistry, medicine, and groundbreaking research.",
+        "Discover how the world works through physics, biology, chemistry, medicine, and scientific research.",
       image: "/images/categories/Science.png",
     },
     {
@@ -237,7 +237,7 @@ async function main() {
       name: "Technology",
       slug: "technology",
       description:
-        "Stay informed about innovation, artificial intelligence, computing, engineering, and emerging technologies.",
+        "Explore innovation, artificial intelligence, computing, engineering, and the technologies shaping our future.",
       image: "/images/categories/Technology.png",
     },
   ];

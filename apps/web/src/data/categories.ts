@@ -11,7 +11,7 @@ export const categories: Category[] = [
     slug: "archaeology",
     image: "/images/categories/Archaeology.png",
     description:
-      "Explore ancient artifacts, excavations, lost cities, and discoveries that uncover humanity's distant past.",
+      "Explore ancient artifacts, excavations, lost cities, and civilizations that reveal humanity's distant past.",
   },
   {
     name: "Economics",
@@ -25,14 +25,14 @@ export const categories: Category[] = [
     slug: "entertainment",
     image: "/images/categories/Entertainment.png",
     description:
-      "Discover stories from film, television, music, gaming, and the entertainment industry around the world.",
+      "Discover stories from film, television, music, gaming, and entertainment from around the world.",
   },
   {
     name: "Geography",
     slug: "geography",
     image: "/images/categories/Geography.png",
     description:
-      "Explore countries, landscapes, natural wonders, climates, and the diverse regions of our planet.",
+      "Explore countries, landscapes, natural wonders, climate, and the diverse regions of our planet.",
   },
   {
     name: "History",
@@ -46,21 +46,21 @@ export const categories: Category[] = [
     slug: "humanity",
     image: "/images/categories/Humanity.png",
     description:
-      "Learn about human culture, society, civilization, behavior, and the stories that connect us all.",
+      "Explore human culture, society, behavior, ideas, and the stories that connect us.",
   },
   {
     name: "Mysteries",
     slug: "mysteries",
     image: "/images/categories/Mysteries.png",
     description:
-      "Investigate unexplained phenomena, unsolved cases, strange events, and enduring historical mysteries.",
+      "Explore unexplained phenomena, unsolved cases, strange events, and mysteries that continue to spark curiosity.",
   },
   {
     name: "Mythology",
     slug: "mythology",
     image: "/images/categories/Mythology.png",
     description:
-      "Dive into myths, legends, gods, heroes, folklore, and ancient beliefs from civilizations worldwide.",
+      "Dive into myths, legends, gods, heroes, folklore, and ancient beliefs from cultures around the world.",
   },
   {
     name: "Nature",
@@ -88,7 +88,7 @@ export const categories: Category[] = [
     slug: "science",
     image: "/images/categories/Science.png",
     description:
-      "Learn about scientific discoveries, physics, biology, chemistry, medicine, and groundbreaking research.",
+      "Discover how the world works through physics, biology, chemistry, medicine, and scientific research.",
   },
   {
     name: "Space",
@@ -102,6 +102,6 @@ export const categories: Category[] = [
     slug: "technology",
     image: "/images/categories/Technology.png",
     description:
-      "Stay informed about innovation, artificial intelligence, computing, engineering, and emerging technologies.",
+      "Explore innovation, artificial intelligence, computing, engineering, and the technologies shaping our future.",
   },
 ];
