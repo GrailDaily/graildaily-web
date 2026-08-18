@@ -3,7 +3,7 @@ import PostLayout from "@/layouts/PostLayout.astro";
 import { getCmsArticles } from "@/lib/cms";
 import config from "@/config";
 
-export const prerender = false;
+export const prerender = true;
 
 const articles = await getCmsArticles();
 ---

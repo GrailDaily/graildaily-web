@@ -9,6 +9,7 @@ import CmsRelatedPosts from "@/components/post/CmsRelatedPosts.astro";
 
 import { getCmsArticle } from "@/lib/cms";
 import { renderCmsMarkdown } from "@/lib/cms-markdown";
+import { getCmsArticles } from "@/lib/cms";
 
 import config from "@/config";
 import { slugifyStr } from "@/utils/slugify";
@@ -17,7 +18,19 @@ interface Props {
   slug: string;
 }
 
-export const prerender = false;
+export async function getStaticPaths() {
+  const articles = await getCmsArticles();
+
+  return articles
+    .filter(article => article.status === "Published")
+    .map(article => ({
+      params: {
+        slug: article.slug,
+      },
+    }));
+}
+
+export const prerender = true;
 
 const { slug } = Astro.params;
 
