@@ -1,6 +1,9 @@
+import { unstable_noStore as noStore } from "next/cache";
 import { prisma } from "@/lib/prisma";
 
 export async function getDashboardStats() {
+  noStore();
+
   const [total, published, draft, review, scheduled, archived, totalViews] =
     await Promise.all([
       prisma.article.count(),
