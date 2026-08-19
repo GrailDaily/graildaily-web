@@ -7,6 +7,8 @@ import PopularList from "@/components/popular/PopularList.astro";
 
 import { getPopularPosts } from "@/lib/popular";
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   return [
     { params: { range: "all" } },

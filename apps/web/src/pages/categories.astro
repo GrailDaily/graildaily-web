@@ -6,7 +6,9 @@ import CategorySection from "@/components/categories/CategorySection.astro";
 import config from "@/config";
 import { categories } from "@/data/categories";
 import { getCmsArticles } from "@/lib/cms";
-const articles = await getCmsArticles();
+const articles = (await getCmsArticles()).filter(
+  article => article.status === "Published"
+);
 ---
 
 <Layout

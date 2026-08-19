@@ -1,0 +1,121 @@
+﻿---
+---
+
+<div class="share-links">
+  <span class="share-label">Share this article</span>
+
+  <div class="share-buttons">
+    <button type="button" data-share="x" aria-label="Share on X">
+      X
+    </button>
+
+    <button type="button" data-share="facebook" aria-label="Share on Facebook">
+      f
+    </button>
+
+    <button type="button" data-share="copy" aria-label="Copy article link">
+      Copy
+    </button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const buttons = document.querySelectorAll<HTMLElement>("[data-share]");
+
+    buttons.forEach(button => {
+      if (button.dataset.shareBound === "true") return;
+
+      button.dataset.shareBound = "true";
+
+      button.addEventListener("click", async event => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const type = button.dataset.share;
+        const url = window.location.href;
+        const title = document.title;
+
+        if (type === "copy") {
+          try {
+            await navigator.clipboard.writeText(url);
+            button.textContent = "Copied!";
+
+            setTimeout(() => {
+              button.textContent = "Copy";
+            }, 1500);
+          } catch {
+            console.error("Failed to copy article URL.");
+          }
+
+          return;
+        }
+
+        if (type === "x") {
+          window.open(
+            `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
+            "_blank",
+            "noopener,noreferrer"
+          );
+        }
+
+        if (type === "facebook") {
+          window.open(
+            `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+            "_blank",
+            "noopener,noreferrer"
+          );
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .share-links {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .share-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted-foreground);
+    white-space: nowrap;
+  }
+
+  .share-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .share-buttons button {
+    border: 1px solid var(--border);
+    background: var(--background);
+    color: inherit;
+    border-radius: 8px;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 9px;
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      color 0.2s ease,
+      background 0.2s ease;
+  }
+
+  .share-buttons button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  @media (max-width: 768px) {
+    .share-links {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+</style>

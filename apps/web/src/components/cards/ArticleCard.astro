@@ -1,11 +1,8 @@
 ---
-import type { CollectionEntry } from "astro:content";
 import type { HomePost, HomePostData } from "@/lib/home-post";
 
-type ArticleCardPost = CollectionEntry<"posts">;
-
 interface Props {
-  post: ArticleCardPost | HomePost;
+  post: HomePost;
   variant?:
     | "featured"
     | "horizontal"
@@ -17,7 +14,7 @@ interface Props {
 
 const { post, variant = "compact", showReadingTime = false } = Astro.props;
 const data = post.data as HomePostData;
-const href = "href" in post ? post.href : `/posts/${post.id}/`;
+const href = post.href;
 ---
 
 <a href={href} class="article-link">

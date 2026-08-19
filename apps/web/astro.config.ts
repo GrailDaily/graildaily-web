@@ -23,7 +23,7 @@ import config from "./astro-paper.config";
 export default defineConfig({
   site: config.site.url,
 
-  output: "static",
+  output: "server",
   adapter: cloudflare({
     prerenderEnvironment: "node",
   }),

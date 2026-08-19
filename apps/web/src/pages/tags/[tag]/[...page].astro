@@ -1,40 +1,80 @@
----
-import { getCollection } from "astro:content";
-import type { GetStaticPathsOptions } from "astro";
+﻿---
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/header/Header.astro";
 import Main from "@/components/Main.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
-import Card from "@/components/Card.astro";
 import Footer from "@/components/Footer.astro";
+import ArticleCard from "@/components/cards/ArticleCard.astro";
 import Pagination from "@/components/Pagination.astro";
-import { getUniqueTags } from "@/utils/getUniqueTags";
-import { getSortedPosts } from "@/utils/getSortedPosts";
-import { slugifyAll } from "@/utils/slugify";
+import { getCmsArticlesByTag, getCmsTags } from "@/lib/tags";
+import { cmsArticlesToHomePosts } from "@/lib/cms-adapter";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
 
-export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const posts = await getCollection("posts", ({ data }) => !data.draft);
-  const tags = getUniqueTags(posts);
+export const prerender = true;
 
-  return tags.flatMap(({ tag, tagName }) => {
-    const tagPosts = getSortedPosts(
-      posts.filter(({ data }) => slugifyAll(data.tags).includes(tag))
-    );
+export async function getStaticPaths() {
+  const tags = await getCmsTags();
 
-    return paginate(tagPosts, {
-      params: { tag },
-      props: { tagName },
-      pageSize: config.posts.perPage,
-    });
-  });
+  const paths = [];
+
+  for (const { tag, tagName } of tags) {
+    const articles = await getCmsArticlesByTag(tag);
+    const posts = cmsArticlesToHomePosts(articles);
+
+    const pageSize = config.posts.perPage;
+    const totalPages = Math.max(1, Math.ceil(posts.length / pageSize));
+
+    for (let page = 1; page <= totalPages; page++) {
+      const start = (page - 1) * pageSize;
+      const pagePosts = posts.slice(start, start + pageSize);
+
+      paths.push({
+        params: {
+          tag,
+          page: page === 1 ? undefined : String(page),
+        },
+        props: {
+          tagName,
+          posts: pagePosts,
+          currentPage: page,
+          totalPages,
+        },
+      });
+    }
+  }
+
+  return paths;
 }
 
-const { page, tagName } = Astro.props;
+const {
+  tagName,
+  posts,
+  currentPage,
+  totalPages,
+} = Astro.props;
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
+
+const page = {
+  data: posts,
+  currentPage,
+  lastPage: totalPages,
+  url: {
+    current: Astro.url.pathname,
+    prev:
+      currentPage > 1
+        ? currentPage === 2
+          ? `../`
+          : `../${currentPage - 1}/`
+        : undefined,
+    next:
+      currentPage < totalPages
+        ? `../${currentPage + 1}/`
+        : undefined,
+  },
+};
 ---
 
 <Layout title={`${t.pages.tagTitle}: ${tagName} | ${config.site.title}`}>
@@ -46,12 +86,23 @@ const t = useTranslations(locale);
     pageTitle={`${t.pages.tagTitle}: ${tagName}`}
     pageDesc={`${t.pages.tagDesc} "${tagName}".`}
   >
-    <ul>
-      {page.data.map(data => <Card {...data} />)}
-    </ul>
+    <div class="article-list">
+      {
+        posts.map(post => (
+          <ArticleCard
+            post={post}
+            variant="horizontal"
+          />
+        ))
+      }
+    </div>
   </Main>
 
-  <Pagination {page} />
+  {
+    totalPages > 1 && (
+      <Pagination {page} />
+    )
+  }
 
-  <Footer noMarginTop={page.lastPage > 1} />
+  <Footer noMarginTop={totalPages > 1} />
 </Layout>

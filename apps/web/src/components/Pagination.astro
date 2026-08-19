@@ -1,13 +1,21 @@
----
-import type { Page } from "astro";
-import type { CollectionEntry } from "astro:content";
+﻿---
 import IconArrowLeft from "@/assets/icons/IconArrowLeft.svg";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import LinkButton from "./LinkButton.astro";
 import { useTranslations } from "@/i18n";
 
+type PaginationPage = {
+  currentPage: number;
+  lastPage: number;
+  url: {
+    current: string;
+    prev?: string;
+    next?: string;
+  };
+};
+
 type Props = {
-  page: Page<CollectionEntry<"posts">>;
+  page: PaginationPage;
 };
 
 const { page } = Astro.props;
@@ -24,17 +32,19 @@ const t = useTranslations(Astro.currentLocale);
     >
       <LinkButton
         disabled={!page.url.prev}
-        href={page.url.prev as string}
+        href={page.url.prev ?? "#"}
         class:list={["select-none", { "opacity-50": !page.url.prev }]}
         aria-label={t.a11y.goToPreviousPage}
       >
         <IconArrowLeft class="inline-block rtl:rotate-180" />
         {t.pagination.prev}
       </LinkButton>
+
       {page.currentPage} / {page.lastPage}
+
       <LinkButton
         disabled={!page.url.next}
-        href={page.url.next as string}
+        href={page.url.next ?? "#"}
         class:list={["select-none", { "opacity-50": !page.url.next }]}
         aria-label={t.a11y.goToNextPage}
       >
