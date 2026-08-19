@@ -20,6 +20,7 @@
     "@astrojs/mdx": "^7.0.2",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/vercel": "^11.0.5",
     "@lucide/astro": "^1.24.0",
     "@pagefind/default-ui": "^1.5.2",
     "@tailwindcss/vite": "^4.3.0",

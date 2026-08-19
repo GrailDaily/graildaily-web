@@ -4,7 +4,7 @@ import {
   fontProviders,
   svgoOptimizer,
 } from "astro/config";
-import cloudflare from "@astrojs/cloudflare";
+import vercel from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
@@ -24,9 +24,7 @@ export default defineConfig({
   site: config.site.url,
 
   output: "server",
-  adapter: cloudflare({
-    prerenderEnvironment: "node",
-  }),
+  adapter: vercel(),
 
   integrations: [
     mdx(),
@@ -105,3 +103,4 @@ export default defineConfig({
     svgOptimizer: svgoOptimizer(),
   },
 });
+
