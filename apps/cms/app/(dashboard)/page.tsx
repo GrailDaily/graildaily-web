@@ -1,4 +1,6 @@
-﻿import { DashboardStats } from "@/features/dashboard/components/dashboard-stats";
+﻿export const dynamic = "force-dynamic";
+
+import { DashboardStats } from "@/features/dashboard/components/dashboard-stats";
 import {
   getDashboardStats,
   getViewsLast7Days,
