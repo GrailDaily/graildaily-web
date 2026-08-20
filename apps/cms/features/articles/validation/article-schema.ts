@@ -14,6 +14,10 @@ export const articleSchema = z.object({
   author: z.string().min(2, "Author is required"),
 
   status: z.enum(["Draft", "Review", "Scheduled", "Published", "Archived"]),
+
+  showInHero: z.boolean(),
+
+  showInEditorsPicks: z.boolean(),
 });
 
 export type ArticleSchema = z.infer<typeof articleSchema>;

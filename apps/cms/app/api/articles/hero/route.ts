@@ -7,10 +7,12 @@ export async function GET() {
     const articles = await prisma.article.findMany({
       where: {
         status: "Published",
+        showInHero: true,
       },
       orderBy: {
-        publishedAt: "desc",
+        heroSelectedAt: "desc",
       },
+      take: 6,
       select: {
         id: true,
         title: true,
@@ -36,11 +38,11 @@ export async function GET() {
       total: articles.length,
     });
   } catch (error) {
-    console.error("GET /api/articles failed:", error);
+    console.error("GET /api/articles/hero failed:", error);
 
     return NextResponse.json(
       {
-        error: "Failed to fetch articles.",
+        error: "Failed to fetch Hero articles.",
       },
       {
         status: 500,

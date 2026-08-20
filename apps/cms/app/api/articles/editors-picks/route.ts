@@ -7,10 +7,12 @@ export async function GET() {
     const articles = await prisma.article.findMany({
       where: {
         status: "Published",
+        showInEditorsPicks: true,
       },
       orderBy: {
-        publishedAt: "desc",
+        editorsPicksSelectedAt: "desc",
       },
+      take: 5,
       select: {
         id: true,
         title: true,
@@ -36,11 +38,11 @@ export async function GET() {
       total: articles.length,
     });
   } catch (error) {
-    console.error("GET /api/articles failed:", error);
+    console.error("GET /api/articles/editors-picks failed:", error);
 
     return NextResponse.json(
       {
-        error: "Failed to fetch articles.",
+        error: "Failed to fetch Editor's Picks articles.",
       },
       {
         status: 500,

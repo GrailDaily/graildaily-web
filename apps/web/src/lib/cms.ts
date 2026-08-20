@@ -11,6 +11,13 @@ export interface CmsArticle {
   createdAt: string;
   updatedAt: string;
   publishedAt: string | null;
+
+  showInHero: boolean;
+  heroSelectedAt: string | null;
+
+  showInEditorsPicks: boolean;
+  editorsPicksSelectedAt: string | null;
+
   views: number;
 }
 

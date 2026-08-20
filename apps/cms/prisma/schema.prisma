@@ -8,30 +8,32 @@ datasource db {
 }
 
 model Article {
-  id            String        @id @default(cuid())
-  title         String
-  slug          String        @unique
-  excerpt       String
-  content       String
-  featuredImage String?
-  category      String
-  author        String
-  authorUserId  String?
-  status        ArticleStatus
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  publishedAt   DateTime?
-
-  views      ArticleView[]
-  authorUser User?         @relation(fields: [authorUserId], references: [id], onDelete: SetNull)
+  id                     String        @id @default(cuid())
+  title                  String
+  slug                   String        @unique
+  excerpt                String
+  content                String
+  featuredImage          String?
+  category               String
+  author                 String
+  status                 ArticleStatus
+  createdAt              DateTime      @default(now())
+  updatedAt              DateTime      @updatedAt
+  publishedAt            DateTime?
+  authorUserId           String?
+  editorsPicksSelectedAt DateTime?
+  heroSelectedAt         DateTime?
+  showInEditorsPicks     Boolean       @default(false)
+  showInHero             Boolean       @default(false)
+  authorUser             User?         @relation(fields: [authorUserId], references: [id])
+  views                  ArticleView[]
 }
 
 model ArticleView {
   id        String   @id @default(cuid())
   articleId String
   viewedAt  DateTime @default(now())
-
-  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
 
   @@index([articleId])
   @@index([viewedAt])
@@ -64,11 +66,6 @@ model Category {
   @@index([status])
 }
 
-enum CategoryStatus {
-  Active
-  Inactive
-}
-
 model SiteSettings {
   id          String   @id @default(cuid())
   siteName    String   @default("GrailDaily")
@@ -79,14 +76,6 @@ model SiteSettings {
   updatedAt   DateTime @updatedAt
 }
 
-enum ArticleStatus {
-  Draft
-  Review
-  Scheduled
-  Published
-  Archived
-}
-
 model User {
   id        String     @id @default(cuid())
   name      String
@@ -95,11 +84,23 @@ model User {
   status    UserStatus @default(Active)
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
-
-  articles Article[]
+  articles  Article[]
 
   @@index([role])
   @@index([status])
+}
+
+enum CategoryStatus {
+  Active
+  Inactive
+}
+
+enum ArticleStatus {
+  Draft
+  Review
+  Scheduled
+  Published
+  Archived
 }
 
 enum UserRole {

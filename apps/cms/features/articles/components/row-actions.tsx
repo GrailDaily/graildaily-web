@@ -1,18 +1,10 @@
 "use client";
 
 import { MoreHorizontal } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
-
 import { useRouter } from "next/navigation";
-
 import { useTransition } from "react";
 
-import {
-  archiveArticleAction,
-  duplicateArticleAction,
-  deleteArticleAction,
-} from "@/actions/article.actions";
+import { Button } from "@/components/ui/button";
 
 import {
   DropdownMenu,
@@ -22,14 +14,48 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import {
+  archiveArticleAction,
+  duplicateArticleAction,
+  deleteArticleAction,
+  selectHeroArticleAction,
+  removeHeroArticleAction,
+  selectEditorsPickArticleAction,
+  removeEditorsPickArticleAction,
+} from "@/actions/article.actions";
+
+import type { ArticleStatus } from "@/types/article";
+
 interface Props {
   articleId: string;
   slug: string;
+  status: ArticleStatus;
+  showInHero: boolean;
+  showInEditorsPicks: boolean;
 }
 
-export function RowActions({ articleId, slug }: Props) {
+export function RowActions({
+  articleId,
+  slug,
+  status,
+  showInHero,
+  showInEditorsPicks,
+}: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+
+  const runAction = async (action: () => Promise<void>) => {
+    startTransition(async () => {
+      try {
+        await action();
+        router.refresh();
+      } catch (error) {
+        console.error(error);
+        alert(error instanceof Error ? error.message : "Something went wrong.");
+      }
+    });
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -49,17 +75,7 @@ export function RowActions({ articleId, slug }: Props) {
 
         <DropdownMenuItem
           disabled={isPending}
-          onClick={() => {
-            startTransition(async () => {
-              try {
-                await duplicateArticleAction(articleId);
-
-                router.refresh();
-              } catch (error) {
-                console.error(error);
-              }
-            });
-          }}
+          onClick={() => runAction(() => duplicateArticleAction(articleId))}
         >
           Duplicate
         </DropdownMenuItem>
@@ -78,19 +94,43 @@ export function RowActions({ articleId, slug }: Props) {
 
         <DropdownMenuSeparator />
 
+        {status === "Published" && (
+          <>
+            <DropdownMenuItem
+              disabled={isPending}
+              onClick={() =>
+                runAction(() =>
+                  showInHero
+                    ? removeHeroArticleAction(articleId)
+                    : selectHeroArticleAction(articleId),
+                )
+              }
+            >
+              {showInHero ? "Remove from Hero" : "Set as Hero"}
+            </DropdownMenuItem>
+
+            <DropdownMenuItem
+              disabled={isPending}
+              onClick={() =>
+                runAction(() =>
+                  showInEditorsPicks
+                    ? removeEditorsPickArticleAction(articleId)
+                    : selectEditorsPickArticleAction(articleId),
+                )
+              }
+            >
+              {showInEditorsPicks
+                ? "Remove from Editor's Picks"
+                : "Set as Editor's Picks"}
+            </DropdownMenuItem>
+
+            <DropdownMenuSeparator />
+          </>
+        )}
+
         <DropdownMenuItem
           disabled={isPending}
-          onClick={() => {
-            startTransition(async () => {
-              try {
-                await archiveArticleAction(articleId);
-
-                router.refresh();
-              } catch (error) {
-                console.error(error);
-              }
-            });
-          }}
+          onClick={() => runAction(() => archiveArticleAction(articleId))}
         >
           Archive
         </DropdownMenuItem>
@@ -101,15 +141,7 @@ export function RowActions({ articleId, slug }: Props) {
           onClick={() => {
             if (!confirm("Delete this article?")) return;
 
-            startTransition(async () => {
-              try {
-                await deleteArticleAction(articleId);
-
-                router.refresh();
-              } catch (error) {
-                console.error(error);
-              }
-            });
+            runAction(() => deleteArticleAction(articleId));
           }}
         >
           Delete

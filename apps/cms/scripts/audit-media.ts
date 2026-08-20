@@ -11,6 +11,13 @@ type CloudinaryResource = {
   created_at?: string;
 };
 
+type MediaAuditRecord = {
+  id: string;
+  originalName: string;
+  path: string;
+  publicId: string | null;
+};
+
 async function getCloudinaryResources() {
   const resources: CloudinaryResource[] = [];
 
@@ -54,7 +61,7 @@ async function main() {
       orderBy: {
         createdAt: "asc",
       },
-    }),
+    }) as Promise<MediaAuditRecord[]>,
 
     prisma.article.findMany({
       select: {

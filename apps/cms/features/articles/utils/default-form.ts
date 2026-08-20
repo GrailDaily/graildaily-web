@@ -11,4 +11,7 @@ export const defaultArticleForm: ArticleFormData = {
   status: "Draft",
 
   featuredImage: null,
+
+  showInHero: false,
+  showInEditorsPicks: false,
 };

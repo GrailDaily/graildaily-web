@@ -56,3 +56,6 @@ public/pagefind/
 **/.agents/
 **/.claude/
 **/.windsurf/
+
+# Vercel local build output
+.vercel/

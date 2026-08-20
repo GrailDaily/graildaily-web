@@ -121,7 +121,13 @@ export function ArticlesTable({ articles, selected, onSelectedChange }: Props) {
                 <TableCell className="text-right">{article.views}</TableCell>
 
                 <TableCell className="text-right">
-                  <RowActions articleId={article.id} slug={article.slug} />
+                  <RowActions
+                    articleId={article.id}
+                    slug={article.slug}
+                    status={article.status}
+                    showInHero={article.showInHero}
+                    showInEditorsPicks={article.showInEditorsPicks}
+                  />
                 </TableCell>
               </TableRow>
             ))}

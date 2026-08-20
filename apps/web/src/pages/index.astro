@@ -16,19 +16,43 @@ const t = useTranslations(locale);
 
 const cmsArticles = await getCmsArticles();
 
-const cmsPosts = cmsArticlesToHomePosts(
-  cmsArticles.filter(article => article.status === "Published")
+const publishedArticles = cmsArticles.filter(
+  article => article.status === "Published"
 );
 
-const posts = cmsPosts;
+const posts = cmsArticlesToHomePosts(publishedArticles);
+
+const heroPosts = cmsArticlesToHomePosts(
+  publishedArticles
+    .filter(article => article.showInHero)
+    .sort(
+      (a, b) =>
+        new Date(b.heroSelectedAt ?? b.publishedAt ?? b.createdAt).getTime() -
+        new Date(a.heroSelectedAt ?? a.publishedAt ?? a.createdAt).getTime()
+    )
+    .slice(0, 6)
+);
+
+const editorPicksPosts = cmsArticlesToHomePosts(
+  publishedArticles
+    .filter(article => article.showInEditorsPicks)
+    .sort(
+      (a, b) =>
+        new Date(
+          b.editorsPicksSelectedAt ?? b.publishedAt ?? b.createdAt
+        ).getTime() -
+        new Date(
+          a.editorsPicksSelectedAt ?? a.publishedAt ?? a.createdAt
+        ).getTime()
+    )
+    .slice(0, 5)
+);
 
 const sortedPosts = [...posts].sort(
   (a, b) =>
     new Date(b.data.modDatetime ?? b.data.pubDatetime).getTime() -
     new Date(a.data.modDatetime ?? a.data.pubDatetime).getTime()
 );
-
-const featuredPosts = sortedPosts.slice(0, 6);
 
 const recentPosts = sortedPosts.slice(0, 10);
 
@@ -123,9 +147,9 @@ const categories = [
 <Layout>
   <Header />
 
-  <HeroCarousel posts={featuredPosts} />
+  <HeroCarousel posts={heroPosts} />
 
-  <EditorPicks posts={featuredPosts} />
+  <EditorPicks posts={editorPicksPosts} />
 
   <Trending posts={recentPosts} />
 

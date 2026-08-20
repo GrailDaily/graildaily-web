@@ -4,6 +4,13 @@ import { revalidatePath } from "next/cache";
 
 import { prisma } from "@/lib/prisma";
 
+import {
+  selectHeroArticle,
+  removeHeroArticle,
+  selectEditorsPickArticle,
+  removeEditorsPickArticle,
+} from "@/services/home-editorial.service";
+
 import { ArticleFormData } from "@/features/articles/types/article-form";
 
 import type { ArticleStatus } from "@/types/article";
@@ -50,6 +57,30 @@ export async function updateArticleAction(id: string, data: ArticleFormData) {
 
   revalidatePath("/articles");
   revalidatePath("/media");
+}
+
+export async function selectHeroArticleAction(articleId: string) {
+  await selectHeroArticle(articleId);
+
+  revalidatePath("/articles");
+}
+
+export async function removeHeroArticleAction(articleId: string) {
+  await removeHeroArticle(articleId);
+
+  revalidatePath("/articles");
+}
+
+export async function selectEditorsPickArticleAction(articleId: string) {
+  await selectEditorsPickArticle(articleId);
+
+  revalidatePath("/articles");
+}
+
+export async function removeEditorsPickArticleAction(articleId: string) {
+  await removeEditorsPickArticle(articleId);
+
+  revalidatePath("/articles");
 }
 
 export async function deleteArticleAction(id: string) {

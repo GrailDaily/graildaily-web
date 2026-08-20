@@ -24,6 +24,12 @@ export interface Article {
 
   status: ArticleStatus;
 
+  showInHero: boolean;
+  heroSelectedAt: Date | null;
+
+  showInEditorsPicks: boolean;
+  editorsPicksSelectedAt: Date | null;
+
   publishedAt: Date | null;
 
   updatedAt: Date;

@@ -65,6 +65,8 @@ export function ArticleForm({ article, media, categories }: Props) {
         author: article.author,
         status: article.status,
         featuredImage: article.featuredImage ?? null,
+        showInHero: article.showInHero,
+        showInEditorsPicks: article.showInEditorsPicks,
       }
     : defaultArticleForm;
 
@@ -91,6 +93,8 @@ export function ArticleForm({ article, media, categories }: Props) {
       category: initialValues.category,
       author: initialValues.author,
       status: initialValues.status,
+      showInHero: initialValues.showInHero,
+      showInEditorsPicks: initialValues.showInEditorsPicks,
     },
 
     mode: "onChange",
@@ -368,6 +372,72 @@ export function ArticleForm({ article, media, categories }: Props) {
                       {formMethods.formState.errors.author.message}
                     </p>
                   )}
+                </div>
+
+                <div className="space-y-4 border-t pt-4">
+                  <div className="space-y-2">
+                    <Label>Show in Hero</Label>
+
+                    <Controller
+                      control={formMethods.control}
+                      name="showInHero"
+                      render={({ field }) => (
+                        <Select
+                          value={field.value ? "yes" : "no"}
+                          onValueChange={(value) => {
+                            const show = value === "yes";
+
+                            field.onChange(show);
+
+                            if (show) {
+                              formMethods.setValue("showInEditorsPicks", false);
+                            }
+                          }}
+                        >
+                          <SelectTrigger className="w-full">
+                            <SelectValue />
+                          </SelectTrigger>
+
+                          <SelectContent>
+                            <SelectItem value="yes">Ya</SelectItem>
+                            <SelectItem value="no">Tidak</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      )}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Show in Editor&apos;s Picks</Label>
+
+                    <Controller
+                      control={formMethods.control}
+                      name="showInEditorsPicks"
+                      render={({ field }) => (
+                        <Select
+                          value={field.value ? "yes" : "no"}
+                          onValueChange={(value) => {
+                            const show = value === "yes";
+
+                            field.onChange(show);
+
+                            if (show) {
+                              formMethods.setValue("showInHero", false);
+                            }
+                          }}
+                        >
+                          <SelectTrigger className="w-full">
+                            <SelectValue />
+                          </SelectTrigger>
+
+                          <SelectContent>
+                            <SelectItem value="yes">Ya</SelectItem>
+                            <SelectItem value="no">Tidak</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      )}
+                    />
+                  </div>
                 </div>
 
                 <div className="space-y-4 pt-2">

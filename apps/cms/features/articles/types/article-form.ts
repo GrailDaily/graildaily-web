@@ -11,4 +11,7 @@ export interface ArticleFormData {
   status: ArticleStatus;
 
   featuredImage: string | null;
+
+  showInHero: boolean;
+  showInEditorsPicks: boolean;
 }
