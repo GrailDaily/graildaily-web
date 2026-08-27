@@ -8,6 +8,7 @@ export async function GET() {
       where: {
         status: "Published",
         showInEditorsPicks: true,
+        showInHero: false,
       },
       orderBy: {
         editorsPicksSelectedAt: "desc",
