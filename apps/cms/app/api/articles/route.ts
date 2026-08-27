@@ -36,9 +36,14 @@ export async function GET() {
       },
     });
 
+    const articlesWithViews = articles.map(({ _count, ...article }) => ({
+      ...article,
+      views: _count.views,
+    }));
+
     return NextResponse.json({
-      articles,
-      total: articles.length,
+      articles: articlesWithViews,
+      total: articlesWithViews.length,
     });
   } catch (error) {
     console.error("GET /api/articles failed:", error);
