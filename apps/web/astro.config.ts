@@ -26,6 +26,10 @@ export default defineConfig({
   output: "server",
   adapter: vercel(),
 
+  security: {
+    checkOrigin: false,
+  },
+
   integrations: [
     mdx(),
     sitemap({
@@ -103,3 +107,4 @@ export default defineConfig({
     svgOptimizer: svgoOptimizer(),
   },
 });
+
