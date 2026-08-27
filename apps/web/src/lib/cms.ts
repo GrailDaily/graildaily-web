@@ -56,6 +56,30 @@ export async function getCmsPopularArticles(
   return data.articles;
 }
 
+export async function getCmsHeroArticles(): Promise<CmsArticle[]> {
+  const response = await fetch(`${CMS_API_URL}/api/articles/hero`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch CMS hero articles: ${response.status}`);
+  }
+
+  const data = (await response.json()) as CmsArticlesResponse;
+
+  return data.articles;
+}
+
+export async function getCmsEditorsPicks(): Promise<CmsArticle[]> {
+  const response = await fetch(`${CMS_API_URL}/api/articles/editors-picks`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch CMS editors picks: ${response.status}`);
+  }
+
+  const data = (await response.json()) as CmsArticlesResponse;
+
+  return data.articles;
+}
+
 export async function getCmsArticle(slug: string): Promise<CmsArticle | null> {
   const response = await fetch(
     `${CMS_API_URL}/api/articles/${encodeURIComponent(slug)}`

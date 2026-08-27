@@ -8,8 +8,10 @@ interface RouteContext {
   }>;
 }
 
+const allowedOrigin = process.env.WEB_ORIGIN ?? "http://localhost:4321";
+
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "http://localhost:4321",
+  "Access-Control-Allow-Origin": allowedOrigin,
   "Access-Control-Allow-Methods": "POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };

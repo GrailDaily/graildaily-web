@@ -9,14 +9,6 @@ import { getPopularPosts } from "@/lib/popular";
 
 export const prerender = false;
 
-export async function getStaticPaths() {
-  return [
-    { params: { range: "all" } },
-    { params: { range: "month" } },
-    { params: { range: "week" } },
-    { params: { range: "today" } },
-  ];
-}
 
 type PopularRange = "all" | "month" | "week" | "today";
 

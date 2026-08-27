@@ -3,7 +3,11 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/header/Header.astro";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
-import { getCmsArticles } from "@/lib/cms";
+import {
+  getCmsArticles,
+  getCmsHeroArticles,
+  getCmsEditorsPicks,
+} from "@/lib/cms";
 import { cmsArticlesToHomePosts } from "@/lib/cms-adapter";
 import HeroCarousel from "@/components/hero/HeroCarousel.astro";
 import Trending from "@/components/home/Trending.astro";
@@ -22,31 +26,11 @@ const publishedArticles = cmsArticles.filter(
 
 const posts = cmsArticlesToHomePosts(publishedArticles);
 
-const heroPosts = cmsArticlesToHomePosts(
-  publishedArticles
-    .filter(article => article.showInHero)
-    .sort(
-      (a, b) =>
-        new Date(b.heroSelectedAt ?? b.publishedAt ?? b.createdAt).getTime() -
-        new Date(a.heroSelectedAt ?? a.publishedAt ?? a.createdAt).getTime()
-    )
-    .slice(0, 6)
-);
+const cmsHeroArticles = await getCmsHeroArticles();
+const heroPosts = cmsArticlesToHomePosts(cmsHeroArticles);
 
-const editorPicksPosts = cmsArticlesToHomePosts(
-  publishedArticles
-    .filter(article => article.showInEditorsPicks)
-    .sort(
-      (a, b) =>
-        new Date(
-          b.editorsPicksSelectedAt ?? b.publishedAt ?? b.createdAt
-        ).getTime() -
-        new Date(
-          a.editorsPicksSelectedAt ?? a.publishedAt ?? a.createdAt
-        ).getTime()
-    )
-    .slice(0, 5)
-);
+const cmsEditorsPicks = await getCmsEditorsPicks();
+const editorPicksPosts = cmsArticlesToHomePosts(cmsEditorsPicks);
 
 const sortedPosts = [...posts].sort(
   (a, b) =>
