@@ -20,7 +20,6 @@ export function cmsArticleToHomePost(article: CmsArticle): HomePost {
       tags: [article.category],
       ogImage: article.featuredImage ?? undefined,
       canonicalURL: undefined,
-      views: article.views,
     },
   };
 }

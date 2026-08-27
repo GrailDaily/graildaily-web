@@ -18,7 +18,6 @@ export interface CmsArticle {
   showInEditorsPicks: boolean;
   editorsPicksSelectedAt: string | null;
 
-  views: number;
 }
 
 interface CmsArticlesResponse {
