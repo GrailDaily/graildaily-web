@@ -59,3 +59,5 @@ public/pagefind/
 
 # Vercel local build output
 .vercel/
+.vercel
+.env*
