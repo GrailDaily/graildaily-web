@@ -4,7 +4,7 @@ backend:
   branch: main
 
 auth_endpoint: https://github.com/login/oauth/authorize
-site_domain: https://graildaily-website.pages.dev
+site_domain: https://graildaily-web-web.vercel.app
 
 media_folder: "src/assets/images"
 public_folder: "/src/assets/images"

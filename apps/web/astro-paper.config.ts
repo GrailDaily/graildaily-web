@@ -2,12 +2,12 @@ import { defineAstroPaperConfig } from "./src/types/config";
 
 export default defineAstroPaperConfig({
   site: {
-    url: "https://graildaily-website.pages.dev", // nanti sesuaikan jika domain sudah aktif
+    url: "https://graildaily-web-web.vercel.app", // nanti sesuaikan jika domain sudah aktif
     title: "GrailDaily",
     description:
       "Discover the world's greatest mysteries, ancient civilizations, lost history, archaeology, science, and unexplained phenomena through well-researched articles.",
     author: "GrailDaily",
-    profile: "https://graildaily-website.pages.dev",
+    profile: "https://graildaily-web-web.vercel.app",
     ogImage: "default-og.jpg",
     lang: "en",
     timezone: "Asia/Jakarta",
