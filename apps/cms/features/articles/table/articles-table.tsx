@@ -117,10 +117,10 @@ export function ArticlesTable({ articles, selected, onSelectedChange }: Props) {
                 <TableCell>{article.author}</TableCell>
 
                 <TableCell>
-  {article.status === "Scheduled"
-    ? formatDateTime(article.scheduledAt)
-    : formatDate(article.publishedAt)}
-</TableCell>
+                  {article.status === "Scheduled"
+                    ? formatDateTime(article.scheduledAt)
+                    : formatDateTime(article.publishedAt)}
+                </TableCell>
 
                 <TableCell className="text-right">{article.views}</TableCell>
 
@@ -141,6 +141,3 @@ export function ArticlesTable({ articles, selected, onSelectedChange }: Props) {
     </Card>
   );
 }
-
-
-
