@@ -14,6 +14,6 @@ jobs:
         env:
           CRON_SECRET: ${{ secrets.CRON_SECRET }}
         run: |
-          curl --fail-with-body \
+          curl --fail-with-body --location \
             -H "Authorization: Bearer ${CRON_SECRET}" \
-            "https://graildaily-web-cms-grail-daily.vercel.app/api/internal/publish-scheduled"
+            "https://graildaily-web-cms.vercel.app/api/internal/publish-scheduled"
