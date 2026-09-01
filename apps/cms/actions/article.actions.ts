@@ -20,7 +20,7 @@ import { cleanupMediaIfUnused } from "@/features/media/utils/media-cleanup";
 export async function createArticleAction(data: ArticleFormData) {
   const scheduledAt =
     data.status === "Scheduled" && data.scheduledAt
-      ? new Date(data.scheduledAt)
+      ? new Date(`${data.scheduledAt}:00+07:00`)
       : null;
 
   await prisma.article.create({
@@ -49,7 +49,7 @@ export async function updateArticleAction(id: string, data: ArticleFormData) {
 
   const scheduledAt =
     data.status === "Scheduled" && data.scheduledAt
-      ? new Date(data.scheduledAt)
+      ? new Date(`${data.scheduledAt}:00+07:00`)
       : null;
 
   const publishedAt =
@@ -285,4 +285,3 @@ export async function bulkDeleteArticlesAction(ids: string[]) {
   revalidatePath("/articles");
   revalidatePath("/media");
 }
-
