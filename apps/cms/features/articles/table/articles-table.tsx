@@ -4,7 +4,7 @@ import { Article } from "@/types/article";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { formatDate } from "@/lib/utils/date";
+import { formatDate, formatDateTime } from "@/lib/utils/date";
 import Image from "next/image";
 
 import { RowActions } from "../components/row-actions";
@@ -116,7 +116,11 @@ export function ArticlesTable({ articles, selected, onSelectedChange }: Props) {
 
                 <TableCell>{article.author}</TableCell>
 
-                <TableCell>{formatDate(article.publishedAt)}</TableCell>
+                <TableCell>
+  {article.status === "Scheduled"
+    ? formatDateTime(article.scheduledAt)
+    : formatDate(article.publishedAt)}
+</TableCell>
 
                 <TableCell className="text-right">{article.views}</TableCell>
 
@@ -137,3 +141,6 @@ export function ArticlesTable({ articles, selected, onSelectedChange }: Props) {
     </Card>
   );
 }
+
+
+

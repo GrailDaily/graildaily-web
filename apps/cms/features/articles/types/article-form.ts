@@ -9,6 +9,7 @@ export interface ArticleFormData {
   category: string;
   author: string;
   status: ArticleStatus;
+  scheduledAt: string | null;
 
   featuredImage: string | null;
 

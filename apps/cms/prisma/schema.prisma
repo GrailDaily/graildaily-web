@@ -20,6 +20,7 @@ model Article {
   createdAt              DateTime      @default(now())
   updatedAt              DateTime      @updatedAt
   publishedAt            DateTime?
+  scheduledAt           DateTime?
   authorUserId           String?
   editorsPicksSelectedAt DateTime?
   heroSelectedAt         DateTime?

@@ -18,9 +18,15 @@ import type { ArticleStatus } from "@/types/article";
 import { cleanupMediaIfUnused } from "@/features/media/utils/media-cleanup";
 
 export async function createArticleAction(data: ArticleFormData) {
+  const scheduledAt =
+    data.status === "Scheduled" && data.scheduledAt
+      ? new Date(data.scheduledAt)
+      : null;
+
   await prisma.article.create({
     data: {
       ...data,
+      scheduledAt,
       featuredImage: data.featuredImage,
       publishedAt: data.status === "Published" ? new Date() : null,
     },
@@ -41,17 +47,25 @@ export async function updateArticleAction(id: string, data: ArticleFormData) {
     throw new Error("Article not found");
   }
 
+  const scheduledAt =
+    data.status === "Scheduled" && data.scheduledAt
+      ? new Date(data.scheduledAt)
+      : null;
+
+  const publishedAt =
+    data.status === "Published"
+      ? (currentArticle.publishedAt ?? new Date())
+      : null;
+
   await prisma.article.update({
     where: {
       id,
     },
     data: {
       ...data,
+      scheduledAt,
       featuredImage: data.featuredImage,
-      publishedAt:
-        data.status === "Published"
-          ? (currentArticle.publishedAt ?? new Date())
-          : null,
+      publishedAt,
     },
   });
 
@@ -271,3 +285,4 @@ export async function bulkDeleteArticlesAction(ids: string[]) {
   revalidatePath("/articles");
   revalidatePath("/media");
 }
+

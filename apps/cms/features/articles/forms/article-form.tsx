@@ -12,7 +12,7 @@ import {
 } from "@/actions/article.actions";
 import { defaultArticleForm } from "@/features/articles/utils/default-form";
 import { useEffect, useRef, useState } from "react";
-import { Article } from "@/types/article";
+import type { Article, ArticleStatus } from "@/types/article";
 import { ImagePlus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { MarkdownEditor } from "@/features/articles/editor/markdown-editor";
@@ -53,9 +53,23 @@ interface Props {
   }[];
 }
 
+type ArticleInitialValues = {
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  author: string;
+  status: ArticleStatus;
+  scheduledAt: string | null;
+  featuredImage: string | null;
+  showInHero: boolean;
+  showInEditorsPicks: boolean;
+};
+
 export function ArticleForm({ article, media, categories }: Props) {
   const router = useRouter();
-  const initialValues = article
+  const initialValues: ArticleInitialValues = article
     ? {
         title: article.title,
         slug: article.slug,
@@ -64,11 +78,26 @@ export function ArticleForm({ article, media, categories }: Props) {
         category: article.category,
         author: article.author,
         status: article.status,
+        scheduledAt: article.scheduledAt
+          ? article.scheduledAt.toISOString().slice(0, 16)
+          : null,
         featuredImage: article.featuredImage ?? null,
         showInHero: article.showInHero,
         showInEditorsPicks: article.showInEditorsPicks,
       }
-    : defaultArticleForm;
+    : {
+        title: defaultArticleForm.title,
+        slug: defaultArticleForm.slug,
+        excerpt: defaultArticleForm.excerpt,
+        content: defaultArticleForm.content,
+        category: defaultArticleForm.category,
+        author: defaultArticleForm.author,
+        status: defaultArticleForm.status,
+        scheduledAt: defaultArticleForm.scheduledAt,
+        featuredImage: defaultArticleForm.featuredImage,
+        showInHero: defaultArticleForm.showInHero,
+        showInEditorsPicks: defaultArticleForm.showInEditorsPicks,
+      };
 
   //   const [slugEdited, setSlugEdited] = useState(false);
 
@@ -93,6 +122,7 @@ export function ArticleForm({ article, media, categories }: Props) {
       category: initialValues.category,
       author: initialValues.author,
       status: initialValues.status,
+      scheduledAt: initialValues.scheduledAt,
       showInHero: initialValues.showInHero,
       showInEditorsPicks: initialValues.showInEditorsPicks,
     },
@@ -117,9 +147,15 @@ export function ArticleForm({ article, media, categories }: Props) {
         featuredImage = upload.url;
       }
 
+      const finalStatus = submitStatus ?? data.status;
+
       const finalData = {
         ...data,
-        status: submitStatus ?? data.status,
+        status: finalStatus,
+        scheduledAt:
+          finalStatus === "Scheduled" && data.scheduledAt
+            ? data.scheduledAt
+            : null,
         featuredImage,
       };
 
@@ -150,8 +186,8 @@ export function ArticleForm({ article, media, categories }: Props) {
     await onSubmit(data, "Draft");
   };
 
-  const handlePublish = async (data: ArticleSchema) => {
-    await onSubmit(data, "Published");
+  const handlePrimarySubmit = async (data: ArticleSchema) => {
+    await onSubmit(data, data.status);
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -199,6 +235,11 @@ export function ArticleForm({ article, media, categories }: Props) {
     name: "title",
   });
 
+  const statusValue = useWatch({
+    control: formMethods.control,
+    name: "status",
+  });
+
   const { setValue } = formMethods;
 
   const [slugEdited, setSlugEdited] = useState(false);
@@ -211,7 +252,7 @@ export function ArticleForm({ article, media, categories }: Props) {
 
   return (
     <>
-      <form onSubmit={formMethods.handleSubmit(handlePublish)}>
+      <form onSubmit={formMethods.handleSubmit(handlePrimarySubmit)}>
         <div className="grid gap-6 lg:grid-cols-3">
           {/* Left */}
           <div className="space-y-6 lg:col-span-2">
@@ -327,6 +368,24 @@ export function ArticleForm({ article, media, categories }: Props) {
                     )}
                   />
                 </div>
+
+                {statusValue === "Scheduled" && (
+                  <div className="space-y-2">
+                    <Label htmlFor="scheduledAt">Schedule Publication</Label>
+
+                    <Input
+                      id="scheduledAt"
+                      type="datetime-local"
+                      {...formMethods.register("scheduledAt")}
+                    />
+
+                    {formMethods.formState.errors.scheduledAt && (
+                      <p className="text-sm text-red-600">
+                        {formMethods.formState.errors.scheduledAt.message}
+                      </p>
+                    )}
+                  </div>
+                )}
 
                 <div className="space-y-2">
                   <Label>Category</Label>
@@ -455,10 +514,18 @@ export function ArticleForm({ article, media, categories }: Props) {
                     {loading
                       ? article
                         ? "Updating..."
-                        : "Publishing..."
-                      : article
-                        ? "Update Article"
-                        : "Publish Article"}
+                        : "Saving..."
+                      : statusValue === "Scheduled"
+                        ? article
+                          ? "Update Schedule"
+                          : "Schedule Article"
+                        : statusValue === "Published"
+                          ? article
+                            ? "Update Article"
+                            : "Publish Article"
+                          : article
+                            ? "Update Article"
+                            : "Save Article"}
                   </Button>
                 </div>
               </CardContent>

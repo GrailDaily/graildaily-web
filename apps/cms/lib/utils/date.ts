@@ -7,3 +7,19 @@ export function formatDate(date: Date | null | undefined, locale = "en-US") {
     year: "numeric",
   }).format(date);
 }
+
+export function formatDateTime(
+  date: Date | null | undefined,
+  locale = "en-US",
+) {
+  if (!date) return "-";
+
+  return new Intl.DateTimeFormat(locale, {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(date);
+}
+

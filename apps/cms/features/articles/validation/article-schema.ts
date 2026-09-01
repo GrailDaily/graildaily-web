@@ -15,6 +15,8 @@ export const articleSchema = z.object({
 
   status: z.enum(["Draft", "Review", "Scheduled", "Published", "Archived"]),
 
+  scheduledAt: z.string().nullable().optional(),
+
   showInHero: z.boolean(),
 
   showInEditorsPicks: z.boolean(),

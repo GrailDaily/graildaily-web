@@ -31,6 +31,7 @@ export interface Article {
   editorsPicksSelectedAt: Date | null;
 
   publishedAt: Date | null;
+  scheduledAt: Date | null;
 
   updatedAt: Date;
 

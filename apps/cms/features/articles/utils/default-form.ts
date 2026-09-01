@@ -9,6 +9,7 @@ export const defaultArticleForm: ArticleFormData = {
   category: "",
   author: "GrailDaily",
   status: "Draft",
+  scheduledAt: null,
 
   featuredImage: null,
 

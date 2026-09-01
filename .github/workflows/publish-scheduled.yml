@@ -1,0 +1,19 @@
+name: Publish Scheduled Articles
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  publish-scheduled:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Publish scheduled articles
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          curl --fail-with-body \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "https://graildaily-web-cms-grail-daily.vercel.app/api/internal/publish-scheduled"
