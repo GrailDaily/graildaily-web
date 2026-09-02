@@ -30,6 +30,10 @@ const { posts } = Astro.props;
         </div>
 
         <div class="card-content">
+          <span class="card-category">
+            {post.data.tags?.[0] ?? "History"}
+          </span>
+
           <h3>{post.data.title}</h3>
 
           <p>{post.data.description}</p>
@@ -259,19 +263,19 @@ const { posts } = Astro.props;
     }
 
     .popular-section-header p {
-      font-size: 0.95rem;
-      line-height: 1.7;
-      padding: 0 6px;
+      display: none !important;
     }
 
     .popular-grid {
-      grid-template-columns: 1fr;
-      gap: 20px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
       margin-top: 32px;
     }
 
     .popular-card {
-      border-radius: 16px;
+      border: none;
+      border-radius: 0;
+      background: transparent;
     }
 
     .popular-rank {
@@ -290,9 +294,7 @@ const { posts } = Astro.props;
     }
 
     .card-content p {
-      margin-top: 10px;
-      font-size: 0.92rem;
-      line-height: 1.6;
+      display: none !important;
     }
   }
 
@@ -315,7 +317,26 @@ const { posts } = Astro.props;
     }
 
     .card-content {
-      padding: 16px;
+      padding: 0;
+    }
+
+    .card-image {
+      border-bottom: none;
+      border-radius: 12px;
+    }
+
+    .card-image img {
+      border-radius: 12px;
+    }
+
+    .card-category {
+      display: inline-block;
+      margin-bottom: 5px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #d6b066;
     }
 
     .card-content h3 {

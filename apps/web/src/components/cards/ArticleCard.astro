@@ -35,6 +35,7 @@ const href = post.href;
         </div>
       )
     }
+
     <div class="content">
       <h3>{data.title}</h3>
 
@@ -46,10 +47,7 @@ const href = post.href;
         <span class="tag">
           {data.tags?.[0] ?? "General"}
         </span>
-
-        <span>•</span>
-
-        <time datetime={data.pubDatetime.toISOString()}>
+<time datetime={data.pubDatetime.toISOString()}>
           {
             data.pubDatetime.toLocaleDateString("en-US", {
               day: "numeric",
@@ -62,8 +60,7 @@ const href = post.href;
         {
           showReadingTime && (
             <>
-              <span>•</span>
-              <span>5 min read</span>
+<span>5 min read</span>
             </>
           )
         }
@@ -217,12 +214,54 @@ const href = post.href;
       flex: 0 0 85%;
       min-width: 85%;
     }
-  }
 
-  @media (max-width: 480px) {
-    .article-link {
-      flex: 0 0 92%;
-      min-width: 92%;
+    .article-card.horizontal {
+      grid-template-columns: 1fr;
+    }
+
+    .article-card.horizontal .thumbnail {
+      height: 220px;
+    }
+
+    .article-card.horizontal-small {
+      grid-template-columns: 25% 1fr;
+      gap: 12px;
+      padding: 10px;
+      min-height: 0;
+    }
+
+    .article-card.horizontal-small .thumbnail {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 10;
+      margin: 0;
+    }
+
+    .article-card.horizontal-small .excerpt {
+      display: none !important;
+      visibility: hidden;
+      height: 0 !important;
+      min-height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: hidden;
+    }
+
+    .article-card.horizontal-small .content {
+      min-width: 0;
+    }
+
+    .article-card.horizontal-small h3 {
+      font-size: 0.95rem;
+      line-height: 1.3;
+      height: 2.6em; max-height: 2.6em; overflow: hidden;
+    }
+
+    .article-card.horizontal-small .meta {
+      margin-top: 8px;
+      padding-top: 0;
+      font-size: 0.7rem;
+      gap: 0.35rem;
     }
   }
 
@@ -382,14 +421,53 @@ const href = post.href;
   .article-card.related:hover {
     transform: translateY(-6px);
   }
+  /* FINAL MOBILE OVERRIDE — RECENT POSTS */
 
   @media (max-width: 768px) {
-    .article-card.horizontal {
-      grid-template-columns: 1fr;
+    .article-card.horizontal-small {
+      grid-template-columns: 25% 1fr;
+      gap: 12px;
+      padding: 10px;
+      min-height: 0;
     }
 
-    .article-card.horizontal .thumbnail {
-      height: 220px;
+    .article-card.horizontal-small .thumbnail {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 10;
+      margin: 0;
+    }
+
+    .article-card.horizontal-small .thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .article-card.horizontal-small .excerpt {
+      display: none !important;
+    }
+
+    .article-card.horizontal-small .content {
+      min-width: 0;
+    }
+
+    .article-card.horizontal-small h3 {
+      display: block !important;
+      overflow: hidden !important;
+      height: 2.5em !important;
+      max-height: 2.5em !important;
+      min-height: 0 !important;
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.25 !important;
+    }
+
+    .article-card.horizontal-small .meta {
+      margin-top: 8px;
+      padding-top: 0;
+      font-size: 0.7rem;
+      gap: 0.35rem;
     }
   }
 </style>

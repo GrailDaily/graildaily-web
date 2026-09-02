@@ -1,70 +1,219 @@
-﻿---
+---
+import XIcon from "@/assets/icons/socials/x.svg";
+import FacebookIcon from "@/assets/icons/socials/facebook.svg";
+import WhatsAppIcon from "@/assets/icons/socials/whatsapp.svg";
+import TelegramIcon from "@/assets/icons/socials/telegram.svg";
+import LinkedInIcon from "@/assets/icons/socials/linkedin.svg";
+import MailIcon from "@/assets/icons/socials/mail.svg";
 ---
 
 <div class="share-links">
-  <span class="share-label">Share this article</span>
+  <button
+    type="button"
+    class="share-trigger"
+    aria-label="Share this article"
+    aria-expanded="false"
+    aria-haspopup="menu"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      class="share-icon"
+    >
+      <path
+        d="M12 16V4m0 0-4 4m4-4 4 4M5 12v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"
+      />
+    </svg>
+  </button>
 
-  <div class="share-buttons">
-    <button type="button" data-share="x" aria-label="Share on X">
-      X
-    </button>
+  <div class="share-menu" role="menu" aria-hidden="true">
+    <div class="share-menu-title">Share Article</div>
 
-    <button type="button" data-share="facebook" aria-label="Share on Facebook">
-      f
-    </button>
+    <button type="button" data-share="x" role="menuitem">
+  <XIcon class="share-option-icon" aria-hidden="true" />
+  <span>X</span>
+</button>
 
-    <button type="button" data-share="copy" aria-label="Copy article link">
-      Copy
-    </button>
+    <button type="button" data-share="facebook" role="menuitem">
+  <FacebookIcon class="share-option-icon" aria-hidden="true" />
+  <span>Facebook</span>
+</button>
+
+    <button type="button" data-share="whatsapp" role="menuitem">
+  <WhatsAppIcon class="share-option-icon" aria-hidden="true" />
+  <span>WhatsApp</span>
+</button>
+
+    <button type="button" data-share="telegram" role="menuitem">
+  <TelegramIcon class="share-option-icon" aria-hidden="true" />
+  <span>Telegram</span>
+</button>
+
+    <button type="button" data-share="linkedin" role="menuitem">
+  <LinkedInIcon class="share-option-icon" aria-hidden="true" />
+  <span>LinkedIn</span>
+</button>
+
+
+
+    <button type="button" data-share="email" role="menuitem">
+  <MailIcon class="share-option-icon" aria-hidden="true" />
+  <span>Email</span>
+</button>
+
+    <button type="button" data-share="copy" role="menuitem">
+  <svg
+    class="share-option-icon"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+  >
+    <path d="M10 13a5 5 0 0 0 7.07.07l2-2a5 5 0 0 0-7.07-7.07l-1.14 1.14" />
+    <path d="M14 11a5 5 0 0 0-7.07-.07l-2 2A5 5 0 0 0 7 20l1.14-1.14" />
+  </svg>
+  <span class="copy-label">Copy Link</span>
+</button>
   </div>
 </div>
 
 <script>
   document.addEventListener("astro:page-load", () => {
-    const buttons = document.querySelectorAll<HTMLElement>("[data-share]");
+    const shareLinks = document.querySelectorAll<HTMLElement>(".share-links");
 
-    buttons.forEach(button => {
-      if (button.dataset.shareBound === "true") return;
+    shareLinks.forEach(container => {
+      if (container.dataset.shareInitialized === "true") return;
 
-      button.dataset.shareBound = "true";
+      container.dataset.shareInitialized = "true";
 
-      button.addEventListener("click", async event => {
+      const trigger = container.querySelector<HTMLButtonElement>(
+        ".share-trigger"
+      );
+      const menu = container.querySelector<HTMLElement>(".share-menu");
+
+      if (!trigger || !menu) return;
+
+      const closeMenu = () => {
+        trigger.setAttribute("aria-expanded", "false");
+        menu.setAttribute("aria-hidden", "true");
+        menu.classList.remove("is-open");
+      };
+
+      const openMenu = () => {
+        trigger.setAttribute("aria-expanded", "true");
+        menu.setAttribute("aria-hidden", "false");
+        menu.classList.add("is-open");
+      };
+
+      trigger.addEventListener("click", event => {
         event.preventDefault();
         event.stopPropagation();
 
-        const type = button.dataset.share;
-        const url = window.location.href;
-        const title = document.title;
+        if (menu.classList.contains("is-open")) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
 
-        if (type === "copy") {
-          try {
-            await navigator.clipboard.writeText(url);
-            button.textContent = "Copied!";
+      const buttons = container.querySelectorAll<HTMLButtonElement>(
+        "[data-share]"
+      );
 
-            setTimeout(() => {
-              button.textContent = "Copy";
-            }, 1500);
-          } catch {
-            console.error("Failed to copy article URL.");
+      buttons.forEach(button => {
+        button.addEventListener("click", async event => {
+          event.preventDefault();
+          event.stopPropagation();
+
+          const type = button.dataset.share;
+          const url = window.location.href;
+          const title = document.title;
+
+          if (type === "copy") {
+            try {
+              await navigator.clipboard.writeText(url);
+
+              const label = button.querySelector(".copy-label");
+
+              if (label) {
+                label.textContent = "Copied!";
+
+                setTimeout(() => {
+                  label.textContent = "Copy Link";
+                }, 1500);
+              }
+            } catch {
+              console.error("Failed to copy article URL.");
+            }
+
+            return;
           }
 
-          return;
-        }
+          if (type === "x") {
+            window.open(
+              `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
+              "_blank",
+              "noopener,noreferrer"
+            );
+          }
 
-        if (type === "x") {
-          window.open(
-            `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
-            "_blank",
-            "noopener,noreferrer"
-          );
-        }
+          if (type === "facebook") {
+            window.open(
+              `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+              "_blank",
+              "noopener,noreferrer"
+            );
+          }
 
-        if (type === "facebook") {
-          window.open(
-            `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
-            "_blank",
-            "noopener,noreferrer"
-          );
+          if (type === "whatsapp") {
+            window.open(
+              `https://api.whatsapp.com/send?text=${encodeURIComponent(`${title} ${url}`)}`,
+              "_blank",
+              "noopener,noreferrer"
+            );
+          }
+
+          if (type === "telegram") {
+            window.open(
+              `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
+              "_blank",
+              "noopener,noreferrer"
+            );
+          }
+
+          if (type === "linkedin") {
+            window.open(
+              `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+              "_blank",
+              "noopener,noreferrer"
+            );
+          }
+
+          if (type === "reddit") {
+            window.open(
+              `https://www.reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`,
+              "_blank",
+              "noopener,noreferrer"
+            );
+          }
+
+          if (type === "email") {
+            window.location.href =
+              `mailto:?subject=${encodeURIComponent(title)}` +
+              `&body=${encodeURIComponent(`${title}\n\n${url}`)}`;
+          }
+
+          closeMenu();
+        });
+      });
+
+      document.addEventListener("click", event => {
+        if (!container.contains(event.target as Node)) {
+          closeMenu();
+        }
+      });
+
+      document.addEventListener("keydown", event => {
+        if (event.key === "Escape") {
+          closeMenu();
         }
       });
     });
@@ -73,32 +222,23 @@
 
 <style>
   .share-links {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 14px;
+    justify-content: center;
   }
 
-  .share-label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--muted-foreground);
-    white-space: nowrap;
-  }
-
-  .share-buttons {
-    display: flex;
+  .share-trigger {
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
-  }
-
-  .share-buttons button {
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
     border: 1px solid var(--border);
+    border-radius: 10px;
     background: var(--background);
     color: inherit;
-    border-radius: 8px;
-    min-width: 36px;
-    height: 36px;
-    padding: 0 9px;
     cursor: pointer;
     transition:
       border-color 0.2s ease,
@@ -106,16 +246,96 @@
       background 0.2s ease;
   }
 
-  .share-buttons button:hover {
+  .share-trigger:hover,
+  .share-trigger[aria-expanded="true"] {
     border-color: var(--accent);
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
+  }
+
+  .share-icon {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .share-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    z-index: 50;
+    width: 190px;
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--background);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.14);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease,
+      visibility 0.18s ease;
+  }
+
+  .share-menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .share-menu-title {
+    padding: 8px 10px 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--muted-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  .share-menu button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    padding: 9px 10px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    font-size: 0.88rem;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      background 0.18s ease,
+      color 0.18s ease;
+  }
+
+  .share-menu button:hover {
+    background: color-mix(in srgb, var(--accent) 9%, transparent);
     color: var(--accent);
   }
 
+  .share-option-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    min-width: 22px;
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
   @media (max-width: 768px) {
-    .share-links {
-      align-items: flex-start;
-      flex-direction: column;
-      gap: 8px;
+    .share-menu {
+      right: 0;
     }
   }
 </style>

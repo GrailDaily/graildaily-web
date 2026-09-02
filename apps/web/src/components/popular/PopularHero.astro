@@ -263,8 +263,7 @@ const { post, range } = Astro.props;
     }
 
     .popular-header p {
-      font-size: 0.95rem;
-      line-height: 1.7;
+      display: none !important;
     }
 
     .popular-filter {
@@ -310,11 +309,7 @@ const { post, range } = Astro.props;
     }
 
     .featured-overlay p {
-      font-size: 0.95rem;
-
-      line-height: 1.6;
-
-      -webkit-line-clamp: 3;
+      display: none !important;
     }
   }
 
@@ -337,7 +332,12 @@ const { post, range } = Astro.props;
     }
 
     .featured-overlay h2 {
-      font-size: 1.45rem;
+      font-size: 1.3rem;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .featured-overlay p {

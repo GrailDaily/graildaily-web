@@ -1216,31 +1216,31 @@ Legend:
 - [x] CMS helpers
 - [x] CMS → API
 - [x] API → Astro tested
-- [ ] Homepage → CMS
-- [ ] Editor Picks → CMS
-- [ ] Trending → CMS
-- [ ] Latest → CMS
-- [ ] Popular → CMS
-- [ ] Categories → CMS
-- [ ] Article Detail → CMS
+- [x] Homepage → CMS
+- [x] Editor Picks → CMS
+- [x] Trending → CMS
+- [x] Latest → CMS
+- [x] Popular → CMS
+- [x] Categories → CMS
+- [x] Article Detail → CMS
 - [ ] Related Articles → CMS
-- [ ] Search → CMS
-- [ ] Legacy cleanup
+- [x] Search → CMS
+- [x] Legacy cleanup
 
 ---
 
 ## PHASE 12 — ASTRO BUILD
 
-- [ ] pnpm build
-- [ ] Astro check
-- [ ] TypeScript errors resolved
-- [ ] GetStaticPathsRequired resolved
-- [ ] Dynamic article route resolved
-- [ ] All pages generate
-- [ ] Pagefind build
-- [ ] Broken imports resolved
-- [ ] Broken assets resolved
-- [ ] Missing environment variables resolved
+- [x] pnpm build
+- [x] Astro check
+- [x] TypeScript errors resolved
+- [x] GetStaticPathsRequired resolved
+- [x] Dynamic article route resolved
+- [x] All pages generate
+- [x] Pagefind build
+- [x] Broken imports resolved
+- [x] Broken assets resolved
+- [x] Missing environment variables resolved
 - [ ] Production environment verified
 
 ---
@@ -1250,17 +1250,17 @@ Legend:
 - [x] Vercel project
 - [x] Deployment system
 - [x] Vercel CLI
-- [~] Verify latest Ready deployment
-- [ ] Confirm source code is latest
-- [ ] Confirm environment variables
-- [ ] Confirm CMS production connection
-- [ ] Verify articles
-- [ ] Verify images
-- [ ] Verify routes
-- [ ] Verify search
-- [ ] Verify theme
+- [x] Verify latest Ready deployment
+- [x] Confirm source code is latest
+- [x] Confirm environment variables
+- [x] Confirm CMS production connection
+- [x] Verify articles
+- [x] Verify images
+- [x] Verify routes
+- [x] Verify search
+- [x] Verify theme
 - [ ] Verify mobile
-- [ ] Final production deployment
+- [x] Final production deployment
 
 ---
 

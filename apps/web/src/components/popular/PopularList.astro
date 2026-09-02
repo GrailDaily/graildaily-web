@@ -23,12 +23,25 @@ const { posts } = Astro.props;
   {
     posts.map((post, index) => (
       <a href={post.href} class="popular-row">
-        <span class="rank">{String(index + 6).padStart(2, "0")}</span>
-
-        <img src={post.data.ogImage} alt={post.data.title} loading="lazy" />
+        <div class="row-image">
+          <span class="rank">{String(index + 6).padStart(2, "0")}</span>
+          <img src={post.data.ogImage} alt={post.data.title} loading="lazy" />
+        </div>
 
         <div class="row-content">
+          <span class="row-category">
+            {post.data.tags?.[0] ?? "History"}
+          </span>
+
           <h3>{post.data.title}</h3>
+
+          <time datetime={post.data.pubDatetime.toISOString()} class="row-date">
+            {post.data.pubDatetime.toLocaleDateString("en-US", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            })}
+          </time>
 
           <p>{post.data.description}</p>
         </div>
@@ -214,14 +227,16 @@ const { posts } = Astro.props;
       margin-bottom: 26px;
     }
 
+    .popular-section-header .section-label {
+      display: none !important;
+    }
+
     .popular-section-header h2 {
       font-size: 1.9rem;
     }
 
     .popular-section-header p {
-      font-size: 0.95rem;
-      line-height: 1.7;
-      padding: 0 6px;
+      display: none !important;
     }
 
     .popular-row {
@@ -244,11 +259,7 @@ const { posts } = Astro.props;
     }
 
     .row-content p {
-      margin-top: 8px;
-      font-size: 0.9rem;
-      line-height: 1.6;
-
-      -webkit-line-clamp: 3;
+      display: none !important;
     }
   }
 
@@ -258,25 +269,64 @@ const { posts } = Astro.props;
 
   @media (max-width: 480px) {
     .popular-row {
-      grid-template-columns: 1fr;
-      gap: 14px;
-      padding: 18px 0;
+      grid-template-columns: 25% 1fr;
+      gap: 12px;
+      padding: 10px 0;
+      align-items: center;
     }
 
-    .rank {
-      font-size: 1.5rem;
-    }
-
-    .popular-row img {
+    .row-image {
+      position: relative;
       width: 100%;
     }
 
+    .row-image img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .rank {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      z-index: 3;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.55);
+    }
+
+    .row-category {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #d6b066;
+    }
+
     .row-content h3 {
-      font-size: 1rem;
+      font-size: 0.95rem;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .row-date {
+      display: block;
+      margin-top: 6px;
+      font-size: 0.7rem;
+      color: var(--muted-foreground);
     }
 
     .row-content p {
-      -webkit-line-clamp: 2;
+      display: none !important;
     }
   }
 </style>

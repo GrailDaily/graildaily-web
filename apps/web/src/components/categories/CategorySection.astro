@@ -23,7 +23,7 @@ const topPosts = posts.slice(1, 6);
         <h2>{category.name}</h2>
         <p>{category.description}</p>
         <a href={`/categories/${category.slug}`} class="category-link">
-          Explore Category →
+          Explore Category ->
         </a>
       </aside>
       <div class="featured-column">
@@ -112,6 +112,10 @@ const topPosts = posts.slice(1, 6);
       .category-info p {
         max-width: 100%;
       }
+    }
+    @media (max-width: 768px) {
+      .category-number { display: none !important; }
+      .category-info p { display: none !important; }
     }
   </style>
 </section>
