@@ -5,6 +5,7 @@ import { useTranslations } from "@/i18n";
 import config from "@/config";
 import {
   getCmsArticles,
+  getCmsTrendingArticles,
   getCmsHeroArticles,
   getCmsEditorsPicks,
 } from "@/lib/cms";
@@ -31,6 +32,9 @@ const heroPosts = cmsArticlesToHomePosts(cmsHeroArticles);
 
 const cmsEditorsPicks = await getCmsEditorsPicks();
 const editorPicksPosts = cmsArticlesToHomePosts(cmsEditorsPicks);
+
+const cmsTrendingArticles = await getCmsTrendingArticles();
+const trendingPosts = cmsArticlesToHomePosts(cmsTrendingArticles);
 
 const sortedPosts = [...posts].sort(
   (a, b) =>
@@ -135,7 +139,7 @@ const categories = [
 
   <EditorPicks posts={editorPicksPosts} />
 
-  <Trending posts={recentPosts} />
+  <Trending posts={trendingPosts} />
 
   <RecentPosts posts={recentPosts} title={t.home.recentPosts} limit={10} />
 

@@ -1,4 +1,4 @@
-export interface CmsArticle {
+﻿export interface CmsArticle {
   id: string;
   title: string;
   slug: string;
@@ -17,7 +17,6 @@ export interface CmsArticle {
 
   showInEditorsPicks: boolean;
   editorsPicksSelectedAt: string | null;
-
 }
 
 interface CmsArticlesResponse {
@@ -48,6 +47,18 @@ export async function getCmsPopularArticles(
 
   if (!response.ok) {
     throw new Error(`Failed to fetch CMS popular articles: ${response.status}`);
+  }
+
+  const data = (await response.json()) as CmsArticlesResponse;
+
+  return data.articles;
+}
+
+export async function getCmsTrendingArticles(): Promise<CmsArticle[]> {
+  const response = await fetch(`${CMS_API_URL}/api/articles/trending`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch CMS trending articles: ${response.status}`);
   }
 
   const data = (await response.json()) as CmsArticlesResponse;
