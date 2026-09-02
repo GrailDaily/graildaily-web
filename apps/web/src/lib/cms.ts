@@ -1,4 +1,6 @@
-﻿export interface CmsArticle {
+﻿import { getVercelOidcToken } from "@vercel/oidc";
+
+export interface CmsArticle {
   id: string;
   title: string;
   slug: string;
@@ -26,8 +28,22 @@ interface CmsArticlesResponse {
 
 const CMS_API_URL = import.meta.env.CMS_API_URL ?? "http://localhost:3000";
 
+async function cmsFetch(path: string): Promise<Response> {
+  const headers = new Headers();
+
+  if (import.meta.env.VERCEL === "1") {
+    const token = await getVercelOidcToken();
+
+    headers.set("x-vercel-trusted-oidc-idp-token", token);
+  }
+
+  return fetch(`${CMS_API_URL}${path}`, {
+    headers,
+  });
+}
+
 export async function getCmsArticles(): Promise<CmsArticle[]> {
-  const response = await fetch(`${CMS_API_URL}/api/articles`);
+  const response = await cmsFetch("/api/articles");
 
   if (!response.ok) {
     throw new Error(`Failed to fetch CMS articles: ${response.status}`);
@@ -41,9 +57,7 @@ export async function getCmsArticles(): Promise<CmsArticle[]> {
 export async function getCmsPopularArticles(
   range: "all" | "month" | "week" | "today" = "all"
 ): Promise<CmsArticle[]> {
-  const response = await fetch(
-    `${CMS_API_URL}/api/articles/popular?range=${range}`
-  );
+  const response = await cmsFetch(`/api/articles/popular?range=${range}`);
 
   if (!response.ok) {
     throw new Error(`Failed to fetch CMS popular articles: ${response.status}`);
@@ -55,7 +69,7 @@ export async function getCmsPopularArticles(
 }
 
 export async function getCmsTrendingArticles(): Promise<CmsArticle[]> {
-  const response = await fetch(`${CMS_API_URL}/api/articles/trending`);
+  const response = await cmsFetch("/api/articles/trending");
 
   if (!response.ok) {
     throw new Error(`Failed to fetch CMS trending articles: ${response.status}`);
@@ -67,7 +81,7 @@ export async function getCmsTrendingArticles(): Promise<CmsArticle[]> {
 }
 
 export async function getCmsHeroArticles(): Promise<CmsArticle[]> {
-  const response = await fetch(`${CMS_API_URL}/api/articles/hero`);
+  const response = await cmsFetch("/api/articles/hero");
 
   if (!response.ok) {
     throw new Error(`Failed to fetch CMS hero articles: ${response.status}`);
@@ -79,7 +93,7 @@ export async function getCmsHeroArticles(): Promise<CmsArticle[]> {
 }
 
 export async function getCmsEditorsPicks(): Promise<CmsArticle[]> {
-  const response = await fetch(`${CMS_API_URL}/api/articles/editors-picks`);
+  const response = await cmsFetch("/api/articles/editors-picks");
 
   if (!response.ok) {
     throw new Error(`Failed to fetch CMS editors picks: ${response.status}`);
@@ -91,8 +105,8 @@ export async function getCmsEditorsPicks(): Promise<CmsArticle[]> {
 }
 
 export async function getCmsArticle(slug: string): Promise<CmsArticle | null> {
-  const response = await fetch(
-    `${CMS_API_URL}/api/articles/${encodeURIComponent(slug)}`
+  const response = await cmsFetch(
+    `/api/articles/${encodeURIComponent(slug)}`
   );
 
   if (response.status === 404) {
@@ -105,3 +119,4 @@ export async function getCmsArticle(slug: string): Promise<CmsArticle | null> {
 
   return (await response.json()) as CmsArticle;
 }
+
