@@ -1,6 +1,69 @@
-<section class="search-results-wrapper">
-  <!--
-    Nanti seluruh hasil Pagefind
-    akan dirender di sini.
-  -->
+---
+import type { CmsArticle } from "@/lib/cms";
+
+interface Props {
+  articles: CmsArticle[];
+  query: string;
+}
+
+const { articles, query } = Astro.props;
+---
+
+<section class="search-results-wrapper" aria-live="polite">
+  {
+    query && (
+      <div class="search-results-info">
+        {articles.length} result{articles.length === 1 ? "" : "s"} for
+        <strong>"{query}"</strong>
+      </div>
+    )
+  }
+
+  {
+    articles.length > 0 ? (
+      <div class="search-results-list">
+        {
+          articles.map(article => (
+            <article class="search-result">
+              <a
+                class="search-result-link"
+                href={`/cms-posts/${article.slug}/`}
+              >
+                <div class="search-result-thumb">
+                  {article.featuredImage ? (
+                    <img
+                      src={article.featuredImage}
+                      alt={article.title}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div class="search-result-no-image">No Image</div>
+                  )}
+                </div>
+
+                <div class="search-result-inner">
+                  <h2 class="search-result-title">
+                    {article.title}
+                  </h2>
+
+                  <p class="search-result-excerpt">
+                    {article.excerpt}
+                  </p>
+                </div>
+              </a>
+            </article>
+          ))
+        }
+      </div>
+    ) : (
+      <div class="search-empty">
+        <h2>No articles found</h2>
+
+        <p>
+          We couldn't find any published articles matching
+          <strong>"{query}"</strong>.
+        </p>
+      </div>
+    )
+  }
 </section>

@@ -52,113 +52,128 @@
 
   background: transparent;
   color: var(--foreground);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 22px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
-/* ===========================================================
-   PAGEFIND RESULT
-=========================================================== */
-
-.search-panel .pagefind-ui__result-excerpt,
-.search-panel .pagefind-ui__result-tags,
-.search-panel .pagefind-ui__result-image,
-.search-panel .pagefind-ui__result-thumb,
-.search-panel .pagefind-ui__result-meta,
-.search-panel .pagefind-ui__message {
-  display: none;
-}
-
-.search-panel .pagefind-ui__results {
-  margin-top: 14px;
-}
-
-.search-panel .pagefind-ui__result {
-  padding: 12px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.search-panel .pagefind-ui__result:last-child {
-  border-bottom: none;
-}
-
-.search-panel .pagefind-ui__result-title {
-  margin: 0;
-}
-
-.search-panel .pagefind-ui__result-title a {
-  display: block;
-
-  color: var(--foreground);
-
-  text-decoration: none;
-
-  font-size: 16px;
-  font-weight: 600;
-
-  transition: color 0.2s ease;
-}
-
-.search-panel .pagefind-ui__result-title a:hover {
+.search-close:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
   color: var(--accent);
 }
 
-/* ==========================================================
-   GrailDaily Pagefind Theme
-========================================================== */
+.search-modal-form {
+  position: relative;
 
-.search-panel .pagefind-ui {
-  --pagefind-ui-primary: var(--accent);
-  --pagefind-ui-text: var(--foreground);
-  --pagefind-ui-background: transparent;
-  --pagefind-ui-border: transparent;
+  display: flex;
+  align-items: center;
+
+  width: 100%;
 }
 
-.search-panel .pagefind-ui__search-input {
+.search-modal-form input {
+  width: 100%;
   height: 52px;
-  border-radius: 12px;
+
+  padding: 0 52px 0 16px;
+
   border: 1px solid var(--border);
-  background: var(--background);
-  font-size: 16px;
-}
-
-.search-panel .pagefind-ui__search-input:focus {
-  border-color: var(--accent);
-}
-
-.search-panel .pagefind-ui__results {
-  margin-top: 18px;
-}
-
-.search-panel .pagefind-ui__result {
-  padding: 14px 16px;
-  border: 0;
   border-radius: 12px;
-  transition: background 0.2s ease;
-}
 
-.search-panel .pagefind-ui__result:hover {
-  background: color-mix(in srgb, var(--accent) 8%, transparent);
-}
-
-.search-panel .pagefind-ui__result-title {
-  margin: 0;
-}
-
-.search-panel .pagefind-ui__result-title a {
+  background: var(--background);
   color: var(--foreground);
-  font-weight: 600;
-  text-decoration: none;
+
+  font-family: inherit;
+  font-size: 16px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.search-panel .pagefind-ui__result-title a:hover {
+.search-modal-form input::placeholder {
+  color: var(--muted-foreground);
+}
+
+.search-modal-form input:hover {
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+}
+
+.search-modal-form input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.search-modal-submit {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+
+  width: 36px;
+  height: 36px;
+
+  transform: translateY(-50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 10px;
+
+  background: transparent;
+  color: var(--foreground);
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.search-modal-submit:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
   color: var(--accent);
 }
 
-/* Sembunyikan informasi yang tidak kita perlukan */
+.search-modal-submit svg {
+  width: 20px;
+  height: 20px;
 
-.search-panel .pagefind-ui__result-excerpt,
-.search-panel .pagefind-ui__result-image,
-.search-panel .pagefind-ui__result-thumb,
-.search-panel .pagefind-ui__result-tags,
-.search-panel .pagefind-ui__result-meta {
-  display: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 480px) {
+  .search-modal {
+    padding-top: 72px;
+  }
+
+  .search-panel {
+    width: calc(100vw - 24px);
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .search-modal-form input {
+    height: 50px;
+    font-size: 15px;
+  }
 }

@@ -4,28 +4,44 @@ import Header from "@/components/header/Header.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import Main from "@/components/Main.astro";
 import SearchHero from "@/components/search/SearchHero.astro";
+import SearchResults from "@/components/search/SearchResults.astro";
 
 import "../styles/search.css";
 
-import { getAssetPath } from "@/utils/withBase";
+import { getCmsSearchArticles, type CmsArticle } from "@/lib/cms";
+import config from "@/config";
 
-const pagefindBundlePath = getAssetPath("pagefind/");
+export const prerender = false;
+
+const query = Astro.url.searchParams.get("q")?.trim() ?? "";
+
+let articles: CmsArticle[] = [];
+
+if (query) {
+  articles = await getCmsSearchArticles(query);
+}
 ---
 
-<Layout title="Search | GrailDaily">
+<Layout
+  title={`Search${query ? `: ${query}` : ""} | ${config.site.title}`}
+  description="Search the GrailDaily archive."
+>
   <Header />
 
   <Breadcrumb />
 
   <Main>
-    <SearchHero pagefindBundlePath={pagefindBundlePath} />
+    <SearchHero />
+
+    {
+      query && (
+        <SearchResults
+          articles={articles}
+          query={query}
+        />
+      )
+    }
   </Main>
 </Layout>
 
-<script>
-  import { initSearch } from "@/scripts/pagefind";
 
-  document.addEventListener("astro:page-load", () => {
-    initSearch("#pagefind-search");
-  });
-</script>

@@ -2,11 +2,32 @@ import { NextResponse } from "next/server";
 
 import { prisma } from "@/lib/prisma";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const query = searchParams.get("q")?.trim() ?? "";
+
     const articles = await prisma.article.findMany({
       where: {
         status: "Published",
+        ...(query
+          ? {
+              OR: [
+                {
+                  title: {
+                    contains: query,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  content: {
+                    contains: query,
+                    mode: "insensitive",
+                  },
+                },
+              ],
+            }
+          : {}),
       },
       orderBy: {
         publishedAt: "desc",

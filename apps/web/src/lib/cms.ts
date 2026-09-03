@@ -120,3 +120,19 @@ export async function getCmsArticle(slug: string): Promise<CmsArticle | null> {
   return (await response.json()) as CmsArticle;
 }
 
+
+export async function getCmsSearchArticles(
+  query: string
+): Promise<CmsArticle[]> {
+  const response = await cmsFetch(
+    `/api/articles?q=${encodeURIComponent(query)}`
+  );
+
+  if (!response.ok) {
+    throw new Error(`Failed to search CMS articles: ${response.status}`);
+  }
+
+  const data = (await response.json()) as CmsArticlesResponse;
+
+  return data.articles;
+}

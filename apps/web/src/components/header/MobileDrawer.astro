@@ -40,15 +40,24 @@ const currentPath = Astro.url.pathname;
       }
     </nav>
     <div class="mobile-actions">
-      <button id="mobile-search-button" class="mobile-action" type="button">
-        <span>🔍</span>
-
-        <span>Search</span>
+      <button
+        id="mobile-search-button"
+        class="mobile-icon-button"
+        type="button"
+        aria-label="Search"
+        title="Search"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <circle cx="11" cy="11" r="6.5"></circle>
+          <path d="m16 16 4 4"></path>
+        </svg>
       </button>
 
       <div class="mobile-theme">
-        <span>Theme</span>
-
         <ThemeToggle />
       </div>
     </div>
@@ -168,23 +177,27 @@ const currentPath = Astro.url.pathname;
 
     display: flex;
 
-    flex-direction: column;
+    align-items: center;
 
-    gap: 18px;
+    justify-content: flex-end;
+
+    gap: 10px;
   }
 
-  .mobile-action {
+  .mobile-icon-button {
+    width: 44px;
+
+    height: 44px;
+
     display: flex;
 
     align-items: center;
 
-    gap: 12px;
+    justify-content: center;
 
-    width: 100%;
+    padding: 0;
 
-    padding: 12px;
-
-    border: none;
+    border: 1px solid var(--border);
 
     border-radius: 12px;
 
@@ -192,15 +205,44 @@ const currentPath = Astro.url.pathname;
 
     color: var(--foreground);
 
-    font-size: 16px;
-
     cursor: pointer;
 
-    transition: 0.2s;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
   }
 
-  .mobile-action:hover {
+  .mobile-icon-button:hover {
     background: color-mix(in srgb, var(--accent) 10%, transparent);
+
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+
+    color: var(--accent);
+  }
+
+  .mobile-icon-button svg {
+    width: 20px;
+
+    height: 20px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+  }
+
+  .mobile-theme {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
   }
 
   .mobile-theme {
@@ -280,3 +322,5 @@ const currentPath = Astro.url.pathname;
 
   document.addEventListener("astro:after-swap", initMobileDrawer);
 </script>
+
+

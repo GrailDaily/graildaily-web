@@ -26,7 +26,6 @@ export default defineAstroPaperConfig({
     editPost: {
       enabled: false,
     },
-    search: "pagefind",
   },
   socials: [
     {

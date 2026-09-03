@@ -1,10 +1,4 @@
 ---
-interface Props {
-  pagefindBundlePath: string;
-}
-
-const { pagefindBundlePath } = Astro.props;
-
 const popularSearches = [
   "History",
   "Archaeology",
@@ -29,7 +23,27 @@ const popularSearches = [
     </p>
   </header>
 
-  <div id="pagefind-search" data-bundle-path={pagefindBundlePath}></div>
+  <form class="search-form" method="get" action="/search">
+    <input
+      type="search"
+      name="q"
+      value={Astro.url.searchParams.get("q") ?? ""}
+      placeholder="Search articles, topics, or keywords..."
+      aria-label="Search articles, topics, or keywords"
+      autocomplete="off"
+    />
+
+    <button type="submit" aria-label="Search">
+      <svg
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+    </button>
+  </form>
 
   <section class="popular-searches">
     <h2>Popular Searches</h2>
@@ -37,9 +51,12 @@ const popularSearches = [
     <div class="popular-search-list">
       {
         popularSearches.map(tag => (
-          <button class="popular-search" data-search={tag}>
+          <a
+            class="popular-search"
+            href={`/search?q=${encodeURIComponent(tag)}`}
+          >
             {tag}
-          </button>
+          </a>
         ))
       }
     </div>
