@@ -12,11 +12,6 @@ const { posts } = Astro.props;
   <span class="section-label">TOP 5</span>
 
   <h2>Trending Rankings</h2>
-
-  <p>
-    Discover the five most-read stories on GrailDaily, selected from across our
-    wide range of topics and perspectives.
-  </p>
 </div>
 
 <section class="popular-grid">
@@ -59,11 +54,11 @@ const { posts } = Astro.props;
 
     overflow: hidden;
 
-    border-radius: 18px;
+    border-radius: 0;
 
-    border: 1px solid var(--border);
+    border: none;
 
-    background: var(--card);
+    background: transparent;
 
     transition:
       transform 0.3s ease,
@@ -77,7 +72,7 @@ const { posts } = Astro.props;
   .popular-card:hover {
     transform: translateY(-3px);
 
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+    box-shadow: none;
   }
 
   .popular-rank {
@@ -107,6 +102,8 @@ const { posts } = Astro.props;
     aspect-ratio: 16 / 10;
 
     overflow: hidden;
+
+    border-radius: 12px;
 
     border-bottom: 1px solid var(--border);
   }
@@ -142,11 +139,21 @@ const { posts } = Astro.props;
   }
 
   .card-content {
-    padding: 24px;
+    padding: 18px;
+  }
+
+  .card-category {
+    display: inline-block;
+    margin-bottom: 7px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #d6b066;
   }
 
   .card-content h3 {
-    font-size: 1.35rem;
+    font-size: 1.45rem;
 
     line-height: 1.35;
 
@@ -166,13 +173,13 @@ const { posts } = Astro.props;
   }
 
   .card-content p {
+    display: none;
+
     margin-top: 14px;
 
     color: var(--muted-foreground);
 
     line-height: 1.75;
-
-    display: -webkit-box;
 
     -webkit-line-clamp: 2;
 
@@ -239,7 +246,17 @@ const { posts } = Astro.props;
       padding: 20px;
     }
 
-    .card-content h3 {
+    .card-category {
+    display: inline-block;
+    margin-bottom: 7px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #d6b066;
+  }
+
+  .card-content h3 {
       font-size: 1.2rem;
     }
 
@@ -288,8 +305,18 @@ const { posts } = Astro.props;
       padding: 18px;
     }
 
-    .card-content h3 {
-      font-size: 1.1rem;
+    .card-category {
+    display: inline-block;
+    margin-bottom: 7px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #d6b066;
+  }
+
+  .card-content h3 {
+      font-size: 1.45rem;
       line-height: 1.4;
     }
 
@@ -308,7 +335,7 @@ const { posts } = Astro.props;
     }
 
     .section-label {
-      font-size: 0.72rem;
+      font-size: 0.78rem;
       padding: 5px 12px;
     }
 
@@ -321,6 +348,7 @@ const { posts } = Astro.props;
     }
 
     .card-image {
+      border-radius: 12px;
       border-bottom: none;
       border-radius: 12px;
     }
@@ -331,15 +359,25 @@ const { posts } = Astro.props;
 
     .card-category {
       display: inline-block;
-      margin-bottom: 5px;
-      font-size: 0.65rem;
+      margin-bottom: 7px;
+      font-size: 0.78rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: #d6b066;
     }
 
-    .card-content h3 {
+    .card-category {
+    display: inline-block;
+    margin-bottom: 7px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #d6b066;
+  }
+
+  .card-content h3 {
       font-size: 1rem;
     }
 

@@ -58,7 +58,7 @@ const { post } = Astro.props;
     line-height: 1.3;
     color: white;
     display: -webkit-box;
-    -webkit-line-clamp: 1;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
@@ -78,6 +78,20 @@ const { post } = Astro.props;
   .featured-card:hover img {
     transform: scale(1.04);
   }
+  @media (max-width: 768px) {
+    .featured-content {
+      max-width: 100%;
+    }
+
+    .featured-content p {
+      display: none;
+    }
+
+    .featured-content h3 {
+      -webkit-line-clamp: 2;
+    }
+  }
+
   .featured-overlay {
     position: absolute;
     left: 0;

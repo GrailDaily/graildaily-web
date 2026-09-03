@@ -10,30 +10,24 @@ const { posts } = Astro.props;
 
 <section class="popular-list">
   <div class="popular-section-header">
-    <span class="section-label"> MORE STORIES </span>
-
     <h2>More Popular Articles</h2>
-
-    <p>
-      Continue exploring the stories readers love, spanning fascinating ideas,
-      discoveries, cultures, places, and perspectives from around the world.
-    </p>
   </div>
 
   {
     posts.map((post, index) => (
       <a href={post.href} class="popular-row">
+        <span class="rank">{String(index + 6).padStart(2, "0")}</span>
+
         <div class="row-image">
-          <span class="rank">{String(index + 6).padStart(2, "0")}</span>
           <img src={post.data.ogImage} alt={post.data.title} loading="lazy" />
         </div>
 
         <div class="row-content">
-          <span class="row-category">
-            {post.data.tags?.[0] ?? "History"}
-          </span>
+          <span class="row-category">{post.data.tags?.[0] ?? "History"}</span>
 
           <h3>{post.data.title}</h3>
+
+          <p>{post.data.description}</p>
 
           <time datetime={post.data.pubDatetime.toISOString()} class="row-date">
             {post.data.pubDatetime.toLocaleDateString("en-US", {
@@ -42,8 +36,6 @@ const { posts } = Astro.props;
               year: "numeric",
             })}
           </time>
-
-          <p>{post.data.description}</p>
         </div>
       </a>
     ))
@@ -64,13 +56,13 @@ const { posts } = Astro.props;
   .popular-row {
     display: grid;
 
-    grid-template-columns: 70px 180px 1fr;
+    grid-template-columns: 52px 240px minmax(0, 1fr);
 
-    gap: 22px;
+    gap: 28px;
 
     align-items: center;
 
-    padding: 22px 18px;
+    padding: 28px 0;
 
     border-bottom: 1px solid var(--border);
 
@@ -102,7 +94,7 @@ const { posts } = Astro.props;
   }
 
   .popular-row img {
-    width: 180px;
+    width: 100%;
 
     aspect-ratio: 16/10;
 
@@ -117,22 +109,29 @@ const { posts } = Astro.props;
     transform: scale(1.03);
   }
 
-  .row-content h3 {
-    font-size: 1.28rem;
-
-    font-weight: 700;
-
-    line-height: 1.4;
-
-    transition: color 0.25s ease;
+  .row-content {
+    min-width: 0;
   }
 
-  .row-content p {
-    margin-top: 10px;
+  .row-category {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
 
-    color: var(--muted-foreground);
+  .row-content h3 {
+    margin: 0;
 
-    line-height: 1.7;
+    font-size: 1.55rem;
+
+    line-height: 1.35;
 
     display: -webkit-box;
 
@@ -141,6 +140,30 @@ const { posts } = Astro.props;
     -webkit-box-orient: vertical;
 
     overflow: hidden;
+
+    transition: color 0.25s ease;
+  }
+
+  .row-content p {
+    margin-top: 14px;
+
+    color: var(--muted-foreground);
+
+    line-height: 1.8;
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 2;
+
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+  }
+
+  .row-date {
+    margin-top: 18px;
+    font-size: 0.9rem;
+    color: var(--muted-foreground);
   }
 
   .popular-row:hover h3 {
@@ -209,6 +232,23 @@ const { posts } = Astro.props;
       font-size: 2rem;
     }
 
+    .row-content {
+      min-width: 0;
+    }
+
+    .row-category {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
     .row-content h3 {
       font-size: 1.15rem;
     }
@@ -253,6 +293,23 @@ const { posts } = Astro.props;
       width: 120px;
     }
 
+    .row-content {
+      min-width: 0;
+    }
+
+    .row-category {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
     .row-content h3 {
       font-size: 1rem;
       line-height: 1.45;
@@ -269,6 +326,7 @@ const { posts } = Astro.props;
 
   @media (max-width: 480px) {
     .popular-row {
+      position: relative;
       grid-template-columns: 25% 1fr;
       gap: 12px;
       padding: 10px 0;
@@ -289,6 +347,8 @@ const { posts } = Astro.props;
     }
 
     .rank {
+      grid-column: 1;
+      grid-row: 1;
       position: absolute;
       top: 8px;
       left: 8px;
@@ -307,6 +367,23 @@ const { posts } = Astro.props;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: #d6b066;
+    }
+
+    .row-content {
+      min-width: 0;
+    }
+
+    .row-category {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
     .row-content h3 {
