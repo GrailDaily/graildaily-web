@@ -1,4 +1,4 @@
-# GRAILDAILY Ã¢â‚¬â€ MASTER PROJECT DOCUMENT
+# GRAILDAILY ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â MASTER PROJECT DOCUMENT
 
 > Dokumen induk utama proyek GrailDaily.
 > Dokumen ini adalah sumber kebenaran utama untuk melanjutkan proyek.
@@ -48,14 +48,14 @@ main
 # 3. PROJECT STRUCTURE
 
 GrailDaily/
-Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ apps/
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ web/
-Ã¢â€â€š   Ã¢â€â€š   Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ Astro website
-Ã¢â€â€š   Ã¢â€â€š
-Ã¢â€â€š   Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ cms/
-Ã¢â€â€š       Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ Next.js CMS
-Ã¢â€â€š
-Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ GRAILDAILY-PROJECT.md
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ apps/
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡   ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ web/
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡   ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡   ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ Astro website
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡   ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡   ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ cms/
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡       ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ Next.js CMS
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ GRAILDAILY-PROJECT.md
 
 ---
 
@@ -105,15 +105,15 @@ http://localhost:3000
 Intended architecture:
 
 CMS
-Ã¢â€ â€œ
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ
 Database
-Ã¢â€ â€œ
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ
 Next.js API
-Ã¢â€ â€œ
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ
 Astro Web
-Ã¢â€ â€œ
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ
 Vercel
-Ã¢â€ â€œ
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ
 GrailDaily public website
 
 CMS is intended to become the primary source of article content.
@@ -247,15 +247,15 @@ Body/UI/interface text.
 Required desktop order:
 
 Logo
-Ã¢â€ â€™ Home
-Ã¢â€ â€™ Categories
-Ã¢â€ â€™ Popular
-Ã¢â€ â€™ Latest
-Ã¢â€ â€™ About
-Ã¢â€ â€™ Search
-Ã¢â€ â€™ Theme Toggle
-Ã¢â€ â€™ Login
-Ã¢â€ â€™ Subscribe
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ Home
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ Categories
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ Popular
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ Latest
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ About
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ Search
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ Theme Toggle
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ Login
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ Subscribe
 
 Desktop header refactor has already been implemented.
 
@@ -920,7 +920,7 @@ Legend:
 
 ---
 
-## PHASE 1 Ã¢â‚¬â€ FOUNDATION
+## PHASE 1 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â FOUNDATION
 
 - [x] Project name / GrailDaily
 - [x] Website topic/focus
@@ -937,7 +937,7 @@ Legend:
 
 ---
 
-## PHASE 2 Ã¢â‚¬â€ DESIGN SYSTEM
+## PHASE 2 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â DESIGN SYSTEM
 
 - [x] Branding
 - [x] Logos
@@ -953,7 +953,7 @@ Legend:
 
 ---
 
-## PHASE 3 Ã¢â‚¬â€ HEADER / NAVIGATION
+## PHASE 3 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â HEADER / NAVIGATION
 
 ### Desktop
 
@@ -986,7 +986,7 @@ Legend:
 
 ---
 
-## PHASE 4 Ã¢â‚¬â€ HOMEPAGE
+## PHASE 4 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â HOMEPAGE
 
 ### Hero
 
@@ -1034,7 +1034,7 @@ Legend:
 
 ---
 
-## PHASE 5 Ã¢â‚¬â€ WEBSITE PAGES
+## PHASE 5 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â WEBSITE PAGES
 
 ### Home
 
@@ -1082,7 +1082,7 @@ Legend:
 
 ---
 
-## PHASE 6 Ã¢â‚¬â€ ARTICLE PAGE
+## PHASE 6 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ARTICLE PAGE
 
 ### Design
 
@@ -1109,7 +1109,7 @@ Legend:
 
 ---
 
-## PHASE 7 Ã¢â‚¬â€ SEARCH
+## PHASE 7 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â SEARCH
 
 - [x] Search via CMS API
 - [x] Search UI
@@ -1125,7 +1125,7 @@ Legend:
 
 ---
 
-## PHASE 8 Ã¢â‚¬â€ CONTENT MODEL
+## PHASE 8 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â CONTENT MODEL
 
 - [x] Existing schema reviewed
 - [x] CMS article fields
@@ -1136,7 +1136,7 @@ Legend:
 
 ---
 
-## PHASE 9 Ã¢â‚¬â€ CMS NEXT.JS
+## PHASE 9 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â CMS NEXT.JS
 
 ### Foundation
 
@@ -1183,7 +1183,7 @@ Legend:
 
 ---
 
-## PHASE 10 Ã¢â‚¬â€ CMS API
+## PHASE 10 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â CMS API
 
 ## 27. API
 
@@ -1242,26 +1242,26 @@ Legend:
 - `/api/settings` sudah memiliki validasi field wajib, tetapi endpoint PUT belum diproteksi authentication/authorization.
 - `/api/internal/publish-scheduled` menggunakan `CRON_SECRET` jika tersedia; production wajib memastikan secret tersebut dikonfigurasi.
 
-## PHASE 11 Ã¢â‚¬â€ CMS Ã¢â€ â€™ ASTRO
+## PHASE 11 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â CMS ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ ASTRO
 
 - [x] CMS client
 - [x] CMS helpers
-- [x] CMS Ã¢â€ â€™ API
-- [x] API Ã¢â€ â€™ Astro tested
-- [x] Homepage Ã¢â€ â€™ CMS
-- [x] Editor Picks Ã¢â€ â€™ CMS
-- [x] Trending Ã¢â€ â€™ CMS
-- [x] Latest Ã¢â€ â€™ CMS
-- [x] Popular Ã¢â€ â€™ CMS
-- [x] Categories Ã¢â€ â€™ CMS
-- [x] Article Detail Ã¢â€ â€™ CMS
-- [x] Related Articles Ã¢â€ â€™ CMS
-- [x] Search Ã¢â€ â€™ CMS
+- [x] CMS ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ API
+- [x] API ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ Astro tested
+- [x] Homepage ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ CMS
+- [x] Editor Picks ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ CMS
+- [x] Trending ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ CMS
+- [x] Latest ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ CMS
+- [x] Popular ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ CMS
+- [x] Categories ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ CMS
+- [x] Article Detail ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ CMS
+- [x] Related Articles ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ CMS
+- [x] Search ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ CMS
 - [x] Legacy cleanup
 
 ---
 
-## PHASE 12 Ã¢â‚¬â€ ASTRO BUILD
+## PHASE 12 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ASTRO BUILD
 
 - [x] pnpm build
 - [x] Astro check
@@ -1274,11 +1274,11 @@ Legend:
 - [x] Broken imports resolved
 - [x] Broken assets resolved
 - [x] Missing environment variables resolved
-- [~] Production environment verified Ã¢â‚¬â€ local build PASS; production environment masih perlu diverifikasi
+- [~] Production environment verified ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â local build PASS; production environment masih perlu diverifikasi
 
 ---
 
-## PHASE 13 Ã¢â‚¬â€ VERCEL
+## PHASE 13 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â VERCEL
 
 - [x] Vercel project
 - [x] Deployment system
@@ -1297,7 +1297,7 @@ Legend:
 
 ---
 
-## PHASE 14 Ã¢â‚¬â€ DOMAIN
+## PHASE 14 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â DOMAIN
 
 - [ ] Domain configured
 - [ ] DNS
@@ -1309,7 +1309,7 @@ Legend:
 
 ---
 
-## PHASE 15 Ã¢â‚¬â€ SEO
+## PHASE 15 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â SEO
 
 - [x] Titles
 - [x] Meta descriptions
@@ -1326,7 +1326,7 @@ Legend:
 
 ---
 
-## PHASE 16 Ã¢â‚¬â€ ANALYTICS
+## PHASE 16 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ANALYTICS
 
 - [ ] Choose analytics
 - [ ] Install
@@ -1337,7 +1337,7 @@ Legend:
 
 ---
 
-## PHASE 17 Ã¢â‚¬â€ PERFORMANCE
+## PHASE 17 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â PERFORMANCE
 
 - [ ] Image optimization
 - [ ] Font optimization
@@ -1351,7 +1351,7 @@ Legend:
 
 ---
 
-## PHASE 18 Ã¢â‚¬â€ NEWSLETTER
+## PHASE 18 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â NEWSLETTER
 
 - [x] UI
 - [ ] Provider
@@ -1366,7 +1366,7 @@ Legend:
 
 ---
 
-## PHASE 19 Ã¢â‚¬â€ LOGIN / SUBSCRIBE
+## PHASE 19 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â LOGIN / SUBSCRIBE
 
 - [ ] Decide whether Login is required
 - [ ] Decide Subscribe meaning
@@ -1379,7 +1379,7 @@ Legend:
 
 ---
 
-## PHASE 20 Ã¢â‚¬â€ CMS PRODUCTION
+## PHASE 20 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â CMS PRODUCTION
 
 - [ ] Deploy CMS
 - [ ] Production CMS URL
@@ -1401,7 +1401,7 @@ Legend:
 
 ---
 
-## PHASE 21 Ã¢â‚¬â€ SECURITY
+## PHASE 21 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â SECURITY
 
 - [ ] Secrets protected
 - [ ] API keys protected
@@ -1424,7 +1424,7 @@ Legend:
 
 ---
 
-## PHASE 22 Ã¢â‚¬â€ CONTENT
+## PHASE 22 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â CONTENT
 
 - [ ] Initial articles
 - [ ] Featured articles
@@ -1443,7 +1443,7 @@ Legend:
 
 ---
 
-## PHASE 23 Ã¢â‚¬â€ RESPONSIVE QA
+## PHASE 23 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â RESPONSIVE QA
 
 - [ ] Desktop
 - [ ] Tablet
@@ -1462,7 +1462,7 @@ Legend:
 
 ---
 
-## PHASE 24 Ã¢â‚¬â€ BROWSER QA
+## PHASE 24 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â BROWSER QA
 
 - [ ] Chrome
 - [ ] Edge
@@ -1471,7 +1471,7 @@ Legend:
 
 ---
 
-## PHASE 25 Ã¢â‚¬â€ FUNCTIONAL QA
+## PHASE 25 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â FUNCTIONAL QA
 
 - [ ] Navigation
 - [ ] Homepage
@@ -1488,7 +1488,7 @@ Legend:
 
 ---
 
-## PHASE 26 Ã¢â‚¬â€ ERROR HANDLING
+## PHASE 26 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ERROR HANDLING
 
 - [ ] 404
 - [ ] API unavailable
@@ -1502,7 +1502,7 @@ Legend:
 
 ---
 
-## PHASE 27 Ã¢â‚¬â€ FINAL SEO / CONTENT AUDIT
+## PHASE 27 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â FINAL SEO / CONTENT AUDIT
 
 - [ ] No placeholders
 - [ ] No broken links
@@ -1517,7 +1517,7 @@ Legend:
 
 ---
 
-## PHASE 28 Ã¢â‚¬â€ FINAL PRODUCTION CHECK
+## PHASE 28 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â FINAL PRODUCTION CHECK
 
 - [ ] Infrastructure
 - [ ] Database
@@ -1526,16 +1526,16 @@ Legend:
 - [ ] Astro
 - [ ] Vercel
 - [ ] Domain
-- [ ] CMS Ã¢â€ â€™ DB
-- [ ] DB Ã¢â€ â€™ API
-- [ ] API Ã¢â€ â€™ Astro
-- [ ] Astro Ã¢â€ â€™ Vercel
-- [ ] Vercel Ã¢â€ â€™ GrailDaily
+- [ ] CMS ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ DB
+- [ ] DB ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ API
+- [ ] API ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ Astro
+- [ ] Astro ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ Vercel
+- [ ] Vercel ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ GrailDaily
 - [ ] End-to-end article publishing test
 
 ---
 
-## PHASE 29 Ã¢â‚¬â€ LAUNCH
+## PHASE 29 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â LAUNCH
 
 ### Pre-launch
 
@@ -1562,7 +1562,7 @@ Legend:
 
 ---
 
-## PHASE 30 Ã¢â‚¬â€ POST-LAUNCH
+## PHASE 30 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â POST-LAUNCH
 
 - [ ] Monitor uptime
 - [ ] Monitor errors
@@ -1592,6 +1592,7 @@ Verified state:
 - Latest known Vercel deployment is Ready and Production.
 - Production /about on the latest deployment returns HTTP 200.
 - Production /popular/all on the latest deployment returns HTTP 200 and contains the expected Popular content.
+- Production homepage `/` on the latest deployment returns HTTP 200 and contains GrailDaily content.
 - Search uses the CMS API rather than Pagefind.
 - Basic SEO metadata, Open Graph, Twitter/X cards, sitemap, robots.txt, structured data, and article canonical URL have been verified.
 
@@ -1659,8 +1660,8 @@ Git:
 
 Production verification already completed:
 
-- /about Ã¢â€ â€™ HTTP 200
-- /popular/all Ã¢â€ â€™ HTTP 200
+- /about ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ HTTP 200
+- /popular/all ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ HTTP 200
 
 The deployment was created approximately 45 seconds after commit 9a0ff5d, strongly correlating it with the latest commit. Direct Git commit metadata was not exposed by the CLI inspection output, so this correlation should not be treated as a separate Vercel metadata guarantee.
 
@@ -1672,7 +1673,7 @@ The deployment was created approximately 45 seconds after commit 9a0ff5d, strong
 2. Complete production verification of the remaining critical website routes.
 3. Verify CMS production environment and API connectivity from the website.
 4. Verify production environment variables.
-5. Verify CMS create Ã¢â€ â€™ publish Ã¢â€ â€™ website flow end-to-end.
+5. Verify CMS create ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ publish ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ website flow end-to-end.
 6. Resolve any remaining legacy content/dependency references.
 7. Verify final SEO configuration on production.
 8. Set up Google Search Console and indexing.
@@ -1688,7 +1689,7 @@ The deployment was created approximately 45 seconds after commit 9a0ff5d, strong
 
 # 45. DEVELOPMENT RULES
 
-## Rule 1 Ã¢â‚¬â€ Do not redesign completed UI
+## Rule 1 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Do not redesign completed UI
 
 If something is [x], do not redesign it unless:
 
@@ -1696,7 +1697,7 @@ If something is [x], do not redesign it unless:
 - It conflicts with architecture
 - User explicitly requests a change
 
-## Rule 2 Ã¢â‚¬â€ One step at a time
+## Rule 2 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â One step at a time
 
 User prefers practical PowerShell instructions.
 
@@ -1709,7 +1710,7 @@ When troubleshooting:
 
 Do not send large sequences of unrelated commands.
 
-## Rule 3 Ã¢â‚¬â€ Never guess repository state
+## Rule 3 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Never guess repository state
 
 Verify:
 
@@ -1723,11 +1724,11 @@ Verify:
 
 before modifying anything.
 
-## Rule 4 Ã¢â‚¬â€ CMS is the article source of truth
+## Rule 4 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â CMS is the article source of truth
 
 Do not reintroduce Markdown article content unless explicitly required.
 
-## Rule 5 Ã¢â‚¬â€ Protect existing design
+## Rule 5 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Protect existing design
 
 Desktop and mobile have already received substantial design work.
 
@@ -1740,21 +1741,21 @@ Do not unnecessarily alter:
 - Responsive breakpoints
 - Page structure
 
-## Rule 6 Ã¢â‚¬â€ Production requires verification
+## Rule 6 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Production requires verification
 
 Deployment success does not automatically mean the website works.
 
 Verify:
 
 CMS
-Ã¢â€ â€™ DB
-Ã¢â€ â€™ API
-Ã¢â€ â€™ Astro
-Ã¢â€ â€™ Build
-Ã¢â€ â€™ Vercel
-Ã¢â€ â€™ Browser
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ DB
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ API
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ Astro
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ Build
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ Vercel
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ Browser
 
-## Rule 7 Ã¢â‚¬â€ Update this document
+## Rule 7 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Update this document
 
 When important project state changes, update:
 
@@ -1814,7 +1815,7 @@ No output. GRAILDAILY-PROJECT.md passed git diff --check.
 Current verified state:
 
 - Encoding corruption in the project document has been fixed.
-- All unintended ? characters replacing Ã¢â€ â€™ have been fixed.
+- All unintended ? characters replacing ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ have been fixed.
 - Project structure tree characters have been restored.
 - GRAILDAILY-PROJECT.md is clean according to git diff --check.
 - Latest known Vercel deployment remains Ready / Production.
