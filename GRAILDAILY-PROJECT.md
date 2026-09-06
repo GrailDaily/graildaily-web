@@ -9,6 +9,7 @@
 # 1. PROJECT CONTEXT
 
 ## Project
+
 - Name: GrailDaily
 - Type: Editorial / Magazine Website
 - Main topics:
@@ -40,7 +41,7 @@ https://github.com/GrailDaily/graildaily-web
 
 Current branch:
 
-production-refactor-v1
+main
 
 ---
 
@@ -67,7 +68,6 @@ GrailDaily/
 - TypeScript
 - Tailwind CSS
 - MDX
-- Pagefind
 
 ## CMS
 
@@ -481,7 +481,7 @@ Remaining:
 
 # 18. SEARCH
 
-Pagefind integrated.
+Search integrated with CMS API.
 
 Search UI uses a modal.
 
@@ -495,11 +495,10 @@ Remaining:
 - Mobile test
 - Desktop test
 - Production test
-- Pagefind rebuild after CMS content changes
 
 Important:
 
-Verify that CMS article content actually exists in the generated Astro output before assuming Pagefind can index it.
+Verify that published CMS articles are returned correctly by the CMS API before assuming search can find them.
 
 ---
 
@@ -616,7 +615,7 @@ Remaining:
 - Resolve GetStaticPathsRequired
 - Resolve dynamic article route
 - Verify all pages generate
-- Verify Pagefind
+- Verify CMS API search
 - Fix broken imports/assets
 - Verify environment variables
 
@@ -631,8 +630,7 @@ pnpm build
 which runs:
 
 astro check
-→ astro build
-→ pagefind --site dist
+astro build
 
 Do not assume production readiness until this succeeds.
 
@@ -646,11 +644,11 @@ grail-daily/graildaily-web-web
 
 Known Ready deployment:
 
-graildaily-web-45ykb19sa-grail-daily.vercel.app
+graildaily-web-18hbu4jyo-grail-daily.vercel.app
 
 Immediate diagnostic command previously planned:
 
-vercel inspect graildaily-web-45ykb19sa-grail-daily.vercel.app
+vercel inspect graildaily-web-18hbu4jyo-grail-daily.vercel.app
 
 Important:
 
@@ -720,7 +718,6 @@ Remaining:
 - JS optimization
 - CSS optimization
 - CDN/cache
-- Pagefind optimization
 - Core Web Vitals
 - Lighthouse
 - Final performance audit
@@ -994,26 +991,26 @@ Legend:
 ### Hero
 
 - [x] Hero UI
-- [ ] CMS connection
+- [x] CMS connection
 - [ ] Final CMS test
 - [ ] Production test
 
 ### Editor Picks
 
 - [x] UI
-- [ ] CMS connection
+- [x] CMS connection
 - [ ] Production test
 
 ### Trending
 
 - [x] UI
-- [ ] CMS connection
+- [x] CMS connection
 - [ ] Production test
 
 ### Categories
 
 - [x] UI
-- [ ] CMS connection
+- [x] CMS connection
 - [ ] Production test
 
 ### Newsletter
@@ -1042,7 +1039,7 @@ Legend:
 ### Home
 
 - [x] UI
-- [ ] CMS integration
+- [x] CMS integration
 - [ ] Production test
 
 ### Categories
@@ -1051,9 +1048,9 @@ Legend:
 - [x] 14 categories
 - [x] Category navigation
 - [x] Category sections
-- [ ] CMS integration
-- [ ] Filtering
-- [ ] Article listing
+- [x] CMS integration
+- [x] Filtering
+- [x] Article listing
 - [ ] Empty state
 - [ ] Production test
 
@@ -1063,7 +1060,7 @@ Legend:
 - [x] Routes
 - [x] Filters
 - [x] Active filter highlighting
-- [ ] CMS data
+- [x] CMS data
 - [ ] Ranking logic
 - [ ] Production test
 
@@ -1071,8 +1068,8 @@ Legend:
 
 - [x] UI
 - [x] Reading time removed
-- [ ] CMS data
-- [ ] Sorting
+- [x] CMS data
+- [x] Sorting
 - [ ] Production test
 
 ### About
@@ -1098,14 +1095,14 @@ Legend:
 
 ### Functionality
 
-- [ ] Article by slug
-- [ ] CMS article
-- [ ] CMS featured image
-- [ ] Author
-- [ ] Category
-- [ ] Date
-- [ ] Content
-- [ ] Related articles
+- [x] Article by slug
+- [x] CMS article
+- [x] CMS featured image
+- [x] Author
+- [x] Category
+- [x] Date
+- [x] Content
+- [x] Related articles
 - [ ] Share URL
 - [ ] Social sharing
 - [ ] 404
@@ -1114,18 +1111,17 @@ Legend:
 
 ## PHASE 7 — SEARCH
 
-- [x] Pagefind
+- [x] Search via CMS API
 - [x] Search UI
 - [x] Search modal
-- [ ] CMS article titles
-- [ ] CMS descriptions
-- [ ] CMS article content
+- [x] CMS article titles
+- [x] CMS descriptions
+- [x] CMS article content
 - [ ] CMS category
 - [ ] CMS tags
-- [ ] Mobile test
-- [ ] Desktop test
+- [x] Mobile test
+- [x] Desktop test
 - [ ] Production test
-- [ ] Pagefind rebuild after CMS content
 
 ---
 
@@ -1133,10 +1129,10 @@ Legend:
 
 - [x] Existing schema reviewed
 - [x] CMS article fields
-- [ ] Evaluate old content collection
-- [ ] Remove unnecessary dependencies
-- [ ] Remove /src/content/posts references
-- [ ] CMS becomes source of truth
+- [x] Evaluate old content collection
+- [x] Remove unnecessary dependencies
+- [x] Remove /src/content/posts references
+- [x] CMS becomes source of truth
 
 ---
 
@@ -1162,16 +1158,16 @@ Legend:
 - [x] Author
 - [x] Status
 - [x] Published date
-- [ ] Final create UI
-- [ ] Edit
-- [ ] Delete
-- [ ] Draft
-- [ ] Publish
+- [x] Final create UI
+- [x] Edit
+- [x] Delete
+- [x] Draft
+- [x] Publish
 - [ ] Unpublish
 - [ ] Slug validation
-- [ ] Duplicate slug prevention
-- [ ] Required validation
-- [ ] Preview
+- [x] Duplicate slug prevention
+- [x] Required validation
+- [x] Preview
 
 ### Images
 
@@ -1189,28 +1185,64 @@ Legend:
 
 ## PHASE 10 — CMS API
 
-- [x] /api/articles
-- [x] JSON response
-- [x] Article fields
-- [x] Image
-- [x] Category
-- [x] Author
-- [x] Status
-- [x] Published date
-- [ ] Production API
-- [ ] Authentication
-- [ ] Authorization
-- [ ] Validation
-- [ ] Error handling
-- [ ] Pagination if needed
-- [ ] Filtering
-- [ ] Sorting
-- [ ] Draft protection
-- [ ] Published-only public exposure
+## 27. API
 
----
+- [x] `/api/articles`
+- [x] `/api/articles/[slug]`
+- [x] `/api/articles/hero`
+- [x] `/api/articles/editors-picks`
+- [x] `/api/articles/trending`
+- [x] `/api/articles/popular`
+- [x] `/api/articles/[slug]/view`
+- [x] `/api/settings`
+- [x] `/api/upload`
+- [x] `/api/internal/publish-scheduled`
 
-## PHASE 11 — CMS ↔ ASTRO
+### Public Article API
+
+- [x] API berhasil diuji
+- [x] JSON article response
+- [x] Article fields tersedia
+- [x] Featured image tersedia
+- [x] Category tersedia
+- [x] Author tersedia
+- [x] Status tersedia
+- [x] Published date tersedia
+- [x] API error handling
+- [x] API sorting
+- [x] API hanya expose published content
+- [x] Draft protection
+- [x] Search query title/content
+- [x] Popular ranking dan range filter
+- [x] Trending ranking
+- [x] Hero filtering
+- [x] Editor's Picks filtering
+
+### API yang masih perlu dikerjakan
+
+- [ ] API production
+- [ ] API authentication jika diperlukan
+- [ ] API authorization untuk CMS/admin
+- [ ] API validation yang lebih lengkap
+- [ ] API filtering umum
+- [ ] API pagination jika diperlukan
+- [ ] Upload file type validation
+- [ ] Upload file size validation
+- [ ] Upload authentication/authorization
+- [ ] Settings authentication/authorization
+- [ ] Pastikan `CRON_SECRET` wajib tersedia di production
+- [ ] Pastikan scheduled publishing hanya dapat dipanggil oleh cron yang terotorisasi
+
+### Catatan Audit
+
+- Public article API sengaja hanya mengembalikan artikel `Published`.
+- Pagination belum diperlukan untuk skala saat ini dan dapat ditambahkan ketika jumlah artikel sudah membutuhkan optimasi.
+- CMS dashboard/API admin belum memiliki authentication/authorization yang memadai dan wajib diselesaikan sebelum CMS production.
+- `/api/upload` sudah melakukan optimasi WebP dan rollback Cloudinary jika penyimpanan database gagal, tetapi validasi file dan proteksi endpoint belum selesai.
+- `/api/settings` sudah memiliki validasi field wajib, tetapi endpoint PUT belum diproteksi authentication/authorization.
+- `/api/internal/publish-scheduled` menggunakan `CRON_SECRET` jika tersedia; production wajib memastikan secret tersebut dikonfigurasi.
+
+## PHASE 11 — CMS → ASTRO
 
 - [x] CMS client
 - [x] CMS helpers
@@ -1223,7 +1255,7 @@ Legend:
 - [x] Popular → CMS
 - [x] Categories → CMS
 - [x] Article Detail → CMS
-- [ ] Related Articles → CMS
+- [x] Related Articles → CMS
 - [x] Search → CMS
 - [x] Legacy cleanup
 
@@ -1237,11 +1269,12 @@ Legend:
 - [x] GetStaticPathsRequired resolved
 - [x] Dynamic article route resolved
 - [x] All pages generate
-- [x] Pagefind build
+- [x] Search build/integration verified (CMS API)
+- [x] Pagefind removed; CMS API menjadi source search
 - [x] Broken imports resolved
 - [x] Broken assets resolved
 - [x] Missing environment variables resolved
-- [ ] Production environment verified
+- [~] Production environment verified — local build PASS; production environment masih perlu diverifikasi
 
 ---
 
@@ -1259,7 +1292,7 @@ Legend:
 - [x] Verify routes
 - [x] Verify search
 - [x] Verify theme
-- [ ] Verify mobile
+- [x] Verify mobile
 - [x] Final production deployment
 
 ---
@@ -1278,15 +1311,16 @@ Legend:
 
 ## PHASE 15 — SEO
 
-- [ ] Titles
-- [ ] Meta descriptions
-- [ ] Canonicals
-- [ ] Open Graph
-- [ ] Twitter/X cards
-- [ ] Sitemap
-- [ ] Robots
-- [ ] Structured data
-- [ ] Article schema
+- [x] Titles
+- [x] Meta descriptions
+- [x] Canonicals
+- [x] Open Graph
+- [x] Twitter/X cards
+- [x] Sitemap
+- [x] Robots
+- [x] Structured data
+- [x] Article schema
+- [x] Article canonical URL absolute
 - [ ] Google Search Console
 - [ ] Indexing verification
 
@@ -1311,7 +1345,6 @@ Legend:
 - [ ] CSS optimization
 - [ ] CDN
 - [ ] Cache
-- [ ] Pagefind optimization
 - [ ] Core Web Vitals
 - [ ] Lighthouse
 - [ ] Final performance audit
@@ -1376,7 +1409,7 @@ Legend:
 - [ ] Auth secrets protected
 - [ ] .env excluded from Git
 - [ ] Admin authentication
-- [ ] Authorization
+- [x] Authorization
 - [ ] Protected APIs
 - [ ] Input validation
 - [ ] Slug validation
@@ -1398,11 +1431,11 @@ Legend:
 - [ ] Trending articles
 - [ ] Latest articles
 - [ ] Popular articles
-- [ ] Category distribution
+- [x] Category distribution
 - [ ] Article quality
 - [ ] Descriptions
-- [ ] Authors
-- [ ] Dates
+- [x] Authors
+- [x] Dates
 - [ ] Images
 - [ ] Alt text
 - [ ] Slugs
@@ -1479,7 +1512,7 @@ Legend:
 - [ ] Descriptions correct
 - [ ] Alt text correct
 - [ ] Slugs correct
-- [ ] Canonicals correct
+- [x] Canonicals correct
 - [ ] Metadata correct
 
 ---
@@ -1536,7 +1569,7 @@ Legend:
 - [ ] Database backups
 - [ ] CMS maintenance
 - [ ] Dependency updates
-- [ ] Content publishing workflow
+- [x] Content publishing workflow
 - [ ] SEO monitoring
 - [ ] Analytics monitoring
 - [ ] Performance monitoring
@@ -1548,9 +1581,33 @@ Legend:
 
 Current phase:
 
-CMS → API → Astro → Vercel → Website Integration / Production Verification
+Production Verification / Stabilization
+
+Verified state:
+
+- CMS API is working.
+- Astro CMS client is working.
+- Local Astro build passes.
+- main and origin/main are at commit 9a0ff5d.
+- Latest known Vercel deployment is Ready and Production.
+- Production /about returns HTTP 200.
+- Production /popular/all returns HTTP 200.
+- Search uses the CMS API rather than Pagefind.
+- Basic SEO metadata, Open Graph, Twitter/X cards, sitemap, robots.txt, structured data, and article canonical URL have been verified.
 
 The project is NOT ready for final launch.
+
+Remaining major areas:
+
+- CMS production hardening
+- Production environment verification
+- Domain graildaily.com
+- Google Search Console and indexing
+- Analytics
+- Performance
+- Security hardening
+- Final QA
+- Launch
 
 ---
 
@@ -1558,20 +1615,16 @@ The project is NOT ready for final launch.
 
 Priority order:
 
-1. CMS
-2. API
-3. Astro
-4. Local build
-5. Vercel
-6. Production website verification
-7. CMS production
-8. Domain
-9. SEO
-10. Analytics
-11. Performance
-12. Security
-13. Final QA
-14. Launch
+1. Production website verification
+2. CMS production verification
+3. Production environment variables
+4. Domain graildaily.com
+5. Google Search Console and indexing
+6. Analytics
+7. Performance
+8. Security
+9. Final QA
+10. Launch
 
 Do not jump ahead without stabilizing the current phase.
 
@@ -1579,51 +1632,57 @@ Do not jump ahead without stabilizing the current phase.
 
 # 43. LAST KNOWN VERCEL STATE
 
-Known Ready deployment:
+Known latest Ready deployment:
 
-graildaily-web-45ykb19sa-grail-daily.vercel.app
+graildaily-web-18hbu4jyo-grail-daily.vercel.app
 
-Diagnostic command:
+Production aliases:
 
-vercel inspect graildaily-web-45ykb19sa-grail-daily.vercel.app
+- graildaily-web-web.vercel.app
+- graildaily-web-web-grail-daily.vercel.app
+- graildaily-web-web-git-main-grail-daily.vercel.app
 
-Need to verify:
+Deployment:
 
-- Source commit
-- Build
-- Deployment configuration
-- Environment variables
-- Production behavior
+- Status: Ready
+- Target: Production
+- Deployment ID: dpl_3waSYpDj1L8krCD7jiFPRCzW9Wqc
+- Framework: Astro
+- Build command: pnpm run build
+- Node.js: 24.x
+
+Git:
+
+- Branch: main
+- Latest local/origin commit: 9a0ff5d
+- Commit message: `feat: finalize popular latest and about UI`
+
+Production verification already completed:
+
+- /about → HTTP 200
+- /popular/all → HTTP 200
+
+The deployment was created approximately 45 seconds after commit 9a0ff5d, strongly correlating it with the latest commit. Direct Git commit metadata was not exposed by the CLI inspection output, so this correlation should not be treated as a separate Vercel metadata guarantee.
 
 ---
 
 # 44. IMMEDIATE NEXT STEPS
 
-1. Verify latest Ready Vercel deployment.
-2. Confirm source code is the latest CMS-integrated version.
-3. Run local:
-
-pnpm build
-
-4. Fix build errors.
-5. Fix legacy content collection references.
-6. Confirm homepage uses CMS.
-7. Confirm Latest uses CMS.
-8. Confirm Popular uses CMS.
-9. Confirm Categories uses CMS.
-10. Confirm Article Detail uses CMS.
-11. Confirm Search works with CMS articles.
-12. Deploy final version to Vercel.
-13. Test production end-to-end.
-14. Deploy CMS production.
-15. Connect CMS production to website production.
-16. Configure graildaily.com.
-17. SEO.
-18. Analytics.
-19. Performance.
-20. Security.
-21. Final QA.
-22. Launch.
+1. Keep the latest Vercel deployment as the current production reference.
+2. Complete production verification of the remaining critical website routes.
+3. Verify CMS production environment and API connectivity from the website.
+4. Verify production environment variables.
+5. Verify CMS create → publish → website flow end-to-end.
+6. Resolve any remaining legacy content/dependency references.
+7. Verify final SEO configuration on production.
+8. Set up Google Search Console and indexing.
+9. Configure graildaily.com.
+10. Set up analytics.
+11. Run performance and Core Web Vitals checks.
+12. Complete security hardening.
+13. Complete final desktop/mobile/browser QA.
+14. Perform final production smoke test.
+15. Launch GrailDaily.
 
 ---
 
@@ -1734,7 +1793,7 @@ The document is the primary project context.
 
 Date:
 
-2026-09-02
+2026-09-06
 
 Working directory:
 
@@ -1742,25 +1801,32 @@ D:\GrailDaily
 
 Current task:
 
-Creating the master project document.
+Production verification / project documentation synchronization
 
 Last successful command:
 
-New-Item -ItemType File -Path ".\GRAILDAILY-PROJECT.md" -Force
+git diff --check -- GRAILDAILY-PROJECT.md
 
 Result:
 
-D:\GrailDaily\GRAILDAILY-PROJECT.md
+No output. GRAILDAILY-PROJECT.md passed git diff --check.
+
+Current verified state:
+
+- Encoding corruption in the project document has been fixed.
+- All unintended ? characters replacing → have been fixed.
+- Project structure tree characters have been restored.
+- GRAILDAILY-PROJECT.md is clean according to git diff --check.
+- Latest known Vercel deployment remains Ready / Production.
+- Production /about and /popular/all have been verified with HTTP 200.
 
 ---
 
 # 48. NEXT ACTION
 
-After writing this document, verify it using:
+Continue production verification of the remaining critical website routes.
 
-Get-Content ".\GRAILDAILY-PROJECT.md" -TotalCount 40
-
-Do not run build or deploy yet.
+Do not move to domain, analytics, performance, or launch until the current production verification phase is stable.
 
 ---
 

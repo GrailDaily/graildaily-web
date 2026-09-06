@@ -1,4 +1,4 @@
----
+﻿---
 import Header from "@/components/header/Header.astro";
 import PostLayout from "@/layouts/PostLayout.astro";
 import Datetime from "@/components/Datetime.astro";
@@ -40,7 +40,7 @@ const modifiedDate = new Date(article.updatedAt);
 <PostLayout
   title={`${article.title} | ${config.site.title}`}
   description={article.excerpt}
-  canonicalURL={`/cms-posts/${article.slug}/`}
+  canonicalURL={new URL(`/cms-posts/${article.slug}/`, Astro.site ?? Astro.url).href}
   ogImage={article.featuredImage ?? undefined}
   pubDatetime={publishedDate}
   modDatetime={modifiedDate}
