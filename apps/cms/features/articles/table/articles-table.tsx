@@ -61,15 +61,15 @@ export function ArticlesTable({ articles, selected, onSelectedChange }: Props) {
 
               <TableHead className="w-24">Image</TableHead>
 
-              <TableHead>Title</TableHead>
+              <TableHead className="min-w-[220px]">Title</TableHead>
 
-              <TableHead>Category</TableHead>
+              <TableHead className="w-28">Category</TableHead>
 
-              <TableHead>Status</TableHead>
+              <TableHead className="w-28">Status</TableHead>
 
-              <TableHead>Author</TableHead>
+              <TableHead className="w-28">Author</TableHead>
 
-              <TableHead>Date</TableHead>
+              <TableHead className="w-36">Date</TableHead>
 
               <TableHead className="w-20 text-right">Views</TableHead>
 
@@ -95,26 +95,26 @@ export function ArticlesTable({ articles, selected, onSelectedChange }: Props) {
                       src={article.featuredImage}
                       alt={article.title}
                       width={80}
-                      height={48}
+                      height={50}
                       unoptimized
-                      className="h-12 w-20 rounded-md object-cover"
+                      className="h-[50px] w-20 rounded-md object-cover"
                     />
                   ) : (
-                    <div className="bg-muted text-muted-foreground flex h-12 w-20 items-center justify-center rounded-md text-xs">
+                    <div className="bg-muted text-muted-foreground flex h-[50px] w-20 items-center justify-center rounded-md text-xs">
                       No Image
                     </div>
                   )}
                 </TableCell>
 
-                <TableCell className="font-medium">{article.title}</TableCell>
+                <TableCell className="max-w-[280px] truncate font-medium">{article.title}</TableCell>
 
-                <TableCell>{article.category}</TableCell>
+                <TableCell className="max-w-[112px] truncate">{article.category}</TableCell>
 
                 <TableCell>
                   <StatusBadge status={article.status} />
                 </TableCell>
 
-                <TableCell>{article.author}</TableCell>
+                <TableCell className="max-w-[112px] truncate">{article.author}</TableCell>
 
                 <TableCell>
                   {article.status === "Scheduled"
@@ -141,3 +141,6 @@ export function ArticlesTable({ articles, selected, onSelectedChange }: Props) {
     </Card>
   );
 }
+
+
+

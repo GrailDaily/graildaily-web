@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Copy, MoreHorizontal, Trash2 } from "lucide-react";
+import { Check, Copy, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import {
   AlertDialog,
@@ -21,17 +21,35 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { deleteMediaAction } from "../actions/media.actions";
+import {
+  deleteMediaAction,
+  updateMediaAltTextAction,
+} from "../actions/media.actions";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   mediaId: string;
   url: string;
   originalName: string;
+  altText: string | null;
 }
 
-export function MediaActions({ mediaId, url, originalName }: Props) {
+export function MediaActions({ mediaId, url, originalName, altText }: Props) {
   const [copied, setCopied] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [altTextOpen, setAltTextOpen] = useState(false);
+  const [altTextValue, setAltTextValue] = useState(altText ?? "");
+  const [savingAltText, setSavingAltText] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
   const handleCopy = async () => {
@@ -47,6 +65,28 @@ export function MediaActions({ mediaId, url, originalName }: Props) {
       }, 2000);
     } catch {
       toast.error("Failed to copy URL");
+    }
+  };
+
+  const handleSaveAltText = async () => {
+    try {
+      setSavingAltText(true);
+
+      await updateMediaAltTextAction(mediaId, altTextValue);
+
+      toast.success("Alt text updated");
+
+      setAltTextOpen(false);
+
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+
+      toast.error(
+        error instanceof Error ? error.message : "Failed to update alt text",
+      );
+    } finally {
+      setSavingAltText(false);
     }
   };
 
@@ -83,6 +123,11 @@ export function MediaActions({ mediaId, url, originalName }: Props) {
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end">
+          <DropdownMenuItem onClick={() => setAltTextOpen(true)}>
+            <Pencil className="mr-2 h-4 w-4" />
+            Edit Alt Text
+          </DropdownMenuItem>
+
           <DropdownMenuItem onClick={handleCopy}>
             {copied ? (
               <>
@@ -136,6 +181,56 @@ export function MediaActions({ mediaId, url, originalName }: Props) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      <Dialog
+        open={altTextOpen}
+        onOpenChange={(open) => {
+          setAltTextOpen(open);
+
+          if (open) {
+            setAltTextValue(altText ?? "");
+          }
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit Alt Text</DialogTitle>
+
+            <DialogDescription>
+              Add a short description of this image for accessibility and search
+              engines.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-2">
+            <Label htmlFor="alt-text">Alt Text</Label>
+
+            <Input
+              id="alt-text"
+              value={altTextValue}
+              onChange={(event) => setAltTextValue(event.target.value)}
+              placeholder="Describe this image..."
+            />
+          </div>
+
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setAltTextOpen(false)}
+            >
+              Cancel
+            </Button>
+
+            <Button
+              type="button"
+              onClick={handleSaveAltText}
+              disabled={savingAltText}
+            >
+              {savingAltText ? "Saving..." : "Save"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

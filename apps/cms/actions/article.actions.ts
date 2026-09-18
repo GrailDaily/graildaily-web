@@ -18,6 +18,18 @@ import type { ArticleStatus } from "@/types/article";
 import { cleanupMediaIfUnused } from "@/features/media/utils/media-cleanup";
 
 export async function createArticleAction(data: ArticleFormData) {
+  const existingArticle = await prisma.article.findUnique({
+    where: {
+      slug: data.slug,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (existingArticle) {
+    throw new Error("An article with this slug already exists.");
+  }
   const scheduledAt =
     data.status === "Scheduled" && data.scheduledAt
       ? new Date(`${data.scheduledAt}:00+07:00`)
@@ -45,6 +57,22 @@ export async function updateArticleAction(id: string, data: ArticleFormData) {
 
   if (!currentArticle) {
     throw new Error("Article not found");
+  }
+
+  const existingArticle = await prisma.article.findFirst({
+    where: {
+      slug: data.slug,
+      NOT: {
+        id,
+      },
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (existingArticle) {
+    throw new Error("An article with this slug already exists.");
   }
 
   const scheduledAt =
@@ -285,3 +313,6 @@ export async function bulkDeleteArticlesAction(ids: string[]) {
   revalidatePath("/articles");
   revalidatePath("/media");
 }
+
+
+

@@ -10,6 +10,7 @@ interface MediaItem {
   id: string;
   filename: string;
   originalName: string;
+  altText: string | null;
   mimeType: string;
   size: number;
   path: string;
@@ -82,6 +83,7 @@ export function MediaGrid({ media }: Props) {
                 mediaId={item.id}
                 url={item.path}
                 originalName={item.originalName}
+                altText={item.altText}
               />
             </div>
 

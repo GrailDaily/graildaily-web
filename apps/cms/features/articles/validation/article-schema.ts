@@ -3,7 +3,7 @@ import { z } from "zod";
 export const articleSchema = z.object({
   title: z.string().min(5, "Title must contain at least 5 characters").max(200),
 
-  slug: z.string().min(3, "Slug is required"),
+  slug: z.string().min(3, "Slug is required").regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Slug may only contain lowercase letters, numbers, and hyphens"),
 
   excerpt: z.string().min(20, "Excerpt must contain at least 20 characters"),
 
@@ -23,3 +23,4 @@ export const articleSchema = z.object({
 });
 
 export type ArticleSchema = z.infer<typeof articleSchema>;
+

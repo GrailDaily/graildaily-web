@@ -1,7 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/header/Header.astro";
-import Breadcrumb from "@/components/Breadcrumb.astro";
 import Main from "@/components/Main.astro";
 import SearchHero from "@/components/search/SearchHero.astro";
 import SearchResults from "@/components/search/SearchResults.astro";
@@ -28,8 +27,6 @@ if (query) {
 >
   <Header />
 
-  <Breadcrumb />
-
   <Main>
     <SearchHero />
 
@@ -43,5 +40,6 @@ if (query) {
     }
   </Main>
 </Layout>
+
 
 

@@ -134,7 +134,7 @@ const articles = await getCmsArticles();
   .cms-posts-header p {
     max-width: 620px;
     margin: 18px auto 0;
-    color: var(--color-text-secondary, #64748b);
+    color: var(--color-muted-foreground);
     font-size: 1rem;
     line-height: 1.7;
   }
@@ -148,9 +148,9 @@ const articles = await getCmsArticles();
   .cms-post-card {
     min-width: 0;
     overflow: hidden;
-    border: 1px solid var(--color-border, #e6e9ee);
+    border: 1px solid var(--color-border);
     border-radius: 14px;
-    background: var(--color-bg-card, #ffffff);
+    background: var(--color-card);
     transition:
       transform 180ms ease,
       box-shadow 180ms ease;
@@ -166,7 +166,7 @@ const articles = await getCmsArticles();
     width: 100%;
     aspect-ratio: 16 / 9;
     overflow: hidden;
-    background: #e6e9ee;
+    background: var(--color-muted);
   }
 
   .cms-post-image {
@@ -185,7 +185,7 @@ const articles = await getCmsArticles();
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #64748b;
+    color: var(--color-muted-foreground);
     font-size: 0.875rem;
   }
 
@@ -223,7 +223,7 @@ const articles = await getCmsArticles();
     display: -webkit-box;
     margin: 12px 0 20px;
     overflow: hidden;
-    color: var(--color-text-secondary, #64748b);
+    color: var(--color-muted-foreground);
     font-size: 0.9rem;
     line-height: 1.65;
     -webkit-box-orient: vertical;
@@ -235,7 +235,7 @@ const articles = await getCmsArticles();
     align-items: center;
     flex-wrap: wrap;
     gap: 8px;
-    color: var(--color-text-secondary, #64748b);
+    color: var(--color-muted-foreground);
     font-size: 0.75rem;
   }
 
@@ -248,9 +248,9 @@ const articles = await getCmsArticles();
     min-height: 240px;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--color-border, #e6e9ee);
+    border: 1px solid var(--color-border);
     border-radius: 14px;
-    color: var(--color-text-secondary, #64748b);
+    color: var(--color-muted-foreground);
   }
 
   @media (max-width: 900px) {
@@ -278,26 +278,8 @@ const articles = await getCmsArticles();
       padding: 20px;
     }
   }
-
-  @media (prefers-color-scheme: dark) {
-    .cms-post-card {
-      background: var(--color-bg-card, #0f172a);
-      border-color: #2a3345;
-    }
-
-    .cms-post-image-link {
-      background: #1e293b;
-    }
-
-    .cms-posts-header p,
-    .cms-post-excerpt,
-    .cms-post-meta,
-    .cms-empty {
-      color: #94a3b8;
-    }
-
-    .cms-empty {
-      border-color: #2a3345;
-    }
-  }
 </style>
+
+
+
+

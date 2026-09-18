@@ -130,6 +130,25 @@ export function ArticleForm({ article, media, categories }: Props) {
     mode: "onChange",
   });
 
+  const { isDirty } = formMethods.formState;
+
+  useEffect(() => {
+    if (!isDirty) {
+      return;
+    }
+
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [isDirty]);
+
   const onSubmit = async (
     data: ArticleSchema,
     submitStatus?: ArticleSchema["status"],
@@ -181,6 +200,12 @@ export function ArticleForm({ article, media, categories }: Props) {
   };
 
   const handleSaveDraft = async () => {
+    const isValid = await formMethods.trigger();
+
+    if (!isValid) {
+      return;
+    }
+
     const data = formMethods.getValues();
 
     await onSubmit(data, "Draft");
@@ -631,3 +656,5 @@ export function ArticleForm({ article, media, categories }: Props) {
     </>
   );
 }
+
+

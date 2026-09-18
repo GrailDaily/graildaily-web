@@ -10,23 +10,42 @@ const { posts } = Astro.props;
 ---
 
 <section class="hero-carousel">
-  <div class="hero-track">
-    {
-      posts.map(post => (
-        <div class="hero-item">
-          <HeroSlide
-            category={post.data.tags?.[0] ?? "History"}
-            title={post.data.title}
-            description={post.data.description}
-            image={
-              typeof post.data.ogImage === "string" ? post.data.ogImage : ""
-            }
-            href={post.href}
-          />
+  {
+    posts.length > 0 ? (
+      <div class="hero-track">
+        {
+          posts.map(post => (
+            <div class="hero-item">
+              <HeroSlide
+                category={post.data.tags?.[0] ?? "History"}
+                title={post.data.title}
+                description={post.data.description}
+                image={
+                  typeof post.data.ogImage === "string" ? post.data.ogImage : ""
+                }
+                href={post.href}
+              />
+            </div>
+          ))
+        }
+      </div>
+    ) : (
+      <section class="hero-empty">
+        <div class="hero-empty-container">
+          <div class="hero-empty-content">
+            <span class="hero-category">GrailDaily</span>
+
+            <h1>Discover the stories behind our world.</h1>
+
+            <p>
+              Explore mysteries, history, science, ancient civilizations,
+              and the stories that continue to shape humanity.
+            </p>
+          </div>
         </div>
-      ))
-    }
-  </div>
+      </section>
+    )
+  }
 </section>
 
 <script>
@@ -94,9 +113,9 @@ const { posts } = Astro.props;
   .hero-carousel {
     overflow: hidden;
     position: relative;
-
     margin: 0;
     padding: 0;
+    max-width: 100%;
   }
 
   .hero-track {
@@ -117,7 +136,53 @@ const { posts } = Astro.props;
     min-width: 100%;
   }
 
-  .hero-carousel {
-    max-width: 100%;
+  .hero-empty {
+    position: relative;
+    min-height: 680px;
+    overflow: hidden;
+
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 92%,
+      transparent 100%
+    );
+
+    mask-image: linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 92%,
+      transparent 100%
+    );
+  }
+
+  .hero-empty-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 680px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 clamp(32px, 5vw, 72px);
+  }
+
+  .hero-empty-content {
+    max-width: 620px;
+  }
+
+  .hero-empty-content h1 {
+    margin: 18px 0 24px;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    line-height: 1.1;
+    font-family: var(--font-heading);
+    color: var(--heading);
+  }
+
+  .hero-empty-content p {
+    max-width: 560px;
+    line-height: 1.8;
+    color: var(--muted-foreground);
   }
 </style>

@@ -20,7 +20,7 @@ model Article {
   createdAt              DateTime      @default(now())
   updatedAt              DateTime      @updatedAt
   publishedAt            DateTime?
-  scheduledAt           DateTime?
+  scheduledAt            DateTime?
   authorUserId           String?
   editorsPicksSelectedAt DateTime?
   heroSelectedAt         DateTime?
@@ -45,6 +45,7 @@ model Media {
   id           String   @id @default(cuid())
   filename     String
   originalName String
+  altText      String?
   mimeType     String
   size         Int
   path         String
@@ -78,17 +79,70 @@ model SiteSettings {
 }
 
 model User {
-  id        String     @id @default(cuid())
-  name      String
-  email     String     @unique
-  role      UserRole   @default(Author)
-  status    UserStatus @default(Active)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  articles  Article[]
+  id            String     @id @default(cuid())
+  name          String
+  email         String     @unique
+  emailVerified Boolean    @default(false)
+  image         String?
+  role          UserRole   @default(Author)
+  status        UserStatus @default(Active)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  articles      Article[]
+  sessions      Session[]
+  accounts      Account[]
 
   @@index([role])
   @@index([status])
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime
+
+  @@index([userId])
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime
+
+  @@index([identifier])
 }
 
 enum CategoryStatus {

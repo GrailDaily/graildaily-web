@@ -1,4 +1,4 @@
----
+﻿---
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
 import { getRelativeLocaleUrl } from "astro:i18n";
@@ -129,19 +129,17 @@ const rssHref = getRelativeLocaleUrl(
       })();
     </script>
 
-<script is:inline type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": {JSON.stringify(cmsSettings.siteName)},
-    "url": {JSON.stringify(cmsSettings.siteUrl)},
-    "description": {JSON.stringify(cmsSettings.description)},
-    "publisher": {
-      "@type": "Organization",
-      "name": {JSON.stringify(cmsSettings.siteName)}
-    }
+<script is:inline type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: cmsSettings.siteName,
+  url: cmsSettings.siteUrl,
+  description: cmsSettings.description,
+  publisher: {
+    "@type": "Organization",
+    name: cmsSettings.siteName
   }
-</script>
+})} />
 
     <ClientRouter />
   </head>
@@ -155,3 +153,5 @@ const rssHref = getRelativeLocaleUrl(
     <Footer />
   </body>
 </html>
+
+

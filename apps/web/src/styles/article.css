@@ -56,7 +56,7 @@
 }
 
 .article-breadcrumb a:hover {
-  color: #fff;
+  color: var(--color-primary);
 }
 
 .article-category {
@@ -97,7 +97,7 @@
 
   line-height: 1.9;
 
-  color: var(--text);
+  color: var(--foreground);
 }
 
 /* ===========================================================
@@ -188,7 +188,7 @@
    =========================================================== */
 
 .article-content {
-  color: var(--text);
+  color: var(--foreground);
 
   font-size: 1.18rem;
 
@@ -207,7 +207,7 @@
    =========================================================== */
 
 .article-content p {
-  color: var(--text);
+  color: var(--foreground);
   text-wrap: pretty;
 }
 
@@ -316,7 +316,7 @@
 
   font-weight: 700;
 
-  color: #fff;
+  color: var(--color-heading);
 }
 
 .article-content h6 {
@@ -382,7 +382,7 @@
 
   padding-left: 0.25rem;
 
-  color: var(--text);
+  color: var(--foreground);
 
   line-height: 1.9;
 }
@@ -424,7 +424,7 @@
 }
 
 .article-content blockquote p {
-  color: #fff;
+  color: var(--foreground);
 }
 
 .article-content blockquote > :first-child {
@@ -511,13 +511,13 @@
 
   font-weight: 700;
 
-  color: #fff;
+  color: var(--color-heading);
 }
 
 .article-content td {
   padding: 16px;
 
-  color: var(--text);
+  color: var(--foreground);
 
   border-top: 1px solid var(--border);
 }
@@ -629,7 +629,7 @@
 
   line-height: 1.2;
 
-  color: #fff;
+  color: var(--color-heading);
 }
 
 .share-box p {

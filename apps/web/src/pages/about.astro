@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/header/Header.astro";
 import config from "@/config";
@@ -11,8 +11,9 @@ import WhyGrailDaily from "@/components/about/WhyGrailDaily.astro";
 import AboutCTA from "@/components/about/AboutCTA.astro";
 import { getCmsArticles } from "@/lib/cms";
 const articles = await getCmsArticles();
-const articleCount = articles.length;
-const categoryCount = new Set(articles.map(article => article.category)).size;
+const publishedArticles = articles.filter(article => article.status === "Published");
+const articleCount = publishedArticles.length;
+const categoryCount = new Set(publishedArticles.map(article => article.category)).size;
 ---
 
 <Layout
@@ -34,3 +35,4 @@ const categoryCount = new Set(articles.map(article => article.category)).size;
     <AboutCTA />
   </main>
 </Layout>
+

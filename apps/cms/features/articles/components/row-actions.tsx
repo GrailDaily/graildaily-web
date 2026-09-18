@@ -83,7 +83,7 @@ export function RowActions({
         <DropdownMenuItem
           onClick={() => {
             window.open(
-              `https://graildaily-website.pages.dev/posts/${slug}`,
+              `https://graildaily-web-web.vercel.app/cms-posts/${slug}`,
               "_blank",
               "noopener,noreferrer",
             );
@@ -150,3 +150,4 @@ export function RowActions({
     </DropdownMenu>
   );
 }
+

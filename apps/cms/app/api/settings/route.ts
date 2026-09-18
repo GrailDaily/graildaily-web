@@ -1,4 +1,23 @@
 import { NextResponse } from "next/server";
+import { requireRole } from "@/lib/auth-guard";
+import { z } from "zod";
+const settingsSchema = z.object({
+  siteName: z.string().trim().min(1).max(120),
+  description: z.string().trim().min(1).max(500),
+  siteUrl: z.string().trim().url().max(2048),
+  language: z.string().trim().regex(/^[a-z]{2,3}(?:-[A-Z]{2})?$/),
+  timezone: z.string().trim().refine(
+    (value) => {
+      try {
+        new Intl.DateTimeFormat("en-US", { timeZone: value });
+        return true;
+      } catch {
+        return false;
+      }
+    },
+    { message: "Invalid timezone." },
+  ),
+});
 
 import {
   getSiteSettings,
@@ -31,25 +50,51 @@ export async function GET() {
 }
 
 export async function PUT(request: Request) {
+  const authResult = await requireRole(request, ["Admin"]);
+
+  if (!authResult.ok) {
+    return NextResponse.json(
+      { error: authResult.error },
+      { status: authResult.status },
+    );
+  }
   try {
-    const body = await request.json();
+    let body: unknown;
 
-    const siteName = String(body.siteName ?? "").trim();
-    const description = String(body.description ?? "").trim();
-    const siteUrl = String(body.siteUrl ?? "").trim();
-    const language = String(body.language ?? "").trim();
-    const timezone = String(body.timezone ?? "").trim();
-
-    if (!siteName || !description || !siteUrl || !language || !timezone) {
+    try {
+      body = await request.json();
+    } catch {
       return NextResponse.json(
         {
-          error: "All settings fields are required.",
+          error: "Invalid JSON body.",
         },
         {
           status: 400,
         },
       );
     }
+
+    const validation = settingsSchema.safeParse(body);
+
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          error: "Invalid settings data.",
+          details: validation.error.flatten().fieldErrors,
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    const {
+      siteName,
+      description,
+      siteUrl,
+      language,
+      timezone,
+    } = validation.data;
 
     const settings = await updateSiteSettings({
       siteName,
@@ -79,3 +124,10 @@ export async function PUT(request: Request) {
     );
   }
 }
+
+
+
+
+
+
+

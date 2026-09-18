@@ -3,13 +3,43 @@ import sharp from "sharp";
 import cloudinary from "@/lib/cloudinary";
 import type { UploadApiResponse } from "cloudinary";
 import { prisma } from "@/lib/prisma";
+import { requireActiveUser } from "@/lib/auth-guard";
 export async function POST(request: NextRequest) {
+  const authResult = await requireActiveUser(request);
+
+  if (!authResult.ok) {
+    return NextResponse.json(
+      { error: authResult.error },
+      { status: authResult.status },
+    );
+  }
   let uploadedPublicId: string | null = null;
   try {
     const formData = await request.formData();
     const file = formData.get("file") as File | null;
-    if (!file) {
-      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+    const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+    if (!(file instanceof File) || file.size === 0) {
+      return NextResponse.json(
+        { error: "Invalid or empty file." },
+        { status: 400 },
+      );
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      return NextResponse.json(
+        { error: "File size must not exceed 10 MB." },
+        { status: 400 },
+      );
+    }
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+    if (!allowedTypes.includes(file.type)) {
+      return NextResponse.json(
+        { error: "Only JPEG, PNG, and WebP images are allowed." },
+        { status: 400 },
+      );
     }
     const bytes = await file.arrayBuffer();
     const inputBuffer = Buffer.from(bytes);
@@ -83,3 +113,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Upload failed" }, { status: 500 });
   }
 }
+
+
+

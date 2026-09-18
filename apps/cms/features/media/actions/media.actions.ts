@@ -47,3 +47,27 @@ export async function deleteMediaAction(id: string) {
   revalidatePath("/media");
   revalidatePath("/articles");
 }
+
+export async function updateMediaAltTextAction(id: string, altText: string) {
+  const media = await prisma.media.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!media) {
+    throw new Error("Media not found");
+  }
+
+  await prisma.media.update({
+    where: {
+      id,
+    },
+    data: {
+      altText: altText.trim() || null,
+    },
+  });
+
+  revalidatePath("/media");
+  revalidatePath("/articles");
+}

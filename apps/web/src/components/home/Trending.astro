@@ -1,4 +1,4 @@
----
+﻿---
 import type { HomePost } from "@/lib/home-post";
 import ArticleCard from "@/components/cards/ArticleCard.astro";
 
@@ -9,7 +9,8 @@ interface Props {
 const { posts } = Astro.props;
 ---
 
-<section id="trending" class="trending">
+{posts.length > 0 && (
+  <section id="trending" class="trending">
   <div class="app-layout">
     <h2 class="title">Trending Now</h2>
 
@@ -25,7 +26,8 @@ const { posts } = Astro.props;
       </div>
     </div>
   </div>
-</section>
+  </section>
+)}
 
 <script>
   const track = document.querySelector(".trending-track") as HTMLElement | null;
@@ -134,3 +136,5 @@ const { posts } = Astro.props;
     }
   }
 </style>
+
+

@@ -24,7 +24,18 @@ if (!slug) {
   return Astro.redirect("/404");
 }
 
-const article = await getCmsArticle(slug);
+let article;
+
+try {
+  article = await getCmsArticle(slug);
+} catch {
+  return new Response("Article temporarily unavailable.", {
+    status: 503,
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+    },
+  });
+}
 
 if (!article || article.status !== "Published") {
   return Astro.redirect("/404", 404);
@@ -187,3 +198,5 @@ const modifiedDate = new Date(article.updatedAt);
     });
   </script>
 </PostLayout>
+
+
