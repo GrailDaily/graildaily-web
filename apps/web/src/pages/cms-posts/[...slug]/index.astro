@@ -188,6 +188,13 @@ const modifiedDate = new Date(article.updatedAt);
         const data = await response.json();
 
         console.log("Article view recorded:", data);
+
+        if (typeof window.gtag === "function") {
+          window.gtag("event", "article_view", {
+            article_title: document.title,
+            article_slug: slug,
+          });
+        }
       } catch (error) {
         console.error("Failed to record article view:", error);
       }
