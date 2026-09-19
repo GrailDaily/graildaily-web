@@ -40,6 +40,33 @@ import { Mail } from "@/components/icons/Icons.astro";
   </div>
 </section>
 
+<script>
+  declare global {
+    interface Window {
+      gtag?: (...args: any[]) => void;
+    }
+  }
+
+  function trackNewsletterSignup(event: SubmitEvent) {
+    const form = event.currentTarget as HTMLFormElement | null;
+    const input = form?.querySelector(
+      'input[type="email"]'
+    ) as HTMLInputElement | null;
+    const email = input?.value.trim();
+
+    if (!email) return;
+
+    if (typeof window.gtag === "function") {
+      window.gtag("event", "newsletter_signup", {
+        method: "newsletter_form",
+      });
+    }
+  }
+
+  const form = document.querySelector(".newsletter-form") as HTMLFormElement | null;
+
+  form?.addEventListener("submit", trackNewsletterSignup);
+</script>
 <style>
   .newsletter {
     padding: 20px 0;
