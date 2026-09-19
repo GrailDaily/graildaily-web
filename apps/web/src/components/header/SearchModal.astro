@@ -40,6 +40,12 @@ import "./Search.css";
 </div>
 
 <script>
+  declare global {
+    interface Window {
+      gtag?: (...args: any[]) => void;
+    }
+  }
+
   function getElements() {
     const modal = document.getElementById("search-modal");
     const closeButton = document.getElementById("search-close");
@@ -71,8 +77,29 @@ import "./Search.css";
     document.body.style.overflow = "";
   }
 
+  function trackSearch(event: SubmitEvent) {
+    const form = event.currentTarget as HTMLFormElement | null;
+    const input = form?.querySelector(
+      "#search-modal-input"
+    ) as HTMLInputElement | null;
+
+    const searchTerm = input?.value.trim();
+
+    if (!searchTerm) return;
+
+    if (typeof window.gtag === "function") {
+      window.gtag("event", "search", {
+        search_term: searchTerm,
+      });
+    }
+  }
+
   function initSearchModal() {
     const { closeButton, backdrop } = getElements();
+    const form = document.getElementById("search-modal-form");
+
+    form?.removeEventListener("submit", trackSearch);
+    form?.addEventListener("submit", trackSearch);
 
     document.removeEventListener("open-search", openSearch);
     document.addEventListener("open-search", openSearch);
