@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 
 import { prisma } from "@/lib/prisma";
 
@@ -55,16 +55,9 @@ export async function POST(_request: Request, { params }: RouteContext) {
       },
     });
 
-    const viewCount = await prisma.articleView.count({
-      where: {
-        articleId: article.id,
-      },
-    });
-
     return NextResponse.json(
       {
         success: true,
-        views: viewCount,
       },
       {
         status: 200,
