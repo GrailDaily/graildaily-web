@@ -51,10 +51,17 @@ export async function GET(request: Request) {
       },
     });
 
-    return NextResponse.json({
-      articles,
-      total: articles.length,
-    });
+    return NextResponse.json(
+      {
+        articles,
+        total: articles.length,
+      },
+      {
+        headers: {
+          "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600",
+        },
+      },
+    );
   } catch (error) {
     console.error("GET /api/articles failed:", error);
 
