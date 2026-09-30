@@ -19,7 +19,6 @@ export async function GET() {
         title: true,
         slug: true,
         excerpt: true,
-        content: true,
         featuredImage: true,
         category: true,
         author: true,
@@ -51,3 +50,4 @@ export async function GET() {
     );
   }
 }
+
