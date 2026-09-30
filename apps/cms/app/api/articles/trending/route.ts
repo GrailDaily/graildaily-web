@@ -29,10 +29,17 @@ export async function GET() {
     const articleIds = viewGroups.map((group) => group.articleId);
 
     if (articleIds.length === 0) {
-      return NextResponse.json({
-        articles: [],
-        total: 0,
-      });
+      return NextResponse.json(
+        {
+          articles: [],
+          total: 0,
+        },
+        {
+          headers: {
+            "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600",
+          },
+        },
+      );
     }
 
     const articles = await prisma.article.findMany({
@@ -80,10 +87,17 @@ export async function GET() {
       })
       .filter((article) => article !== null);
 
-    return NextResponse.json({
-      articles: trendingArticles,
-      total: trendingArticles.length,
-    });
+    return NextResponse.json(
+      {
+        articles: trendingArticles,
+        total: trendingArticles.length,
+      },
+      {
+        headers: {
+          "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600",
+        },
+      },
+    );
   } catch (error) {
     console.error("GET /api/articles/trending failed:", error);
 
