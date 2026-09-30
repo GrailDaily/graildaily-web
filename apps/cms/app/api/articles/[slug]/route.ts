@@ -18,7 +18,6 @@ export async function GET(_request: Request, { params }: RouteContext) {
         status: "Published",
       },
       select: {
-        id: true,
         title: true,
         slug: true,
         excerpt: true,
