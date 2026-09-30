@@ -28,13 +28,20 @@ export async function GET() {
   try {
     const settings = await getSiteSettings();
 
-    return NextResponse.json({
-      siteName: settings.siteName,
-      description: settings.description,
-      siteUrl: settings.siteUrl,
-      language: settings.language,
-      timezone: settings.timezone,
-    });
+    return NextResponse.json(
+      {
+        siteName: settings.siteName,
+        description: settings.description,
+        siteUrl: settings.siteUrl,
+        language: settings.language,
+        timezone: settings.timezone,
+      },
+      {
+        headers: {
+          "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600",
+        },
+      },
+    );
   } catch (error) {
     console.error("GET /api/settings failed:", error);
 
@@ -124,10 +131,3 @@ export async function PUT(request: Request) {
     );
   }
 }
-
-
-
-
-
-
-
