@@ -37,7 +37,6 @@ export async function GET(request: Request) {
         title: true,
         slug: true,
         excerpt: true,
-        content: true,
         featuredImage: true,
         category: true,
         author: true,
@@ -45,11 +44,6 @@ export async function GET(request: Request) {
         createdAt: true,
         updatedAt: true,
         publishedAt: true,
-        _count: {
-          select: {
-            views: true,
-          },
-        },
         showInHero: true,
         heroSelectedAt: true,
         showInEditorsPicks: true,
@@ -57,14 +51,9 @@ export async function GET(request: Request) {
       },
     });
 
-    const articlesWithViews = articles.map(({ _count, ...article }) => ({
-      ...article,
-      views: _count.views,
-    }));
-
     return NextResponse.json({
-      articles: articlesWithViews,
-      total: articlesWithViews.length,
+      articles,
+      total: articles.length,
     });
   } catch (error) {
     console.error("GET /api/articles failed:", error);
@@ -79,3 +68,4 @@ export async function GET(request: Request) {
     );
   }
 }
+
