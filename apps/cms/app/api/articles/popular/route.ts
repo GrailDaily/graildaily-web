@@ -116,11 +116,18 @@ export async function GET(request: Request) {
       })
       .filter((article) => article !== null);
 
-    return NextResponse.json({
-      articles: popularArticles,
-      total: popularArticles.length,
-      range,
-    });
+    return NextResponse.json(
+      {
+        articles: popularArticles,
+        total: popularArticles.length,
+        range,
+      },
+      {
+        headers: {
+          "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600",
+        },
+      },
+    );
   } catch (error) {
     console.error("GET /api/articles/popular failed:", error);
 
