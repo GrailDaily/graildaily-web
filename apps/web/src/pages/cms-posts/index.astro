@@ -2,6 +2,7 @@
 import PostLayout from "@/layouts/PostLayout.astro";
 import { getCmsArticles } from "@/lib/cms";
 import config from "@/config";
+import { getCloudinaryImageSrcSet, getCloudinaryImageUrl } from "@/lib/cloudinary";
 
 export const prerender = true;
 
@@ -40,7 +41,7 @@ const articles = await getCmsArticles();
                     class="cms-post-image-link"
                   >
                     <img
-                      src={article.featuredImage}
+                      src={getCloudinaryImageUrl(article.featuredImage, { width: 640 })} srcset={getCloudinaryImageSrcSet(article.featuredImage, [320, 640, 960])} sizes="(max-width: 768px) 100vw, 640px"
                       alt={article.title}
                       class="cms-post-image"
                       loading="lazy"
@@ -279,7 +280,3 @@ const articles = await getCmsArticles();
     }
   }
 </style>
-
-
-
-

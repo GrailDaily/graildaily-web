@@ -1,5 +1,6 @@
 ---
 import type { HomePost, HomePostData } from "@/lib/home-post";
+import { getCloudinaryImageSrcSet, getCloudinaryImageUrl } from "@/lib/cloudinary";
 
 interface Props {
   post: HomePost;
@@ -31,7 +32,7 @@ const href = post.href;
     {
       data.ogImage && (
         <div class="thumbnail">
-          <img src={data.ogImage} alt={data.title} loading="lazy" />
+          <img src={getCloudinaryImageUrl(data.ogImage, { width: 640 })} srcset={getCloudinaryImageSrcSet(data.ogImage, [320, 640, 960])} sizes="(max-width: 768px) 100vw, 640px" alt={data.title} loading="lazy" />
         </div>
       )
     }

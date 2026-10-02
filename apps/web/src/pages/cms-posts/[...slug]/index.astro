@@ -1,4 +1,4 @@
-﻿---
+---
 import Header from "@/components/header/Header.astro";
 import PostLayout from "@/layouts/PostLayout.astro";
 import Datetime from "@/components/Datetime.astro";
@@ -9,6 +9,7 @@ import CmsRelatedPosts from "@/components/post/CmsRelatedPosts.astro";
 
 import { getCmsArticle } from "@/lib/cms";
 import { renderCmsMarkdown } from "@/lib/cms-markdown";
+import { getCloudinaryImageUrl } from "@/lib/cloudinary";
 
 import config from "@/config";
 
@@ -102,7 +103,7 @@ const modifiedDate = new Date(article.updatedAt);
     {
       article.featuredImage && (
         <section class="article-hero">
-          <img src={article.featuredImage} alt={article.title} />
+          <img src={getCloudinaryImageUrl(article.featuredImage, { width: 1920 })} alt={article.title} />
         </section>
       )
     }
@@ -205,5 +206,3 @@ const modifiedDate = new Date(article.updatedAt);
     });
   </script>
 </PostLayout>
-
-

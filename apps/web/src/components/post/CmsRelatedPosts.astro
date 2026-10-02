@@ -1,4 +1,5 @@
 ---
+import { getCloudinaryImageUrl } from "@/lib/cloudinary";
 interface CmsArticle {
   id: string;
   title: string;
@@ -59,7 +60,7 @@ if (response.ok) {
               {article.featuredImage && (
                 <div class="thumbnail">
                   <img
-                    src={article.featuredImage}
+                    src={getCloudinaryImageUrl(article.featuredImage, { width: 640 })}
                     alt={article.title}
                     loading="lazy"
                   />

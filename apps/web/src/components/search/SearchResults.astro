@@ -1,4 +1,5 @@
 ---
+import { getCloudinaryImageSrcSet, getCloudinaryImageUrl } from "@/lib/cloudinary";
 import type { CmsArticle } from "@/lib/cms";
 
 interface Props {
@@ -32,7 +33,7 @@ const { articles, query } = Astro.props;
                 <div class="search-result-thumb">
                   {article.featuredImage ? (
                     <img
-                      src={article.featuredImage}
+                      src={getCloudinaryImageUrl(article.featuredImage, { width: 640 })} srcset={getCloudinaryImageSrcSet(article.featuredImage, [320, 640, 960])} sizes="(max-width: 768px) 100vw, 640px"
                       alt={article.title}
                       loading="lazy"
                     />

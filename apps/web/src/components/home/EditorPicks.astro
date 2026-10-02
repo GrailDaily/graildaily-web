@@ -1,4 +1,5 @@
-﻿---
+---
+import { getCloudinaryImageUrl } from "@/lib/cloudinary";
 import type { HomePost } from "@/lib/home-post";
 
 interface Props {
@@ -18,7 +19,7 @@ const { posts } = Astro.props;
         <div class="editor-layout desktop-editor">
           <a href={posts[0].href} class="featured">
             {posts[0].data.ogImage && (
-              <img src={posts[0].data.ogImage} alt={posts[0].data.title} />
+              <img src={getCloudinaryImageUrl(posts[0].data.ogImage, { width: 1920 })} alt={posts[0].data.title} />
             )}
 
             <div class="featured-content">
@@ -36,7 +37,7 @@ const { posts } = Astro.props;
             {posts.slice(1, 5).map(post => (
               <a href={post.href} class="side-card">
                 {post.data.ogImage && (
-                  <img src={post.data.ogImage} alt={post.data.title} />
+                  <img src={getCloudinaryImageUrl(post.data.ogImage, { width: 640 })} alt={post.data.title} loading="lazy" />
                 )}
 
                 <div>
@@ -56,7 +57,7 @@ const { posts } = Astro.props;
           {posts.slice(0, 6).map(post => (
             <a href={post.href} class="mobile-card">
               {post.data.ogImage && (
-                <img src={post.data.ogImage} alt={post.data.title} />
+                <img src={getCloudinaryImageUrl(post.data.ogImage, { width: 640 })} alt={post.data.title} loading="lazy" />
               )}
 
               <span class="category">

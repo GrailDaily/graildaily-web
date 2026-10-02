@@ -1,4 +1,5 @@
----
+﻿---
+import { getCloudinaryImageUrl } from "@/lib/cloudinary";
 import type { HomePost } from "@/lib/home-post";
 
 interface Props {
@@ -37,7 +38,7 @@ const { post, range } = Astro.props;
       post && (
         <a href={post.href} class="popular-featured">
           {post.data.ogImage && (
-            <img src={post.data.ogImage} alt={post.data.title} />
+            <img src={getCloudinaryImageUrl(post.data.ogImage, { width: 1920 })} alt={post.data.title} />
           )}
 
           <div class="featured-overlay">

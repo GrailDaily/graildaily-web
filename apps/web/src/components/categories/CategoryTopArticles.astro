@@ -1,4 +1,5 @@
 ---
+import { getCloudinaryImageSrcSet, getCloudinaryImageUrl } from "@/lib/cloudinary";
 import type { CmsArticle } from "@/lib/cms";
 interface Props {
   posts: CmsArticle[];
@@ -13,7 +14,7 @@ const { posts } = Astro.props;
       <a href={`/cms-posts/${post.slug}/`} class="top-item">
         {" "}
         {post.featuredImage && (
-          <img src={post.featuredImage} alt={post.title} loading="lazy" />
+          <img src={getCloudinaryImageUrl(post.featuredImage, { width: 160 })} srcset={getCloudinaryImageSrcSet(post.featuredImage, [80, 160, 320])} sizes="78px" alt={post.title} loading="lazy" />
         )}{" "}
         <h4>{post.title}</h4>{" "}
       </a>
