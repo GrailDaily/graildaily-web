@@ -8,15 +8,7 @@ import { categories } from "@/data/categories";
 import { getCmsArticles } from "@/lib/cms";
 import { cmsArticlesToHomePosts } from "@/lib/cms-adapter";
 
-export const prerender = true;
-
-export async function getStaticPaths() {
-  return categories.map(category => ({
-    params: {
-      slug: category.slug,
-    },
-  }));
-}
+export const prerender = false;
 
 const { slug } = Astro.params;
 
@@ -25,6 +17,8 @@ const category = categories.find(c => c.slug === slug);
 if (!category) {
   throw new Error("Category not found");
 }
+
+const categoryImageBase = category.image.replace(/\.webp$/i, "");
 
 const cmsArticles = await getCmsArticles();
 
@@ -55,7 +49,22 @@ const visiblePosts = categoryPosts.slice(0, POSTS_PER_PAGE);
 
   <main class="app-layout">
     <section class="category-hero">
-      <img src={category.image} alt={category.name} class="hero-image" />
+      <img
+        src={category.image}
+        srcset={`
+    ${categoryImageBase}-320.webp 320w,
+    ${categoryImageBase}-480.webp 480w,
+    ${categoryImageBase}-640.webp 640w,
+    ${categoryImageBase}-960.webp 960w,
+    ${categoryImageBase}-1280.webp 1280w
+  `}
+        sizes="(max-width: 768px) 100vw, 1280px"
+        alt={category.name}
+        class="hero-image"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
 
       <div class="hero-overlay"></div>
 

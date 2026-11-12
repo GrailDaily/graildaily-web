@@ -1,8 +1,8 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
 import config from "@/config";
-import logoLight from "@/assets/images/logo/logo-light.png";
-import logoDark from "@/assets/images/logo/logo-dark.png";
+import logoLight from "@/assets/images/logo/logo-light.webp";
+import logoDark from "@/assets/images/logo/logo-dark.webp";
 
 const locale = Astro.currentLocale ?? config.site.lang;
 ---
@@ -16,11 +16,15 @@ const locale = Astro.currentLocale ?? config.site.lang;
     src={logoLight.src}
     alt="GrailDaily"
     class="block h-8 w-auto dark:hidden"
+    width="520"
+    height="150"
   />
 
   <img
     src={logoDark.src}
     alt="GrailDaily"
     class="hidden h-8 w-auto dark:block"
+    width="520"
+    height="150"
   />
 </a>

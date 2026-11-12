@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.graildaily.com"
+        }
+      ],
+      "destination": "https://graildaily.com/$1",
+      "permanent": true
+    }
+  ]
+}

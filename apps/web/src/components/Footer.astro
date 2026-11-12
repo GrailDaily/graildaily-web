@@ -1,6 +1,6 @@
 ﻿---
-import logoLight from "@/assets/images/logo/logo-light.png";
-import logoDark from "@/assets/images/logo/logo-dark.png";
+import logoLight from "@/assets/images/logo/logo-light.webp";
+import logoDark from "@/assets/images/logo/logo-dark.webp";
 import "@/styles/footer.css";
 import Socials from "./Socials.astro";
 ---
@@ -10,9 +10,21 @@ import Socials from "./Socials.astro";
     <!-- Brand -->
     <div class="footer-brand">
       <a href="/" class="footer-logo">
-        <img src={logoLight.src} alt="GrailDaily" class="footer-logo-light" />
+        <img
+          src={logoLight.src}
+          alt="GrailDaily"
+          class="footer-logo-light"
+          width="520"
+          height="150"
+        />
 
-        <img src={logoDark.src} alt="GrailDaily" class="footer-logo-dark" />
+        <img
+          src={logoDark.src}
+          alt="GrailDaily"
+          class="footer-logo-dark"
+          width="520"
+          height="150"
+        />
       </a>
 
       <p class="footer-description">
@@ -38,7 +50,14 @@ import Socials from "./Socials.astro";
 
     <!-- Map -->
     <div class="footer-map">
-      <img src="/images/worldmap.webp" alt="World Map" />
+      <img
+        src="/images/worldmap-optimized.webp"
+        alt="World Map"
+        width="680"
+        height="357"
+        loading="lazy"
+        decoding="async"
+      />
 
       <p>Connecting curious minds around the world.</p>
     </div>
@@ -48,5 +67,3 @@ import Socials from "./Socials.astro";
     </div>
   </div>
 </footer>
-
-
