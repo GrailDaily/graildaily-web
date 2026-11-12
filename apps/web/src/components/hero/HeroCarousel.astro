@@ -14,7 +14,7 @@ const { posts } = Astro.props;
     posts.length > 0 ? (
       <div class="hero-track">
         {
-          posts.map(post => (
+          posts.map((post, index) => (
             <div class="hero-item">
               <HeroSlide
                 category={post.data.tags?.[0] ?? "History"}
@@ -24,6 +24,7 @@ const { posts } = Astro.props;
                   typeof post.data.ogImage === "string" ? post.data.ogImage : ""
                 }
                 href={post.href}
+                priority={index === 0}
               />
             </div>
           ))

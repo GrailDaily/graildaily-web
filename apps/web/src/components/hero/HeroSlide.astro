@@ -1,14 +1,30 @@
 ---
-import { getCloudinaryImageUrl } from "@/lib/cloudinary";
+import { getCloudinaryImageUrl, getCloudinaryImageSrcSet } from "@/lib/cloudinary";
 interface Props {
   title: string;
   description: string;
   category: string;
   image?: string;
   href: string;
+  priority?: boolean;
 }
 
-const { title, description, category, image, href } = Astro.props;
+const {
+  title,
+  description,
+  category,
+  image,
+  href,
+  priority = false,
+} = Astro.props;
+
+const imageSrcSet =
+  image?.includes("res.cloudinary.com/")
+    ? getCloudinaryImageSrcSet(
+        image,
+        [480, 640, 768, 960, 1280, 1600, 1920],
+      )
+    : undefined;
 ---
 
 <section class="hero-slide">
@@ -27,7 +43,16 @@ const { title, description, category, image, href } = Astro.props;
     <div class="hero-right">
       {
         image ? (
-          <img src={getCloudinaryImageUrl(image, { width: 1920 })} alt={title} class="hero-image" />
+          <img
+              src={getCloudinaryImageUrl(image, { width: 1280 })}
+              srcset={imageSrcSet}
+              sizes="(min-width: 1400px) 1400px, 100vw"
+              alt={title}
+              class="hero-image"
+              loading={priority ? "eager" : "lazy"}
+              fetchpriority={priority ? "high" : "auto"}
+              decoding="async"
+            />
         ) : (
           <div class="hero-image placeholder" />
         )
