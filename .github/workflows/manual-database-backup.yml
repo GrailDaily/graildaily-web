@@ -1,0 +1,55 @@
+﻿name: Manual Database Backup
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    name: Backup Neon PostgreSQL
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Create PostgreSQL backup
+        env:
+          DATABASE_URL_DIRECT: ${{ secrets.DATABASE_URL_DIRECT }}
+        run: |
+          set -Eeuo pipefail
+
+          if [[ -z "${DATABASE_URL_DIRECT:-}" ]]; then
+            echo "DATABASE_URL_DIRECT secret is missing."
+            exit 1
+          fi
+
+          mkdir -p backups
+
+          BACKUP_FILE="backups/graildaily-neon-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.dump"
+
+          docker run --rm \
+            --env DATABASE_URL_DIRECT \
+            postgres:18-alpine \
+            sh -c 'pg_dump "$DATABASE_URL_DIRECT" --format=custom --no-owner --no-acl' \
+            > "$BACKUP_FILE"
+
+          if [[ ! -s "$BACKUP_FILE" ]]; then
+            echo "Backup file is empty."
+            exit 1
+          fi
+
+          sha256sum "$BACKUP_FILE" > "$BACKUP_FILE.sha256"
+
+          echo "Database backup created successfully."
+          ls -lh "$BACKUP_FILE" "$BACKUP_FILE.sha256"
+
+      - name: Upload backup artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: graildaily-database-backup-${{ github.run_id }}
+          path: |
+            backups/*.dump
+            backups/*.sha256
+          if-no-files-found: error
+          retention-days: 90
