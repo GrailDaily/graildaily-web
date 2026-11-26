@@ -1,5 +1,8 @@
+import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+
+export type UserRole = "Admin" | "Editor" | "Author";
 
 export async function requireActiveUser(request: Request) {
   const session = await auth.api.getSession({
@@ -40,15 +43,14 @@ export async function requireActiveUser(request: Request) {
   };
 }
 
-
-export async function requireRole(request: Request, allowedRoles: Array<"Admin" | "Editor" | "Author">) {
+export async function requireRole(request: Request, allowedRoles: UserRole[]) {
   const authResult = await requireActiveUser(request);
 
   if (!authResult.ok) {
     return authResult;
   }
 
-  if (!allowedRoles.includes(authResult.user.role as "Admin" | "Editor" | "Author")) {
+  if (!allowedRoles.includes(authResult.user.role as UserRole)) {
     return {
       ok: false as const,
       status: 403,
@@ -57,4 +59,21 @@ export async function requireRole(request: Request, allowedRoles: Array<"Admin" 
   }
 
   return authResult;
+}
+
+export async function requireActionRole(allowedRoles: UserRole[]) {
+  const requestHeaders = await headers();
+
+  const authResult = await requireRole(
+    new Request("http://localhost", {
+      headers: requestHeaders,
+    }),
+    allowedRoles,
+  );
+
+  if (!authResult.ok) {
+    throw new Error(authResult.error);
+  }
+
+  return authResult.user;
 }

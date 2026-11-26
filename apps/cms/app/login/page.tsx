@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { FormEvent, useState } from "react";
 
@@ -26,15 +26,12 @@ export default function LoginPage() {
       });
 
       if (!response.ok) {
-        const data = await response.json().catch(() => null);
-        throw new Error(data?.message || "Email atau password salah.");
+        throw new Error("Email atau password salah.");
       }
 
       window.location.href = "/";
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Login gagal. Silakan coba lagi.",
-      );
+    } catch {
+      setError("Email atau password salah.");
     } finally {
       setLoading(false);
     }

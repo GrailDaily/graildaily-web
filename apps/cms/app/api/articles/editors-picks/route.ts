@@ -44,8 +44,8 @@ export async function GET() {
         },
       },
     );
-  } catch (error) {
-    console.error("GET /api/articles/editors-picks failed:", error);
+  } catch {
+    console.error("GET /api/articles/editors-picks failed.");
 
     return NextResponse.json(
       {

@@ -32,8 +32,8 @@ export async function GET(request: Request) {
       published: result.count,
       timestamp: now.toISOString(),
     });
-  } catch (error) {
-    console.error("GET /api/internal/publish-scheduled failed:", error);
+  } catch {
+    console.error("GET /api/internal/publish-scheduled failed.");
 
     return NextResponse.json(
       {

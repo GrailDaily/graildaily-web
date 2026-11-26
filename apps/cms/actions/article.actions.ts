@@ -1,9 +1,14 @@
-"use server";
+﻿"use server";
 
 import { revalidatePath } from "next/cache";
-
 import { prisma } from "@/lib/prisma";
-
+import { requireActionRole } from "@/lib/auth-guard";
+import {
+  articleActionSchema,
+  articleIdSchema,
+  articleIdsSchema,
+  articleStatusSchema,
+} from "@/features/articles/validation/article-schema";
 import {
   selectHeroArticle,
   removeHeroArticle,
@@ -11,16 +16,79 @@ import {
   removeEditorsPickArticle,
 } from "@/services/home-editorial.service";
 
-import { ArticleFormData } from "@/features/articles/types/article-form";
-
+import type { ArticleFormData } from "@/features/articles/types/article-form";
 import type { ArticleStatus } from "@/types/article";
 
 import { cleanupMediaIfUnused } from "@/features/media/utils/media-cleanup";
 
+const ARTICLE_MANAGEMENT_ROLES = ["Admin", "Editor"] as const;
+async function validateFeaturedImage(featuredImage: string | null) {
+  if (featuredImage === null) {
+    return;
+  }
+
+  const media = await prisma.media.findFirst({
+    where: {
+      path: featuredImage,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (!media) {
+    throw new Error("Featured image is not registered in Media Library.");
+  }
+}
+
+async function validateArticleCategory(
+  categoryName: string,
+  currentCategory?: string,
+) {
+  const category = await prisma.category.findUnique({
+    where: {
+      name: categoryName,
+    },
+    select: {
+      status: true,
+    },
+  });
+
+  if (!category) {
+    throw new Error("Selected category does not exist.");
+  }
+
+  if (category.status !== "Active" && categoryName !== currentCategory) {
+    throw new Error("Selected category is inactive.");
+  }
+}
+
+// CREATE ARTICLE
 export async function createArticleAction(data: ArticleFormData) {
+  const user = await requireActionRole(["Admin", "Editor", "Author"]);
+
+  const validation = articleActionSchema.safeParse(data);
+
+  if (!validation.success) {
+    throw new Error("Invalid article data.");
+  }
+
+  const validatedData = validation.data;
+
+  await validateFeaturedImage(validatedData.featuredImage);
+  await validateArticleCategory(validatedData.category);
+
+  if (
+    user.role === "Author" &&
+    (validatedData.status === "Published" ||
+      validatedData.status === "Scheduled")
+  ) {
+    throw new Error("Authors cannot publish or schedule articles.");
+  }
+
   const existingArticle = await prisma.article.findUnique({
     where: {
-      slug: data.slug,
+      slug: validatedData.slug,
     },
     select: {
       id: true,
@@ -30,17 +98,22 @@ export async function createArticleAction(data: ArticleFormData) {
   if (existingArticle) {
     throw new Error("An article with this slug already exists.");
   }
+
   const scheduledAt =
-    data.status === "Scheduled" && data.scheduledAt
-      ? new Date(`${data.scheduledAt}:00+07:00`)
+    validatedData.status === "Scheduled" && validatedData.scheduledAt
+      ? new Date(`${validatedData.scheduledAt}:00+07:00`)
       : null;
 
   await prisma.article.create({
     data: {
-      ...data,
+      ...validatedData,
+      authorUserId: user.id,
+      showInHero: user.role === "Author" ? false : validatedData.showInHero,
+      showInEditorsPicks:
+        user.role === "Author" ? false : validatedData.showInEditorsPicks,
       scheduledAt,
-      featuredImage: data.featuredImage,
-      publishedAt: data.status === "Published" ? new Date() : null,
+      featuredImage: validatedData.featuredImage,
+      publishedAt: validatedData.status === "Published" ? new Date() : null,
     },
   });
 
@@ -48,10 +121,25 @@ export async function createArticleAction(data: ArticleFormData) {
   revalidatePath("/media");
 }
 
+// UPDATE ARTICLE
 export async function updateArticleAction(id: string, data: ArticleFormData) {
+  const user = await requireActionRole(["Admin", "Editor", "Author"]);
+
+  const validatedId = articleIdSchema.parse(id);
+
+  const validation = articleActionSchema.safeParse(data);
+
+  if (!validation.success) {
+    throw new Error("Invalid article data.");
+  }
+
+  const validatedData = validation.data;
+
+  await validateFeaturedImage(validatedData.featuredImage);
+
   const currentArticle = await prisma.article.findUnique({
     where: {
-      id,
+      id: validatedId,
     },
   });
 
@@ -59,11 +147,36 @@ export async function updateArticleAction(id: string, data: ArticleFormData) {
     throw new Error("Article not found");
   }
 
+  if (user.role === "Author" && currentArticle.authorUserId !== user.id) {
+    throw new Error("Forbidden");
+  }
+
+  await validateArticleCategory(
+    validatedData.category,
+    currentArticle.category,
+  );
+
+  if (
+    user.role === "Author" &&
+    validatedData.status === "Published" &&
+    currentArticle.status !== "Published"
+  ) {
+    throw new Error("Authors cannot publish articles.");
+  }
+
+  if (
+    user.role === "Author" &&
+    validatedData.status === "Scheduled" &&
+    currentArticle.status !== "Scheduled"
+  ) {
+    throw new Error("Authors cannot schedule articles.");
+  }
+
   const existingArticle = await prisma.article.findFirst({
     where: {
-      slug: data.slug,
+      slug: validatedData.slug,
       NOT: {
-        id,
+        id: validatedId,
       },
     },
     select: {
@@ -76,23 +189,32 @@ export async function updateArticleAction(id: string, data: ArticleFormData) {
   }
 
   const scheduledAt =
-    data.status === "Scheduled" && data.scheduledAt
-      ? new Date(`${data.scheduledAt}:00+07:00`)
+    validatedData.status === "Scheduled" && validatedData.scheduledAt
+      ? new Date(`${validatedData.scheduledAt}:00+07:00`)
       : null;
 
   const publishedAt =
-    data.status === "Published"
+    validatedData.status === "Published"
       ? (currentArticle.publishedAt ?? new Date())
       : null;
 
   await prisma.article.update({
     where: {
-      id,
+      id: validatedId,
     },
     data: {
-      ...data,
+      ...validatedData,
+      authorUserId: currentArticle.authorUserId,
+      showInHero:
+        user.role === "Author"
+          ? currentArticle.showInHero
+          : validatedData.showInHero,
+      showInEditorsPicks:
+        user.role === "Author"
+          ? currentArticle.showInEditorsPicks
+          : validatedData.showInEditorsPicks,
       scheduledAt,
-      featuredImage: data.featuredImage,
+      featuredImage: validatedData.featuredImage,
       publishedAt,
     },
   });
@@ -101,34 +223,57 @@ export async function updateArticleAction(id: string, data: ArticleFormData) {
   revalidatePath("/media");
 }
 
+// HERO MANAGEMENT
 export async function selectHeroArticleAction(articleId: string) {
-  await selectHeroArticle(articleId);
+  await requireActionRole([...ARTICLE_MANAGEMENT_ROLES]);
+
+  const validatedId = articleIdSchema.parse(articleId);
+
+  await selectHeroArticle(validatedId);
 
   revalidatePath("/articles");
 }
 
 export async function removeHeroArticleAction(articleId: string) {
-  await removeHeroArticle(articleId);
+  await requireActionRole([...ARTICLE_MANAGEMENT_ROLES]);
+
+  const validatedId = articleIdSchema.parse(articleId);
+
+  await removeHeroArticle(validatedId);
 
   revalidatePath("/articles");
 }
 
+// EDITOR'S PICKS MANAGEMENT
 export async function selectEditorsPickArticleAction(articleId: string) {
-  await selectEditorsPickArticle(articleId);
+  await requireActionRole([...ARTICLE_MANAGEMENT_ROLES]);
+
+  const validatedId = articleIdSchema.parse(articleId);
+
+  await selectEditorsPickArticle(validatedId);
 
   revalidatePath("/articles");
 }
 
 export async function removeEditorsPickArticleAction(articleId: string) {
-  await removeEditorsPickArticle(articleId);
+  await requireActionRole([...ARTICLE_MANAGEMENT_ROLES]);
+
+  const validatedId = articleIdSchema.parse(articleId);
+
+  await removeEditorsPickArticle(validatedId);
 
   revalidatePath("/articles");
 }
 
+// DELETE ARTICLE
 export async function deleteArticleAction(id: string) {
+  await requireActionRole([...ARTICLE_MANAGEMENT_ROLES]);
+
+  const validatedId = articleIdSchema.parse(id);
+
   const article = await prisma.article.findUnique({
     where: {
-      id,
+      id: validatedId,
     },
     select: {
       id: true,
@@ -142,20 +287,10 @@ export async function deleteArticleAction(id: string) {
 
   await prisma.article.delete({
     where: {
-      id,
+      id: validatedId,
     },
   });
 
-  /*
-   * The article has now been removed.
-   *
-   * If its Featured Image is no longer referenced
-   * anywhere else, cleanupMediaIfUnused() will remove
-   * the corresponding media from Cloudinary and Media DB.
-   *
-   * If the image is still used by another article or
-   * inside article content, it will be preserved.
-   */
   if (article.featuredImage) {
     const media = await prisma.media.findFirst({
       where: {
@@ -172,10 +307,15 @@ export async function deleteArticleAction(id: string) {
   revalidatePath("/media");
 }
 
+// ARCHIVE ARTICLE
 export async function archiveArticleAction(id: string) {
+  await requireActionRole([...ARTICLE_MANAGEMENT_ROLES]);
+
+  const validatedId = articleIdSchema.parse(id);
+
   await prisma.article.update({
     where: {
-      id,
+      id: validatedId,
     },
     data: {
       status: "Archived",
@@ -186,16 +326,24 @@ export async function archiveArticleAction(id: string) {
   revalidatePath("/articles");
 }
 
+// DUPLICATE ARTICLE
 export async function duplicateArticleAction(id: string) {
+  const user = await requireActionRole([...ARTICLE_MANAGEMENT_ROLES]);
+
+  const validatedId = articleIdSchema.parse(id);
+
   const article = await prisma.article.findUnique({
     where: {
-      id,
+      id: validatedId,
     },
   });
 
   if (!article) {
     throw new Error("Article not found");
   }
+
+  await validateFeaturedImage(article.featuredImage);
+  await validateArticleCategory(article.category);
 
   const baseSlug = `${article.slug}-copy`;
 
@@ -234,6 +382,7 @@ export async function duplicateArticleAction(id: string) {
       featuredImage: article.featuredImage,
       category: article.category,
       author: article.author,
+      authorUserId: user.id,
       status: "Draft",
       publishedAt: null,
     },
@@ -243,30 +392,41 @@ export async function duplicateArticleAction(id: string) {
   revalidatePath("/media");
 }
 
+// BULK UPDATE STATUS
 export async function bulkUpdateStatusAction(
   ids: string[],
   status: ArticleStatus,
 ) {
+  await requireActionRole([...ARTICLE_MANAGEMENT_ROLES]);
+
+  const validatedIds = articleIdsSchema.parse(ids);
+  const validatedStatus = articleStatusSchema.parse(status);
+
   await prisma.article.updateMany({
     where: {
       id: {
-        in: ids,
+        in: validatedIds,
       },
     },
     data: {
-      status,
-      publishedAt: status === "Published" ? new Date() : null,
+      status: validatedStatus,
+      publishedAt: validatedStatus === "Published" ? new Date() : null,
     },
   });
 
   revalidatePath("/articles");
 }
 
+// BULK DELETE
 export async function bulkDeleteArticlesAction(ids: string[]) {
+  await requireActionRole([...ARTICLE_MANAGEMENT_ROLES]);
+
+  const validatedIds = articleIdsSchema.parse(ids);
+
   const articles = await prisma.article.findMany({
     where: {
       id: {
-        in: ids,
+        in: validatedIds,
       },
     },
     select: {
@@ -278,18 +438,11 @@ export async function bulkDeleteArticlesAction(ids: string[]) {
   await prisma.article.deleteMany({
     where: {
       id: {
-        in: ids,
+        in: validatedIds,
       },
     },
   });
 
-  /*
-   * The articles have now been deleted.
-   *
-   * Check every Featured Image that belonged to those
-   * articles. A media item is removed only when it is
-   * no longer referenced anywhere else.
-   */
   const featuredImages = [
     ...new Set(
       articles
@@ -313,6 +466,3 @@ export async function bulkDeleteArticlesAction(ids: string[]) {
   revalidatePath("/articles");
   revalidatePath("/media");
 }
-
-
-

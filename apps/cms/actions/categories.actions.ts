@@ -1,21 +1,40 @@
 "use server";
+
 import { revalidatePath } from "next/cache";
+import { requireActionRole } from "@/lib/auth-guard";
 import {
   createCategory,
   deleteCategory,
   updateCategory,
 } from "@/services/categories.service";
+import {
+  categoryIdSchema,
+  categorySchema,
+  updateCategorySchema,
+} from "@/features/categories/validation/category-schema";
+
 export async function createCategoryAction(data: {
   name: string;
   slug: string;
   description: string;
   image?: string;
 }) {
-  const category = await createCategory(data);
+  await requireActionRole(["Admin", "Editor"]);
+
+  const validation = categorySchema.safeParse(data);
+
+  if (!validation.success) {
+    throw new Error("Invalid category data.");
+  }
+
+  const category = await createCategory(validation.data);
+
   revalidatePath("/categories");
   revalidatePath("/articles");
+
   return category;
 }
+
 export async function updateCategoryAction(
   id: string,
   data: {
@@ -26,14 +45,31 @@ export async function updateCategoryAction(
     status: "Active" | "Inactive";
   },
 ) {
-  const category = await updateCategory(id, data);
+  await requireActionRole(["Admin", "Editor"]);
+
+  const validatedId = categoryIdSchema.parse(id);
+  const validation = updateCategorySchema.safeParse(data);
+
+  if (!validation.success) {
+    throw new Error("Invalid category data.");
+  }
+
+  const category = await updateCategory(validatedId, validation.data);
+
   revalidatePath("/categories");
   revalidatePath("/articles");
+
   return category;
 }
+
 export async function deleteCategoryAction(id: string) {
-  const category = await deleteCategory(id);
+  await requireActionRole(["Admin", "Editor"]);
+
+  const validatedId = categoryIdSchema.parse(id);
+  const category = await deleteCategory(validatedId);
+
   revalidatePath("/categories");
   revalidatePath("/articles");
+
   return category;
 }

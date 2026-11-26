@@ -1,4 +1,4 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 import { prisma } from "@/lib/prisma";
 
@@ -98,8 +98,8 @@ export async function GET() {
         },
       },
     );
-  } catch (error) {
-    console.error("GET /api/articles/trending failed:", error);
+  } catch {
+    console.error("GET /api/articles/trending failed.");
 
     return NextResponse.json(
       {

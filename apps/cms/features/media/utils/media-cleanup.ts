@@ -27,13 +27,7 @@ export async function cleanupMediaIfUnused(mediaId: string) {
   }
 
   if (media.publicId) {
-    const result = await cloudinary.uploader.destroy(media.publicId);
-
-    console.log("=== CLOUDINARY CLEANUP ===");
-    console.log({
-      publicId: media.publicId,
-      result,
-    });
+    await cloudinary.uploader.destroy(media.publicId);
   }
 
   await prisma.media.delete({

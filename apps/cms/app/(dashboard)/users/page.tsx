@@ -1,9 +1,9 @@
+import { headers } from "next/headers";
+import { notFound, redirect } from "next/navigation";
+import { requireRole } from "@/lib/auth-guard";
 import { PageHeader } from "@/components/common/page-header";
-
 import { UsersView } from "@/features/users/views/users-view";
-
 import { getUserStats, getUsers } from "@/services/user.service";
-
 import { UserStats } from "@/features/users/components/user-stats";
 
 interface Props {
@@ -15,6 +15,23 @@ interface Props {
 }
 
 export default async function UsersPage({ searchParams }: Props) {
+  const requestHeaders = await headers();
+
+  const authResult = await requireRole(
+    new Request("http://localhost", {
+      headers: requestHeaders,
+    }),
+    ["Admin"],
+  );
+
+  if (!authResult.ok) {
+    if (authResult.status === 401) {
+      redirect("/login");
+    }
+
+    notFound();
+  }
+
   const params = await searchParams;
 
   const search = params.search ?? "";
@@ -22,11 +39,7 @@ export default async function UsersPage({ searchParams }: Props) {
   const status = params.status ?? "all";
 
   const [users, stats] = await Promise.all([
-    getUsers({
-      search,
-      role,
-      status,
-    }),
+    getUsers({ search, role, status }),
     getUserStats(),
   ]);
 
@@ -44,7 +57,6 @@ export default async function UsersPage({ searchParams }: Props) {
         editors={stats.editors}
         authors={stats.authors}
       />
-
       <UsersView users={users} />
     </div>
   );

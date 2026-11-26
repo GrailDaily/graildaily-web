@@ -5,6 +5,7 @@ import { ImagePlus, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
+import { uploadImage } from "@/features/media/utils/upload-image";
 
 export function MediaUpload() {
   const router = useRouter();
@@ -22,24 +23,10 @@ export function MediaUpload() {
     setUploading(true);
 
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error ?? "Upload failed");
-      }
-
+      await uploadImage(file);
       router.refresh();
     } catch (error) {
-      console.error(error);
-      alert("Failed to upload image.");
+      alert("Failed to upload image. Please try again.");
     } finally {
       setUploading(false);
 

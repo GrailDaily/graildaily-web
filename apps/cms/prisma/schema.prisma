@@ -52,7 +52,7 @@ model Media {
   width        Int?
   height       Int?
   createdAt    DateTime @default(now())
-  publicId     String?
+  publicId     String?  @unique
 }
 
 model Category {

@@ -50,8 +50,7 @@ export function RowActions({
         await action();
         router.refresh();
       } catch (error) {
-        console.error(error);
-        alert(error instanceof Error ? error.message : "Something went wrong.");
+        alert("Unable to complete this article action. Please try again.");
       }
     });
   };

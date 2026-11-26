@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
 
 import { prisma } from "@/lib/prisma";
 
@@ -30,15 +31,19 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
 
-    const requestedRange = searchParams.get("range");
+    const requestedRange = searchParams.get("range") ?? "all";
 
-    const range: PopularRange =
-      requestedRange === "month" ||
-      requestedRange === "week" ||
-      requestedRange === "today"
-        ? requestedRange
-        : "all";
+    const rangeSchema = z.enum(["all", "month", "week", "today"]);
+    const rangeResult = rangeSchema.safeParse(requestedRange);
 
+    if (!rangeResult.success) {
+      return NextResponse.json(
+        { error: "Invalid range parameter." },
+        { status: 400 },
+      );
+    }
+
+    const range: PopularRange = rangeResult.data;
     const rangeStart = getRangeStart(range);
 
     const viewGroups = await prisma.articleView.groupBy({
@@ -128,8 +133,8 @@ export async function GET(request: Request) {
         },
       },
     );
-  } catch (error) {
-    console.error("GET /api/articles/popular failed:", error);
+  } catch {
+    console.error("GET /api/articles/popular failed.");
 
     return NextResponse.json(
       {

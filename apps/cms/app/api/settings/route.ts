@@ -1,24 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireRole } from "@/lib/auth-guard";
-import { z } from "zod";
-const settingsSchema = z.object({
-  siteName: z.string().trim().min(1).max(120),
-  description: z.string().trim().min(1).max(500),
-  siteUrl: z.string().trim().url().max(2048),
-  language: z.string().trim().regex(/^[a-z]{2,3}(?:-[A-Z]{2})?$/),
-  timezone: z.string().trim().refine(
-    (value) => {
-      try {
-        new Intl.DateTimeFormat("en-US", { timeZone: value });
-        return true;
-      } catch {
-        return false;
-      }
-    },
-    { message: "Invalid timezone." },
-  ),
-});
-
+import { siteSettingsSchema } from "@/features/settings/validation/settings-schema";
 import {
   getSiteSettings,
   updateSiteSettings,
@@ -42,8 +24,8 @@ export async function GET() {
         },
       },
     );
-  } catch (error) {
-    console.error("GET /api/settings failed:", error);
+  } catch {
+    console.error("GET /api/settings failed.");
 
     return NextResponse.json(
       {
@@ -65,6 +47,7 @@ export async function PUT(request: Request) {
       { status: authResult.status },
     );
   }
+
   try {
     let body: unknown;
 
@@ -81,7 +64,7 @@ export async function PUT(request: Request) {
       );
     }
 
-    const validation = settingsSchema.safeParse(body);
+    const validation = siteSettingsSchema.safeParse(body);
 
     if (!validation.success) {
       return NextResponse.json(
@@ -95,21 +78,7 @@ export async function PUT(request: Request) {
       );
     }
 
-    const {
-      siteName,
-      description,
-      siteUrl,
-      language,
-      timezone,
-    } = validation.data;
-
-    const settings = await updateSiteSettings({
-      siteName,
-      description,
-      siteUrl,
-      language,
-      timezone,
-    });
+    const settings = await updateSiteSettings(validation.data);
 
     return NextResponse.json({
       siteName: settings.siteName,
@@ -118,8 +87,8 @@ export async function PUT(request: Request) {
       language: settings.language,
       timezone: settings.timezone,
     });
-  } catch (error) {
-    console.error("PUT /api/settings failed:", error);
+  } catch {
+    console.error("PUT /api/settings failed.");
 
     return NextResponse.json(
       {

@@ -42,9 +42,10 @@ interface Props {
   url: string;
   originalName: string;
   altText: string | null;
+  canManage: boolean;
 }
 
-export function MediaActions({ mediaId, url, originalName, altText }: Props) {
+export function MediaActions({ mediaId, url, originalName, altText, canManage }: Props) {
   const [copied, setCopied] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [altTextOpen, setAltTextOpen] = useState(false);
@@ -80,10 +81,9 @@ export function MediaActions({ mediaId, url, originalName, altText }: Props) {
 
       window.location.reload();
     } catch (error) {
-      console.error(error);
 
       toast.error(
-        error instanceof Error ? error.message : "Failed to update alt text",
+        "Failed to update alt text.",
       );
     } finally {
       setSavingAltText(false);
@@ -102,10 +102,9 @@ export function MediaActions({ mediaId, url, originalName, altText }: Props) {
 
       window.location.reload();
     } catch (error) {
-      console.error(error);
 
       toast.error(
-        error instanceof Error ? error.message : "Failed to delete media",
+        "Failed to delete media.",
       );
     } finally {
       setDeleting(false);
@@ -123,10 +122,12 @@ export function MediaActions({ mediaId, url, originalName, altText }: Props) {
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onClick={() => setAltTextOpen(true)}>
-            <Pencil className="mr-2 h-4 w-4" />
-            Edit Alt Text
-          </DropdownMenuItem>
+          {canManage && (
+            <DropdownMenuItem onClick={() => setAltTextOpen(true)}>
+              <Pencil className="mr-2 h-4 w-4" />
+              Edit Alt Text
+            </DropdownMenuItem>
+          )}
 
           <DropdownMenuItem onClick={handleCopy}>
             {copied ? (
@@ -142,13 +143,15 @@ export function MediaActions({ mediaId, url, originalName, altText }: Props) {
             )}
           </DropdownMenuItem>
 
-          <DropdownMenuItem
-            className="text-destructive focus:text-destructive"
-            onClick={() => setDeleteOpen(true)}
-          >
-            <Trash2 className="mr-2 h-4 w-4" />
-            Delete
-          </DropdownMenuItem>
+          {canManage && (
+            <DropdownMenuItem
+              className="text-destructive focus:text-destructive"
+              onClick={() => setDeleteOpen(true)}
+            >
+              <Trash2 className="mr-2 h-4 w-4" />
+              Delete
+            </DropdownMenuItem>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
 
@@ -209,6 +212,7 @@ export function MediaActions({ mediaId, url, originalName, altText }: Props) {
               value={altTextValue}
               onChange={(event) => setAltTextValue(event.target.value)}
               placeholder="Describe this image..."
+              maxLength={500}
             />
           </div>
 

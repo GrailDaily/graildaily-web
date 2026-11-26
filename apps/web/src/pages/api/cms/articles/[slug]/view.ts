@@ -7,10 +7,15 @@ export const prerender = false;
 export const POST: APIRoute = async ({ params }) => {
   const slug = params.slug;
 
-  if (!slug) {
+  if (
+    !slug ||
+    slug.length < 3 ||
+    slug.length > 200 ||
+    !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)
+  ) {
     return new Response(
       JSON.stringify({
-        error: "Slug artikel tidak ditemukan",
+        error: "Invalid article slug.",
       }),
       {
         status: 400,

@@ -1,5 +1,6 @@
-import { notFound } from "next/navigation";
-
+import { headers } from "next/headers";
+import { notFound, redirect } from "next/navigation";
+import { requireRole } from "@/lib/auth-guard";
 import { PageHeader } from "@/components/common/page-header";
 import { UserForm } from "@/features/users/forms/user-form";
 import { getUserById } from "@/services/user.service";
@@ -11,6 +12,23 @@ interface Props {
 }
 
 export default async function EditUserPage({ params }: Props) {
+  const requestHeaders = await headers();
+
+  const authResult = await requireRole(
+    new Request("http://localhost", {
+      headers: requestHeaders,
+    }),
+    ["Admin"],
+  );
+
+  if (!authResult.ok) {
+    if (authResult.status === 401) {
+      redirect("/login");
+    }
+
+    notFound();
+  }
+
   const { id } = await params;
 
   const user = await getUserById(id);

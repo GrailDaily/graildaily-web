@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-
+import { articleSlugSchema } from "@/features/articles/validation/article-schema";
 import { prisma } from "@/lib/prisma";
 
 interface RouteContext {
@@ -12,9 +12,22 @@ export async function GET(_request: Request, { params }: RouteContext) {
   try {
     const { slug } = await params;
 
+    const validation = articleSlugSchema.safeParse(slug);
+
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          error: "Invalid article slug.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
     const article = await prisma.article.findFirst({
       where: {
-        slug,
+        slug: validation.data,
         status: "Published",
       },
       select: {
@@ -44,8 +57,8 @@ export async function GET(_request: Request, { params }: RouteContext) {
     }
 
     return NextResponse.json(article);
-  } catch (error) {
-    console.error("GET /api/articles/[slug] failed:", error);
+  } catch {
+    console.error("GET /api/articles/[slug] failed.");
 
     return NextResponse.json(
       {

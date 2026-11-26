@@ -1,16 +1,27 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 
 import cloudinary from "@/lib/cloudinary";
 import { prisma } from "@/lib/prisma";
+import { requireActionRole } from "@/lib/auth-guard";
 
 import { getMediaUsageCount } from "../utils/media-usage";
 
+const MEDIA_MANAGEMENT_ROLES = ["Admin", "Editor"] as const;
+
+const mediaIdSchema = z.string().trim().min(1).max(191);
+const mediaAltTextSchema = z.string().trim().max(500);
+
 export async function deleteMediaAction(id: string) {
+  await requireActionRole([...MEDIA_MANAGEMENT_ROLES]);
+
+  const validatedId = mediaIdSchema.parse(id);
+
   const media = await prisma.media.findUnique({
     where: {
-      id,
+      id: validatedId,
     },
   });
 
@@ -29,18 +40,14 @@ export async function deleteMediaAction(id: string) {
   }
 
   if (media.publicId) {
-    const cloudinaryResult = await cloudinary.uploader.destroy(media.publicId);
+    await cloudinary.uploader.destroy(media.publicId);
 
-    console.log("=== CLOUDINARY DELETE ===");
-    console.log({
-      publicId: media.publicId,
-      result: cloudinaryResult,
-    });
+
   }
 
   await prisma.media.delete({
     where: {
-      id,
+      id: validatedId,
     },
   });
 
@@ -49,9 +56,14 @@ export async function deleteMediaAction(id: string) {
 }
 
 export async function updateMediaAltTextAction(id: string, altText: string) {
+  await requireActionRole([...MEDIA_MANAGEMENT_ROLES]);
+
+  const validatedId = mediaIdSchema.parse(id);
+  const validatedAltText = mediaAltTextSchema.parse(altText);
+
   const media = await prisma.media.findUnique({
     where: {
-      id,
+      id: validatedId,
     },
   });
 
@@ -61,10 +73,10 @@ export async function updateMediaAltTextAction(id: string, altText: string) {
 
   await prisma.media.update({
     where: {
-      id,
+      id: validatedId,
     },
     data: {
-      altText: altText.trim() || null,
+      altText: validatedAltText || null,
     },
   });
 

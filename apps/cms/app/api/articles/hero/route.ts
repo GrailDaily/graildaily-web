@@ -44,8 +44,8 @@ export async function GET() {
         },
       },
     );
-  } catch (error) {
-    console.error("GET /api/articles/hero failed:", error);
+  } catch {
+    console.error("GET /api/articles/hero failed.");
 
     return NextResponse.json(
       {

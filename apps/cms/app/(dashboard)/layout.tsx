@@ -20,5 +20,5 @@ export default async function DashboardLayout({
     redirect("/login");
   }
 
-  return <AppShell>{children}</AppShell>;
+  return <AppShell role={authResult.user.role}>{children}</AppShell>;
 }

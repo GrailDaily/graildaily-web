@@ -48,7 +48,6 @@ export function BulkActionBar({ count, ids, onCompleted }: Props) {
 
         router.refresh();
       } catch (error) {
-        console.error(error);
 
         toast.error("Failed to update articles.");
       }
@@ -68,7 +67,6 @@ export function BulkActionBar({ count, ids, onCompleted }: Props) {
 
         router.refresh();
       } catch (error) {
-        console.error(error);
 
         toast.error("Failed to delete articles.");
       }

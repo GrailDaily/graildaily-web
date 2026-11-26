@@ -16,9 +16,16 @@ import {
 } from "@/components/ui/sidebar";
 
 import { sidebarItems } from "@/constants/sidebar";
+import type { UserRole } from "@/lib/auth-guard";
 
-export function AppSidebar() {
+interface Props {
+  role: UserRole;
+}
+
+export function AppSidebar({ role }: Props) {
   const pathname = usePathname();
+
+  const visibleItems = sidebarItems.filter((item) => item.roles.includes(role));
 
   return (
     <Sidebar variant="inset" collapsible="icon">
@@ -35,7 +42,7 @@ export function AppSidebar() {
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
 
           <SidebarMenu>
-            {sidebarItems.map((item) => (
+            {visibleItems.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton
                   render={<Link href={item.href} />}

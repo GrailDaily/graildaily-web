@@ -123,7 +123,6 @@ export function CategoryDialog({ category }: CategoryDialogProps) {
         }
         setOpen(false);
       } catch (error) {
-        console.error(error);
         setError(
           "Unable to save category. The name or slug may already exist.",
         );
@@ -140,9 +139,8 @@ export function CategoryDialog({ category }: CategoryDialogProps) {
         await deleteCategoryAction(category.id);
         setDeleteOpen(false);
       } catch (error) {
-        console.error(error);
         setDeleteError(
-          error instanceof Error ? error.message : "Unable to delete category.",
+          "Unable to delete category. It may still be in use by articles.",
         );
       }
     });

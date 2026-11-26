@@ -7,7 +7,11 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
-    "seed": "prisma db seed"
+    "seed": "prisma db seed",
+    "db:migrate:status": "prisma migrate status",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:migrate:dev:status": "prisma migrate status --config prisma.config.dev.ts",
+    "db:migrate:dev": "prisma migrate dev --config prisma.config.dev.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",

@@ -59,7 +59,6 @@ export function UserForm({ user }: Props) {
 
       router.push("/users");
     } catch (error) {
-      console.error(error);
       alert("Failed to update user.");
     } finally {
       setLoading(false);

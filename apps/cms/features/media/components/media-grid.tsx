@@ -1,4 +1,7 @@
-"use client";
+﻿"use client";
+
+import { useContext } from "react";
+import { RoleContext } from "@/components/layout/app-shell/role-context";
 
 import Image from "next/image";
 
@@ -44,6 +47,8 @@ function formatDate(date: Date | string) {
 }
 
 export function MediaGrid({ media }: Props) {
+  const role = useContext(RoleContext);
+  const canManageMedia = role === "Admin" || role === "Editor";
   if (media.length === 0) {
     return (
       <Card>
@@ -84,13 +89,14 @@ export function MediaGrid({ media }: Props) {
                 url={item.path}
                 originalName={item.originalName}
                 altText={item.altText}
+                canManage={canManageMedia}
               />
             </div>
 
             <div className="text-muted-foreground space-y-1 text-xs">
               <p>
                 {item.width && item.height
-                  ? `${item.width} × ${item.height}`
+                  ? `${item.width} Ã— ${item.height}`
                   : "Unknown dimensions"}
               </p>
 

@@ -22,6 +22,7 @@ import { ARTICLE_STATUS } from "@/features/articles/constants/article-status";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MediaPicker } from "@/features/media/components/media-picker";
+import { uploadImage } from "@/features/media/utils/upload-image";
 import {
   articleSchema,
   type ArticleSchema,
@@ -36,6 +37,7 @@ import {
 
 interface Props {
   article?: Article;
+  role: "Admin" | "Editor" | "Author";
   media: {
     id: string;
     originalName: string;
@@ -67,7 +69,7 @@ type ArticleInitialValues = {
   showInEditorsPicks: boolean;
 };
 
-export function ArticleForm({ article, media, categories }: Props) {
+export function ArticleForm({ article, role, media, categories }: Props) {
   const router = useRouter();
   const initialValues: ArticleInitialValues = article
     ? {
@@ -153,8 +155,6 @@ export function ArticleForm({ article, media, categories }: Props) {
     data: ArticleSchema,
     submitStatus?: ArticleSchema["status"],
   ) => {
-    console.log("=== ONSUBMIT ===");
-    console.log(data);
 
     setLoading(true);
 
@@ -184,14 +184,12 @@ export function ArticleForm({ article, media, categories }: Props) {
         await createArticleAction(finalData);
       }
 
-      console.log("Success");
 
       setSelectedFile(null);
 
       router.push("/articles");
       router.refresh();
     } catch (error) {
-      console.error(error);
 
       alert("Failed to save article.");
     } finally {
@@ -236,22 +234,6 @@ export function ArticleForm({ article, media, categories }: Props) {
     setSelectedFile(null);
   };
 
-  async function uploadImage(file: File) {
-    const formData = new FormData();
-
-    formData.append("file", file);
-
-    const response = await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!response.ok) {
-      throw new Error("Upload failed");
-    }
-
-    return response.json();
-  }
 
   const [loading, setLoading] = useState(false);
 
@@ -383,7 +365,16 @@ export function ArticleForm({ article, media, categories }: Props) {
                         </SelectTrigger>
 
                         <SelectContent>
-                          {ARTICLE_STATUS.map((status) => (
+                          {(
+                            role === "Author"
+                              ? ARTICLE_STATUS.filter(
+                                  (status) =>
+                                    status === "Draft" ||
+                                    status === "Review" ||
+                                    status === article?.status,
+                                )
+                              : ARTICLE_STATUS
+                          ).map((status) => (
                             <SelectItem key={status} value={status}>
                               {status}
                             </SelectItem>
@@ -565,7 +556,7 @@ export function ArticleForm({ article, media, categories }: Props) {
                 <input
                   ref={inputRef}
                   type="file"
-                  accept="image/*"
+                  accept="image/jpeg,image/png,image/webp"
                   className="hidden"
                   onChange={handleImageChange}
                 />
@@ -656,5 +647,3 @@ export function ArticleForm({ article, media, categories }: Props) {
     </>
   );
 }
-
-

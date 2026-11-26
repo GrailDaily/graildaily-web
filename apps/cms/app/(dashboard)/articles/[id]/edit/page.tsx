@@ -1,4 +1,6 @@
-import { notFound } from "next/navigation";
+import { headers } from "next/headers";
+import { notFound, redirect } from "next/navigation";
+import { requireActiveUser } from "@/lib/auth-guard";
 import { getCategories } from "@/services/categories.service";
 import { PageHeader } from "@/components/common/page-header";
 import { ArticleForm } from "@/features/articles/forms/article-form";
@@ -12,11 +14,30 @@ interface Props {
 }
 
 export default async function EditArticlePage({ params }: Props) {
+  const requestHeaders = await headers();
+
+  const authResult = await requireActiveUser(
+    new Request("http://localhost", {
+      headers: requestHeaders,
+    }),
+  );
+
+  if (!authResult.ok) {
+    redirect("/login");
+  }
+
   const { id } = await params;
 
   const article = await getArticleById(id);
 
   if (!article) {
+    notFound();
+  }
+
+  if (
+    authResult.user.role === "Author" &&
+    article.authorUserId !== authResult.user.id
+  ) {
     notFound();
   }
 
@@ -35,6 +56,7 @@ export default async function EditArticlePage({ params }: Props) {
 
       <ArticleForm
         article={article}
+        role={authResult.user.role}
         media={media}
         categories={activeCategories}
       />
